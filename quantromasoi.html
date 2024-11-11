@@ -25,9 +25,12 @@
         h1 {
             font-family: 'Creepster', Arial, sans-serif;
             font-size: 2.5em;
-            color: #e74c3c;
+            color: #ffffff;
             margin-bottom: 20px;
+            text-shadow: 0 0 10px rgb(255, 25, 0),
+            0 0 20px rgba(231, 76, 60, 0.5);
         }
+
         .container {
             width: 90%;
             margin: auto;
@@ -147,6 +150,22 @@
         .role-button.red {
             background-color: red;
         }
+
+        .guide-button {
+            margin-top: 20px;
+            padding: 10px 200px;
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 1em;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .guide-button:hover {
+            background-color: darkred;
+        }
     </style>
 </head>
 <body>
@@ -170,6 +189,7 @@
                 <option value="Thằng Ngố">Thằng Ngố</option>
                 <option value="Dân làng">Dân làng</option>
             </select>
+            <button class="button" onclick="addCustomRole()">Thêm Role</button>
             <div class="day-night-buttons">
                 <button class="button" onclick="startDayCountdown()">Bắt Đầu Ban Ngày</button>
                 <button class="button" onclick="startNight()">Bắt Đầu Ban Đêm</button>
@@ -228,6 +248,46 @@
                 logEvent(`Vai trò mới "${newRole}" đã được thêm.`);
             }
         }
+
+        function addCustomRole() {
+    const newRole = prompt("Nhập tên role mới:");
+    if (newRole) {
+        const roleSelect = document.getElementById('roles');
+        
+        // Thêm vai trò mới vào danh sách chọn
+        const option = document.createElement("option");
+        option.value = newRole;
+        option.text = newRole;
+        roleSelect.add(option);
+
+        // Cập nhật danh sách vai trò cho ban đêm
+        updateNightRoleList();
+
+        logEvent(`Vai trò mới "${newRole}" đã được thêm.`);
+    }
+}
+
+// Hàm cập nhật danh sách vai trò ban đêm
+function updateNightRoleList() {
+    const nightRoleList = document.getElementById('nightRoleList');
+    nightRoleList.innerHTML = "<p><strong>Lần lượt gọi tên các vai trò</strong></p>";
+
+    const roleOptions = Array.from(document.getElementById('roles').options).map(option => option.value);
+    const uniqueRoles = [...nightRolesOrder, ...roleOptions.filter(role => !nightRolesOrder.includes(role))];
+
+    uniqueRoles.forEach(role => {
+        const roleButton = document.createElement("button");
+        roleButton.classList.add("role-button");
+        roleButton.textContent = role;
+        roleButton.onclick = function() {
+            roleButton.classList.add("red");
+            roleButton.disabled = true;
+            checkNightRolesComplete();
+        };
+        nightRoleList.appendChild(roleButton);
+    });
+}
+
 
         function deletePlayer(playerName) {
             players = players.filter(player => player.name !== playerName);
@@ -402,6 +462,7 @@
         }
 
         function startNight() {
+            updateNightRoleList(); // Cập nhật danh sách vai trò ban đêm
             const nightRoleList = document.getElementById('nightRoleList');
             nightRoleList.innerHTML = "<p><strong>Lần lượt gọi tên các vai trò</strong></p>"; // Add the note dynamically
             nightRoleList.style.display = "block";
@@ -517,5 +578,9 @@ function startDayCountdown() {
 }
 
     </script>
+    
+    <footer>
+        <a href="lawsandandguid.html" class="guide-button">Hướng Dẫn trò chơi ma sói</a>
+</footer>
 </body>
 </html>
