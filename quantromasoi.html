@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản Trò Ma Sói</title>
+    <title>Werewolf Game Master</title>
+
+    <link rel="icon" href="logo/logoweb-dammekynang.png" type="logo/logoweb-dammekynang.png">
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Creepster&family=Arial&display=swap">
     <style>
         body {
@@ -21,7 +24,7 @@
         .container {
             width: 90%;
             margin: auto;
-            max-width: 700px;
+            max-width: 780px;
             padding: 20px;
             background-color: #1b1b1b;
             border-radius: 10px;
@@ -87,29 +90,18 @@
         .dead {
             background-color: #e74c3c;
         }
-        .controls, .night-role-list {
+        .controls {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 10px;
             padding: 10px;
         }
-        .role-button {
-            padding: 10px;
-            width: 100%;
-            margin: 5px 0;
-            background-color: #333;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s ease;
-            border-radius: 5px;
-        }
-        .role-button:hover {
-            background-color: #555;
-        }
-        .role-button.red {
-            background-color: red;
+        .day-night-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
         }
         input[type="text"], select {
             padding: 10px;
@@ -129,11 +121,30 @@
             background-color: #3498db;
             color: white;
         }
+                .night-role-list {
+            display: none;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #333;
+            border-radius: 5px;
+        }
+        .role-button {
+            background-color: #555;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 5px;
+        }
+        .role-button.red {
+            background-color: red;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Quản Trò Ma Sói</h1>
+        <h1>Werewolf Game Master</h1>
         <button class="reset-button" onclick="startResetCountdown()">Bắt Đầu Lại</button>
         <span id="countdownDisplay"></span>
         <button class="cancel-button" id="cancelResetButton" onclick="cancelReset()" style="display: none;">Hủy</button>
@@ -152,10 +163,11 @@
                 <option value="Thằng Ngố">Thằng Ngố</option>
                 <option value="Dân làng">Dân làng</option>
             </select>
-            <button class="button" onclick="addRole()">Thêm Role Mới</button>
-            <button class="button" onclick="startDayCountdown()">Bắt Đầu Ban Ngày</button>
+            <div class="day-night-buttons">
+                <button class="button" onclick="startDayCountdown()">Bắt Đầu Ban Ngày</button>
+                <button class="button" onclick="startNight()">Bắt Đầu Ban Đêm</button>
+            </div>
             <span id="dayCountdownDisplay"></span>
-            <button class="button" onclick="startNight()">Bắt Đầu Ban Đêm</button>
             <button class="warning-button" id="dayEndWarning" onclick="alert('Thời gian ban ngày đã hết!')">Thời Gian Ban Ngày Đã Kết Thúc</button>
         </div>
 
@@ -169,7 +181,6 @@
                 <tr>
                     <th>Tên Người Chơi</th>
                     <th>Vai Trò</th>
-                    <th>Trạng Thái</th>
                     <th>Ghi Chú</th>
                     <th>Thao Tác</th>
                 </tr>
@@ -211,6 +222,13 @@
                 logEvent(`Vai trò mới "${newRole}" đã được thêm.`);
             }
         }
+
+        function deletePlayer(playerName) {
+            players = players.filter(player => player.name !== playerName);
+            renderPlayers();
+            logEvent(`Người chơi ${playerName} đã bị xóa khỏi trò chơi.`);
+        }
+
 
         function changeRole(playerName) {
             const roleSelect = document.createElement("select");
@@ -297,7 +315,6 @@
             playersTable.innerHTML = `<tr>
                 <th>Tên Người Chơi</th>
                 <th>Vai Trò</th>
-                <th>Trạng Thái</th>
                 <th>Ghi Chú</th>
                 <th class="actions-cell">Thao Tác</th>
             </tr>`;
@@ -308,7 +325,6 @@
                 playersTable.innerHTML += `<tr id="${player.name}" class="${rowClass}">
                     <td>${player.name}${isLovePair}</td>
                     <td class="role-cell">${player.role}</td>
-                    <td>${player.status}</td>
                     <td><input type="text" value="${player.note}" onchange="updateNote('${player.name}', this.value)" /></td>
                     <td class="actions-cell">
                         <button onclick="toggleStatus('${player.name}')">Đổi Trạng Thái</button>
@@ -385,7 +401,7 @@
         function startNight() {
             const nightRoleList = document.getElementById('nightRoleList');
             nightRoleList.innerHTML = "<p><strong>Lần lượt gọi tên các vai trò</strong></p>"; // Add the note dynamically
-            nightRoleList.style.display = "flex";
+            nightRoleList.style.display = "block";
 
             const roleOptions = Array.from(document.getElementById('roles').options).map(option => option.value);
             const uniqueRoles = [...nightRolesOrder, ...roleOptions.filter(role => !nightRolesOrder.includes(role))];
@@ -427,7 +443,6 @@ function renderPlayers() {
     playersTable.innerHTML = `<tr>
         <th>Tên Người Chơi</th>
         <th>Vai Trò</th>
-        <th>Trạng Thái</th>
         <th>Ghi Chú</th>
         <th class="actions-cell">Thao Tác</th>
     </tr>`;
@@ -438,7 +453,6 @@ function renderPlayers() {
         playersTable.innerHTML += `<tr id="${player.name}" class="${rowClass}">
             <td>${player.name}${isLovePair}</td>
             <td class="role-cell">${player.role}</td>
-            <td>${player.status}</td>
             <td><input type="text" value="${player.note}" onchange="updateNote('${player.name}', this.value)" /></td>
             <td class="actions-cell">
                 <button onclick="toggleStatus('${player.name}')">Đổi Trạng Thái</button>
