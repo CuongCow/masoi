@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kỹ Năng </title>
+    <style>
+        /* Tổng thể */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Nền gradient động */
+        .background-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(45deg, #ff6b6b, #f0e68c, #48c9b0, #5dade2, #e74c3c);
+            background-size: 300% 300%;
+            animation: gradientAnimation 15s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Overlay gradient để làm mờ nền */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* Độ trong suốt */
+            z-index: -1;
+        }
+
+        /* Thanh điều hướng */
+        .navbar {
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 10;
+        }
+
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        .navbar li {
+            position: relative;
+            padding: 0 15px;
+        }
+
+        .navbar li a {
+            color: #fff;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .navbar li a:hover {
+            color: #f1c40f;
+        }
+
+        /* Dropdown */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.4);
+            z-index: 1;
+            top: 100%;
+        }
+
+        .dropdown-content a {
+            color: #f1f1f1;
+            padding: 10px;
+            display: block;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #4caf50;
+        }
+
+        .navbar li:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Nội dung chính */
+        .content {
+            text-align: center;
+            color: white;
+            padding: 100px 300px 60px 300px;
+        }
+
+        .content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        .content p {
+            font-size: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Chân trang */
+        .footer {
+            background-color: #222;
+            color: #f1f1f1;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: 200px;
+        }
+
+        .footer a {
+            color: #f1c40f;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Nền gradient động -->
+    <div class="background-gradient"></div>
+    <div class="overlay"></div>
+
+    <!-- Thanh điều hướng -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.html">Trang Chủ</a></li>
+            <li>
+                <a href="#dangnhap">Giải Mật Thư</a>
+                <div class="dropdown-content">
+                    <a href="Enrypt text and text.html">Thay Thế Chữ Bằng Chữ</a>
+                    <a href="Enrypttext text and number.html">Thay Thế Chữ Bằng Số</a>
+                    <a href="#bophankhac">Tọa Độ</a>
+                    <a href="camranh.html">Cam Ranh</a>
+                </div>
+            </li>
+            <li>
+                <a href="#tailieu">Tài Liệu</a>
+                <div class="dropdown-content">
+                    <a href="tailieu/banxoay.html">Bản xoay mật thư</a>
+                    <a href="tailieu/matthu.html">Mật thư</a>
+                    <a href="/tailieu/muadanvu.html">Múa, dân vũ</a>
+                    <a href="tailieu/nutday.html">Nút dây</a>
+                    <a href="tailieu/sinhhoatvt.html">Sinh hoat vòng tròn</a>
+                    <a href="tailieu/thucongtrai.html">Thủ công trại</a>
+                    <a href="tailieu/trochoilon.html">Trò chơi lớn</a>
+                    <a href="tailieu/trochoinho.html">Trò chơi nhỏ</a>
+                </div>
+            </li>
+            <li>
+                <a href="#mon">Mon</a> 
+                <div class="dropdown-content"> 
+                    <a href="#nhap">Nhập</a> 
+                    <a href="#baoh">Báo H</a>
+                    <a href="#kycuong">Kỷ Cương</a>
+                    <a href="#dichthuat">Dịch Thuật</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Nội dung chính -->
+    <!-- Nội dung chính -->
+<section class="content">
+    <h1>Chính Sách Bảo Mật</h1>
+    <p>Trang web này cam kết bảo vệ quyền riêng tư của người dùng. Chính sách bảo mật này mô tả cách chúng tôi thu thập, sử dụng và bảo vệ thông tin cá nhân của bạn khi truy cập trang web.</p>
+
+    <h2>1. Thu Thập Thông Tin Cá Nhân</h2>
+    <p>Chúng tôi có thể thu thập các loại thông tin sau đây:</p>
+    <ul>
+        <li><strong>Thông tin nhận dạng cá nhân:</strong> Bao gồm tên, địa chỉ email, số điện thoại và các thông tin khác mà bạn cung cấp khi đăng ký nhận tin, gửi yêu cầu hoặc tham gia các dịch vụ trên trang web.</li>
+        <li><strong>Thông tin tài khoản:</strong> Nếu bạn tạo tài khoản trên trang, chúng tôi có thể yêu cầu thông tin như tên đăng nhập và mật khẩu.</li>
+        <li><strong>Thông tin tự động:</strong> Bao gồm địa chỉ IP, loại trình duyệt, hệ điều hành, trang web trước đó và hoạt động của bạn trên trang. Chúng tôi sử dụng thông tin này để cải thiện trải nghiệm người dùng.</li>
+    </ul>
+
+    <h2>2. Sử Dụng Thông Tin</h2>
+    <p>Thông tin mà chúng tôi thu thập được sử dụng cho các mục đích sau:</p>
+    <ul>
+        <li><strong>Cung cấp dịch vụ:</strong> Đảm bảo các tính năng và dịch vụ trên trang hoạt động một cách tối ưu.</li>
+        <li><strong>Liên lạc:</strong> Cung cấp các thông tin quan trọng như thông báo cập nhật hoặc thay đổi dịch vụ, trả lời câu hỏi và giải đáp thắc mắc.</li>
+        <li><strong>Tùy chỉnh nội dung:</strong> Cá nhân hóa trải nghiệm của bạn bằng cách đề xuất nội dung phù hợp.</li>
+        <li><strong>Phân tích và cải thiện:</strong> Thu thập phản hồi và cải thiện dịch vụ để đáp ứng nhu cầu của người dùng.</li>
+    </ul>
+
+    <h2>3. Bảo Mật Thông Tin</h2>
+    <p>Chúng tôi áp dụng các biện pháp bảo mật kỹ thuật và quản trị để bảo vệ thông tin cá nhân của bạn, bao gồm:</p>
+    <ul>
+        <li><strong>Mã hóa:</strong> Dữ liệu nhạy cảm được mã hóa khi truyền tải và lưu trữ.</li>
+        <li><strong>Kiểm soát truy cập:</strong> Chỉ những nhân viên được ủy quyền mới có quyền truy cập vào thông tin cá nhân của bạn.</li>
+        <li><strong>Giám sát an ninh:</strong> Hệ thống được giám sát và kiểm tra thường xuyên để phát hiện và ngăn chặn các cuộc tấn công bảo mật.</li>
+    </ul>
+
+    <h2>4. Chia Sẻ Thông Tin Cá Nhân</h2>
+    <p>Chúng tôi không chia sẻ, bán hoặc cho thuê thông tin cá nhân của bạn với bên thứ ba trừ khi:</p>
+    <ul>
+        <li><strong>Theo yêu cầu pháp lý:</strong> Chúng tôi có thể chia sẻ thông tin của bạn để tuân thủ pháp luật, quy định, lệnh tòa, hoặc quá trình pháp lý hợp lệ.</li>
+        <li><strong>Nhà cung cấp dịch vụ:</strong> Các bên thứ ba cung cấp dịch vụ cho chúng tôi (ví dụ: phân tích dữ liệu, thanh toán, hỗ trợ khách hàng) có thể được truy cập vào thông tin để thực hiện các dịch vụ thay mặt chúng tôi.</li>
+    </ul>
+
+    <h2>5. Cookies và Công Nghệ Theo Dõi</h2>
+    <p>Trang web này sử dụng cookies để thu thập dữ liệu như hoạt động của người dùng, sở thích và các lựa chọn cá nhân nhằm nâng cao trải nghiệm.</p>
+
+    <h3>5.1 Cookies</h3>
+    <p>Cookies là các tệp nhỏ được lưu trữ trên trình duyệt của bạn để giúp cải thiện trải nghiệm người dùng. Chúng tôi có thể sử dụng cookies để lưu trữ tùy chọn của bạn và cung cấp nội dung phù hợp.</p>
+
+    <h3>5.2 Quản Lý Cookies</h3>
+    <p>Bạn có thể quản lý cookies thông qua cài đặt trình duyệt của mình. Nếu từ chối cookies, bạn có thể không thể sử dụng được tất cả các tính năng của trang web.</p>
+
+    <h2>6. Quyền Riêng Tư của Người Dùng</h2>
+    <ul>
+        <li><strong>Quyền Truy Cập và Chỉnh Sửa:</strong> Bạn có quyền truy cập và yêu cầu sửa đổi thông tin cá nhân của mình. Để thực hiện yêu cầu này, vui lòng liên hệ với chúng tôi qua thông tin liên hệ bên dưới.</li>
+        <li><strong>Quyền Xóa Dữ Liệu:</strong> Bạn có quyền yêu cầu xóa thông tin cá nhân khi không còn cần thiết cho mục đích mà nó được thu thập. Vui lòng liên hệ với chúng tôi nếu bạn muốn thực hiện quyền này.</li>
+        <li><strong>Quyền Rút Lại Sự Đồng Ý:</strong> Nếu bạn đã đồng ý với việc thu thập thông tin cá nhân, bạn có quyền rút lại sự đồng ý bất kỳ lúc nào. Tuy nhiên, việc rút lại này không ảnh hưởng đến tính hợp pháp của việc xử lý dữ liệu dựa trên sự đồng ý trước đó.</li>
+    </ul>
+
+    <h2>7. Liên Kết Đến Các Trang Web Bên Ngoài</h2>
+    <p>Trang web có thể chứa liên kết đến các trang web bên ngoài. Chúng tôi không kiểm soát và không chịu trách nhiệm về nội dung hoặc chính sách bảo mật của các trang web đó. Hãy xem xét chính sách bảo mật của các trang web bên ngoài khi rời khỏi trang của chúng tôi.</p>
+
+    <h2>8. Cập Nhật Chính Sách Bảo Mật</h2>
+    <p>Chính sách bảo mật này có thể thay đổi để phù hợp với các quy định pháp luật và nhu cầu của trang web. Mọi thay đổi sẽ được đăng tải tại đây, và ngày cập nhật cuối cùng sẽ được ghi rõ. Bạn nên kiểm tra thường xuyên để biết những thay đổi mới nhất.</p>
+
+    <h2>9. Thông Tin Liên Hệ</h2>
+    <p>Nếu bạn có bất kỳ câu hỏi hoặc yêu cầu nào liên quan đến Chính Sách Bảo Mật, vui lòng liên hệ với chúng tôi qua:</p>
+    <ul>
+        <li><strong>Email:</strong> cuong.dn@pctu.edut.vn</li>
+        <li><strong>Số điện thoại:</strong> 0369225402</li>
+        <li><strong>Địa chỉ:</strong> Điện Bàn - Quảng Nam</li>
+    </ul>
+</section>
+
+
+    <!-- Chân trang -->
+    <footer class="footer">
+        <p>&copy; 2024 Kỹ Năng. Mọi quyền được bảo lưu. Vui lòng không sao chép</p>
+        <p><a href="/lienhe.html">Liên Hệ</a> | <a href="/chinhsach.html">Chính Sách Bảo Mật</a> | <a href="/dieukhoan.html">Điều Khoản Sử Dụng</a></p>
+    </footer>
+
+</body>
+</html>

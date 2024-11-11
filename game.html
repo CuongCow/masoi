@@ -1,0 +1,259 @@
+<html><head><base href="https://t.me/Earn_Toncoin_whalesbot">
+    <title>Whale Fall Frenzy</title>
+    <style>
+    body {
+        margin: 0;
+        overflow: hidden;
+        background: url('https://cdn4.cdn-telegram.org/file/orlrkQeS-4RAsa22gPCIdQIx8pBA5INON0IkaDivjKjQf7Z2ntxS151mjqdiKuVih46y_G7NKu6Lyo4guijalAX8mB36NjVbayB_jQz_uqUmHARUTqkRThxcONad2BoAGQkjoNrDVMkK8eOMvj4tr7wOaRbvFwgBVcFdPIQCr_uNOaSFALJ8MQ9VyjzSxUeUejdxMvUS_t7yPsMcW7LLfAh7RYkhJG5mBXjnSwWjmk2pTWecCA0o8Gcjo7Z5DArJkPX5KWhKffFbACydqP3BthI7palMkADuYmtIfLah-3p0HTrvpvj1AIjeOrtR0S-OFmlbvHjeYHIie1lGbCRj5Q.jpg');
+        background-size: cover;
+        background-position: center;
+        cursor: pointer;
+    }
+    
+    .leaderboard {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 250px;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 10px;
+        border-radius: 5px;
+        overflow-y: auto;
+        max-height: 250px;
+        color: white;
+        font-family: Arial, sans-serif;
+        font-size: 20px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        z-index: 100;
+    }
+    
+    .score, .timer {
+        position: fixed;
+        right: 20px;
+        color: white;
+        font-family: Arial, sans-serif;
+        font-size: 24px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        z-index: 100;
+    }
+    
+    .score {
+        top: 300px; /* Position below the leaderboard */
+    }
+    
+    .timer {
+        top: 340px; /* Position slightly below the score */
+    }
+    
+    .whale, .anchor {
+        position: absolute;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        user-select: none;
+    }
+    
+    .whale:hover, .anchor:hover {
+        transform: scale(1.1);
+    }
+    
+    @keyframes float {
+        0% { 
+            transform: translateY(-100%) rotate(0deg);
+        }
+        100% { 
+            transform: translateY(100vh) rotate(360deg);
+        }
+    }
+    
+    .splash {
+        position: absolute;
+        pointer-events: none;
+        animation: splash 1s forwards;
+        opacity: 0;
+    }
+    
+    @keyframes splash {
+        0% { transform: scale(0.5); opacity: 1; }
+        100% { transform: scale(2); opacity: 0; }
+    }
+    
+    .game-over {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0,0,0,0.8);
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        display: none;
+        text-align: center;
+    }
+    </style>
+    </head>
+    <body>
+    <div class="leaderboard" id="leaderboard">
+        <h3>Leaderboard</h3>
+        <ul id="leaderboardList"></ul>
+    </div>
+    <div class="score">Score: <span id="scoreValue">0</span></div>
+    <div class="timer">Time: <span id="timeValue">30</span>s</div>
+    <div class="game-over" id="gameOver">
+        <h2>Game Over!</h2>
+        <p>Final Score: <span id="finalScore">0</span></p>
+        <button onclick="startGame()">Play Again</button>
+    </div>
+    
+    <script>
+    let score = 0;
+    let timeLeft = 30;
+    let gameActive = true;
+    let whaleInterval;
+    let anchorInterval;
+    
+    let userId = "ID" + Math.floor(1000 + Math.random() * 9000);
+    
+    function loadLeaderboard() {
+        const leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+        const leaderboardList = document.getElementById('leaderboardList');
+        leaderboardList.innerHTML = '';
+        leaderboard.forEach((entry, index) => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `#${index + 1} - <span contenteditable="true" onclick="editName(this, '${entry.id}')">${entry.name}</span>: ${entry.score}`;
+            leaderboardList.appendChild(listItem);
+        });
+    }
+    
+    function updateLeaderboard(finalScore) {
+        let leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+        leaderboard.push({ id: userId, name: userId, score: finalScore });
+        leaderboard.sort((a, b) => b.score - a.score);
+        if (leaderboard.length > 5) leaderboard = leaderboard.slice(0, 5); // Keep only top 5 scores
+        localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
+        loadLeaderboard();
+    }
+    
+    function editName(element, id) {
+        element.onblur = function() {
+            const newName = element.textContent;
+            let leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+            leaderboard = leaderboard.map(entry => entry.id === id ? { ...entry, name: newName } : entry);
+            localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
+            loadLeaderboard();
+        };
+    }
+    
+    function createWhale() {
+        const whale = document.createElement('div');
+        whale.className = 'whale';
+        whale.textContent = '🐋';
+        
+        const size = 50 + Math.random() * 100;
+        whale.style.fontSize = size + 'px';
+        
+        const xPos = Math.random() * (window.innerWidth - size);
+        whale.style.left = xPos + 'px';
+        whale.style.top = '-100px';
+        
+        const duration = 3 + Math.random() * 4;
+        whale.style.animation = `float ${duration}s linear`;
+        
+        whale.onclick = function(event) {
+            if (gameActive) {
+                score++;
+                document.getElementById('scoreValue').textContent = score;
+                createSplash(event.clientX, event.clientY);
+                whale.remove();
+                setTimeout(createWhale, Math.random() * 500);
+            }
+        };
+        
+        whale.addEventListener('animationend', () => whale.remove());
+        document.body.appendChild(whale);
+    }
+    
+    function createAnchor() {
+        const anchor = document.createElement('div');
+        anchor.className = 'anchor';
+        anchor.textContent = '⚓';
+        
+        const size = 30;
+        anchor.style.fontSize = size + 'px';
+        
+        const xPos = Math.random() * (window.innerWidth - size);
+        anchor.style.left = xPos + 'px';
+        anchor.style.top = '-100px';
+        
+        const duration = 4 + Math.random() * 3;
+        anchor.style.animation = `float ${duration}s linear`;
+        
+        anchor.onclick = function(event) {
+            if (gameActive) {
+                score = 0;
+                document.getElementById('scoreValue').textContent = score;
+                createSplash(event.clientX, event.clientY);
+                anchor.remove();
+                document.body.style.backgroundColor = 'rgba(255,0,0,0.3)';
+                setTimeout(() => {
+                    document.body.style.backgroundColor = 'transparent';
+                }, 200);
+            }
+        };
+        
+        anchor.addEventListener('animationend', () => anchor.remove());
+        document.body.appendChild(anchor);
+    }
+    
+    function createSplash(x, y) {
+        const splash = document.createElement('div');
+        splash.className = 'splash';
+        splash.style.left = (x - 50) + 'px';
+        splash.style.top = (y - 50) + 'px';
+        splash.style.width = '100px';
+        splash.style.height = '100px';
+        splash.style.background = 'radial-gradient(circle, rgba(135,206,235,0.8) 0%, rgba(135,206,235,0) 70%)';
+        
+        document.body.appendChild(splash);
+        setTimeout(() => splash.remove(), 1000);
+    }
+    
+    function startGame() {
+        score = 0;
+        timeLeft = 30;
+        gameActive = true;
+        document.getElementById('scoreValue').textContent = score;
+        document.getElementById('timeValue').textContent = timeLeft;
+        document.getElementById('gameOver').style.display = 'none';
+        loadLeaderboard();
+        
+        whaleInterval = setInterval(() => {
+            const whaleCount = 1 + Math.floor(Math.random() * 2);
+            for (let i = 0; i < whaleCount; i++) {
+                setTimeout(createWhale, Math.random() * 500);
+            }
+        }, 800);
+        
+        anchorInterval = setInterval(() => {
+            if (Math.random() < 0.3) createAnchor();
+        }, 2000);
+        
+        const timer = setInterval(() => {
+            timeLeft--;
+            document.getElementById('timeValue').textContent = timeLeft;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                clearInterval(whaleInterval);
+                clearInterval(anchorInterval);
+                gameActive = false;
+                document.getElementById('finalScore').textContent = score;
+                document.getElementById('gameOver').style.display = 'block';
+                updateLeaderboard(score);
+            }
+        }, 1000);
+    }
+    
+    startGame();
+    </script>
+    </body></html>
+    

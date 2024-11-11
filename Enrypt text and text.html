@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mật thư thay thế Chữ bằng Chữ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 5px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .letters {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+
+        .letter {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+            width: 30px;
+        }
+
+        .letter.selected {
+            background-color: #ffa500;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        span {
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="active">Trang Chủ</a>
+    <div class="container">
+        <h1>Thay thế Chữ bằng Chữ</h1>
+        
+        <label>Chọn ký tự nguồn:</label>
+        <div class="letters" id="sourceLetters">
+            <!-- Các ký tự từ A-Z sẽ được tạo động trong JavaScript -->
+        </div>
+
+        <label>Chọn ký tự đích:</label>
+        <div class="letters" id="targetLetters">
+            <!-- Các ký tự từ A-Z sẽ được tạo động trong JavaScript -->
+        </div>
+
+        <label for="textInput">Nhập nội dung:</label>
+        <input type="text" id="textInput" placeholder="Nhập nội dung..." oninput="encryptText()">
+
+        <p><strong>Mã hóa chiều thuận:</strong> <span id="forwardResult"></span></p>
+        <p><strong>Mã hóa chiều nghịch:</strong> <span id="backwardResult"></span></p>
+    </div>
+
+    <script>
+        const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        let sourceChar = '';
+        let targetChar = '';
+
+        // Tạo danh sách các ký tự từ A-Z cho phần chọn ký tự
+        function createLetterButtons(containerId, onClickHandler) {
+            const container = document.getElementById(containerId);
+            alphabet.split('').forEach(letter => {
+                const letterBtn = document.createElement('div');
+                letterBtn.className = 'letter';
+                letterBtn.textContent = letter;
+                letterBtn.onclick = () => onClickHandler(letter, letterBtn);
+                container.appendChild(letterBtn);
+            });
+        }
+
+        // Xử lý khi người dùng chọn ký tự nguồn
+        function selectSourceChar(letter, element) {
+            document.querySelectorAll('#sourceLetters .letter').forEach(btn => btn.classList.remove('selected'));
+            element.classList.add('selected');
+            sourceChar = letter;
+            encryptText();
+        }
+
+        // Xử lý khi người dùng chọn ký tự đích
+        function selectTargetChar(letter, element) {
+            document.querySelectorAll('#targetLetters .letter').forEach(btn => btn.classList.remove('selected'));
+            element.classList.add('selected');
+            targetChar = letter;
+            encryptText();
+        }
+
+        // Mã hóa nội dung đầu vào khi ký tự nguồn, đích và nội dung được nhập
+        function encryptText() {
+            const text = document.getElementById('textInput').value;
+
+            if (!sourceChar || !targetChar || text === '') return;
+
+            let forwardResult = '';
+            let backwardResult = '';
+
+            let sourceIdx = sourceChar.charCodeAt(0) - 'A'.charCodeAt(0);
+            let targetIdx = targetChar.charCodeAt(0) - 'A'.charCodeAt(0);
+            let shiftForward = (targetIdx - sourceIdx + 26) % 26;
+            let shiftBackward = (sourceIdx - targetIdx + 26) % 26;
+
+            for (let i = 0; i < text.length; i++) {
+                let char = text[i];
+
+                if (/[a-zA-Z]/.test(char)) {
+                    let isUpperCase = char === char.toUpperCase();
+                    let baseCharCode = isUpperCase ? 'A'.charCodeAt(0) : 'a'.charCodeAt(0);
+
+                    // Mã hóa chiều thuận
+                    let forwardCharCode = ((char.charCodeAt(0) - baseCharCode + shiftForward) % 26) + baseCharCode;
+                    forwardResult += String.fromCharCode(forwardCharCode);
+
+                    // Mã hóa chiều nghịch
+                    let backwardCharCode = ((char.charCodeAt(0) - baseCharCode + shiftBackward) % 26) + baseCharCode;
+                    backwardResult += String.fromCharCode(backwardCharCode);
+                } else {
+                    forwardResult += char;
+                    backwardResult += char;
+                }
+            }
+
+            document.getElementById('forwardResult').innerText = forwardResult;
+            document.getElementById('backwardResult').innerText = backwardResult;
+        }
+
+        // Khởi tạo các nút chọn ký tự khi trang được tải
+        createLetterButtons('sourceLetters', selectSourceChar);
+        createLetterButtons('targetLetters', selectTargetChar);
+    </script>
+</body>
+</html>

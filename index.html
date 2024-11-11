@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đam mê Kỹ Năng</title>
+
+    <link rel="icon" href="logo/logoweb-dammekynang.png" type="logo/logoweb-dammekynang.png">
+
+    <style>
+        /* Tổng thể */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Nền gradient động */
+        .background-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(45deg, #ff6b6b, #f0e68c, #48c9b0, #5dade2, #e74c3c);
+            background-size: 1% 300%;
+            animation: gradientAnimation 10s ease infinite;
+            z-index: -3;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Logo mờ làm nền */
+        .logo-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('logo/logoweb-dammekynang.png'); /* Đường dẫn ảnh */
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 30%; /* Tùy chỉnh kích thước logo */
+            opacity: 0.4; /* Độ mờ của logo */
+            z-index: -2;
+        }
+
+        /* Overlay gradient để làm mờ nền */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+
+        /* Thanh điều hướng */
+        .navbar {
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 10px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 10;
+        }
+
+        /* Logo luôn ở bên trái */
+
+        .navbar .logo img {
+            width: 60px;
+            height: auto;
+        }
+
+        /* Danh mục chữ nằm ở giữa */
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 15px;
+            margin-right: 40px; /* Tạo khoảng trống giữa danh mục chữ và mép phải */
+            max-width: calc(100% - 60px); /* Đảm bảo chiều rộng phù hợp */
+        }
+
+        .navbar li {
+            position: relative;
+        }
+
+        .navbar li a {
+            color: #fff;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .navbar li a:hover {
+            color: #f1c40f;
+        }
+
+        /* Dropdown */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.4);
+            z-index: 1;
+            top: 100%;
+        }
+
+        .dropdown-content a {
+            color: #f1f1f1;
+            padding: 10px;
+            display: block;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #4caf50;
+        }
+
+        .navbar li:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Nội dung chính */
+        .content {
+            text-align: center;
+            color: white;
+            padding: 100px 20px 60px 20px;
+        }
+
+        .content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        .content p {
+            font-size: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Chân trang */
+        .footer {
+            background-color: #21212154;
+            color: #f1f1f1;
+            text-align: center;
+            padding: 5px;
+            margin-top: auto; /* Đẩy footer xuống cuối */
+            width: 100%;
+        }
+
+        .footer a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            color: #fff;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <!-- Nền gradient động -->
+    <div class="background-gradient"></div>
+
+    <!-- Logo mờ làm nền -->
+    <div class="logo-background"></div>
+
+    <!-- Overlay -->
+    <div class="overlay"></div>
+
+    <!-- Thanh điều hướng -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html"><img src="logo/logoweb-dammekynang.png" alt="Logo Kỹ Năng"></a>
+        </div>
+        <ul>
+            <li>
+                <a href="#dangnhap">Giải Mật Thư</a>
+                <div class="dropdown-content">
+                    <a href="Enrypt text and text.html">Thay Thế Chữ Bằng Chữ</a>
+                    <a href="Enrypttext text and number.html">Thay Thế Chữ Bằng Số</a>
+                    <a href="#bophankhac">Tọa Độ</a>
+                    <a href="camranh.html">Cam Ranh</a>
+                </div>
+            </li>
+            <li>
+                <a href="#tailieu">Tài Liệu</a>
+                <div class="dropdown-content">
+                    <a href="tailieu/banxoay.html">Bản xoay mật thư</a>
+                    <a href="tailieu/matthu.html">Mật thư</a>
+                    <a href="/tailieu/muadanvu.html">Múa, dân vũ</a>
+                    <a href="tailieu/nutday.html">Nút dây</a>
+                    <a href="tailieu/sinhhoatvt.html">Sinh hoat vòng tròn</a>
+                    <a href="tailieu/thucongtrai.html">Thủ công trại</a>
+                    <a href="tailieu/trochoilon.html">Trò chơi lớn</a>
+                    <a href="tailieu/trochoinho.html">Trò chơi nhỏ</a>
+                </div>
+            </li>
+            <li>
+                <a href="#Bổ ích">Bổ ích</a> 
+                <div class="dropdown-content"> 
+                    <a href="#nhap">Nhập</a> 
+                    <a href="#baoh">Báo cao</a>
+                    <a href="#kycuong">Kỷ Cương</a>
+                    <a href="#dichthuat">Dịch Thuật AI</a>
+                </div>
+            </li>
+            <li><a href="quantromasoi.html">Quản trò Ma sói</a></li>
+        </ul>
+    </nav>
+
+    <!-- Nội dung chính -->
+    <section class="content">
+        <h1>Chào các bạn đến với trang Kỹ năng</h1> 
+        <p>Khám phá các kỹ năng cần thiết để chuẩn bị cho đợt trại của bạn.</p>
+    </section>
+
+    <!-- Chân trang -->
+    <footer class="footer">
+        <p>&copy; 2024 Kỹ Năng. Mọi quyền được bảo lưu. Vui lòng không sao chép</p>
+        <p><a href="/lienhe.html">Liên Hệ</a> | <a href="/chinhsach.html">Chính Sách Bảo Mật</a> | <a href="/dieukhoan.html">Điều Khoản Sử Dụng</a></p>
+    </footer>
+
+</body>
+</html>

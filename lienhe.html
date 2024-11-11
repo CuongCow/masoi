@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Thư viện Font Awesome cho biểu tượng -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kỹ Năng </title>
+    <style>
+        /* Tổng thể */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Nền gradient động */
+        .background-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(45deg, #ff6b6b, #f0e68c, #48c9b0, #5dade2, #e74c3c);
+            background-size: 300% 300%;
+            animation: gradientAnimation 15s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Overlay gradient để làm mờ nền */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* Độ trong suốt */
+            z-index: -1;
+        }
+
+        /* Thanh điều hướng */
+        .navbar {
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 10;
+        }
+
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        .navbar li {
+            position: relative;
+            padding: 0 15px;
+        }
+
+        .navbar li a {
+            color: #fff;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .navbar li a:hover {
+            color: #f1c40f;
+        }
+
+        /* Dropdown */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.4);
+            z-index: 1;
+            top: 100%;
+        }
+
+        .dropdown-content a {
+            color: #f1f1f1;
+            padding: 10px;
+            display: block;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #4caf50;
+        }
+
+        .navbar li:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Nội dung chính */
+        .content {
+            text-align: center;
+            color: white;
+            padding: 100px 20px 60px 20px;
+        }
+
+        .content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        .content p {
+            font-size: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Chân trang */
+        .footer {
+            background-color: #222;
+            color: #f1f1f1;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: 200px;
+        }
+
+        .footer a {
+            color: #f1c40f;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Nền gradient động -->
+    <div class="background-gradient"></div>
+    <div class="overlay"></div>
+
+    <!-- Thanh điều hướng -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.html">Trang Chủ</a></li>
+            <li>
+                <a href="#dangnhap">Giải Mật Thư</a>
+                <div class="dropdown-content">
+                    <a href="Enrypt text and text.html">Thay Thế Chữ Bằng Chữ</a>
+                    <a href="Enrypttext text and number.html">Thay Thế Chữ Bằng Số</a>
+                    <a href="#bophankhac">Tọa Độ</a>
+                    <a href="camranh.html">Cam Ranh</a>
+                </div>
+            </li>
+            <li>
+                <a href="#tailieu">Tài Liệu</a>
+                <div class="dropdown-content">
+                    <a href="tailieu/banxoay.html">Bản xoay mật thư</a>
+                    <a href="tailieu/matthu.html">Mật thư</a>
+                    <a href="/tailieu/muadanvu.html">Múa, dân vũ</a>
+                    <a href="tailieu/nutday.html">Nút dây</a>
+                    <a href="tailieu/sinhhoatvt.html">Sinh hoat vòng tròn</a>
+                    <a href="tailieu/thucongtrai.html">Thủ công trại</a>
+                    <a href="tailieu/trochoilon.html">Trò chơi lớn</a>
+                    <a href="tailieu/trochoinho.html">Trò chơi nhỏ</a>
+                </div>
+            </li>
+            <li>
+                <a href="#mon">Mon</a> 
+                <div class="dropdown-content"> 
+                    <a href="#nhap">Nhập</a> 
+                    <a href="#baoh">Báo H</a>
+                    <a href="#kycuong">Kỷ Cương</a>
+                    <a href="#dichthuat">Dịch Thuật</a>
+                </div>
+            </li>
+            <li><a href="quantromasoi.html">Quản trò Ma sói</a></li>
+        </ul>
+    </nav>
+
+    <!-- Nội dung chính -->
+    <section class="content">
+        <h1>Liên Hệ Với Tôi</h1>
+        <p>Theo dõi và liên hệ tôi qua các mạng xã hội:</p>
+        
+        <!-- Liên kết đến các mạng xã hội với icon -->
+        <div class="social-links">
+            <a href="https://www.facebook.com/cuongcowk" target="_blank" style="color: white; margin: 0 10px;">
+                <i class="fab fa-facebook fa-2x"></i>
+            </a>
+            <a href="https://www.instagram.com/cuong_cow/" target="_blank" style="color: white; margin: 0 10px;">
+                <i class="fab fa-instagram fa-2x"></i>
+            </a>
+            <a href="https://zalo.me/84799444052" target="_blank" style="color: white; margin: 0 10px;">
+                <i class="fas fa-comments fa-2x"></i>
+            </a>
+            <a href="tel:0369225402" style="color: white; margin: 0 10px;">
+                <i class="fas fa-phone fa-2x"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Chân trang -->
+    <footer class="footer">
+        <p>&copy; 2024 Kỹ Năng. Mọi quyền được bảo lưu. Vui lòng không sao chép</p>
+        <p><a href="/lienhe.html">Liên Hệ</a> | <a href="/chinhsach.html">Chính Sách Bảo Mật</a> | <a href="/dieukhoan.html">Điều Khoản Sử Dụng</a></p>
+    </footer>
+
+</body>
+</html>
