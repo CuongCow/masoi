@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Trò Ma Sói</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Creepster&family=Arial&display=swap">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: #f0f0f0;
+            text-align: center;
+        }
+        h1 {
+            font-family: 'Creepster', Arial, sans-serif;
+            font-size: 2.5em;
+            color: #e74c3c;
+            margin-bottom: 20px;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            max-width: 700px;
+            padding: 20px;
+            background-color: #1b1b1b;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .reset-button, .cancel-button, .button {
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            width: 100%;
+            margin: 10px 0;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .reset-button {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .reset-button:hover {
+            background-color: darkred;
+        }
+        .cancel-button {
+            background-color: #555;
+            color: white;
+        }
+        .cancel-button:hover {
+            background-color: #333;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .warning-button {
+            background-color: orange;
+            color: white;
+            display: none;
+            margin-top: 10px;
+        }
+        .player-list, .role-list {
+            margin-top: 20px;
+            background-color: #222;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #444;
+            color: #ddd;
+            font-size: 1em;
+        }
+        .alive {
+            background-color: #2ecc71;
+        }
+        .dead {
+            background-color: #e74c3c;
+        }
+        .controls, .night-role-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+        }
+        .role-button {
+            padding: 10px;
+            width: 100%;
+            margin: 5px 0;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s ease;
+            border-radius: 5px;
+        }
+        .role-button:hover {
+            background-color: #555;
+        }
+        .role-button.red {
+            background-color: red;
+        }
+        input[type="text"], select {
+            padding: 10px;
+            font-size: 1em;
+            width: 100%;
+            margin-bottom: 10px;
+            color: #222;
+            border: none;
+            border-radius: 5px;
+        }
+        .actions-cell {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+        .shield-button {
+            background-color: #3498db;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quản Trò Ma Sói</h1>
+        <button class="reset-button" onclick="startResetCountdown()">Bắt Đầu Lại</button>
+        <span id="countdownDisplay"></span>
+        <button class="cancel-button" id="cancelResetButton" onclick="cancelReset()" style="display: none;">Hủy</button>
+
+        <div class="controls">
+            <input type="text" id="playerName" placeholder="Nhập tên người chơi">
+            <button class="button" onclick="addPlayer()">Thêm Người Chơi</button>
+            <select id="roles">
+                <option value="Chọn role">Chọn role</option>
+                <option value="Ma Sói">Ma Sói</option>
+                <option value="Phù Thủy">Phù Thủy</option>
+                <option value="Bảo Vệ">Bảo Vệ</option>
+                <option value="Tiên Tri">Tiên Tri</option>
+                <option value="Thần Tình Yêu">Thần Tình Yêu</option>
+                <option value="Bán Sói">Bán Sói</option>
+                <option value="Thằng Ngố">Thằng Ngố</option>
+                <option value="Dân làng">Dân làng</option>
+            </select>
+            <button class="button" onclick="addRole()">Thêm Role Mới</button>
+            <button class="button" onclick="startDayCountdown()">Bắt Đầu Ban Ngày</button>
+            <span id="dayCountdownDisplay"></span>
+            <button class="button" onclick="startNight()">Bắt Đầu Ban Đêm</button>
+            <button class="warning-button" id="dayEndWarning" onclick="alert('Thời gian ban ngày đã hết!')">Thời Gian Ban Ngày Đã Kết Thúc</button>
+        </div>
+
+        <div id="nightRoleList" class="night-role-list" style="display: none;">
+            <p><strong>Lần lượt gọi tên các vai trò</strong></p>
+        </div>
+
+        <div class="player-list">
+            <h2>Danh Sách Người Chơi</h2>
+            <table id="playersTable">
+                <tr>
+                    <th>Tên Người Chơi</th>
+                    <th>Vai Trò</th>
+                    <th>Trạng Thái</th>
+                    <th>Ghi Chú</th>
+                    <th>Thao Tác</th>
+                </tr>
+            </table>
+        </div>
+        <div class="role-list">
+            <h2>Ghi Chú Trò Chơi</h2>
+            <ul id="gameLog"></ul>
+        </div>
+    </div>
+
+    <script>
+        let players = [];
+        let resetTimeout;
+        let resetCounter = 10;
+        let dayCountdown;
+        let dayCounter = 300;
+        let lovePair = [];
+        const nightRolesOrder = ["Thần Tình Yêu", "Bảo Vệ", "Ma Sói", "Phù Thủy", "Tiên Tri", "Bán Sói", "Thằng Ngố", "Dân làng"];
+
+        function addPlayer() {
+            const playerName = document.getElementById('playerName').value;
+            if (playerName) {
+                players.push({ name: playerName, role: "Chưa gán", status: 'Sống', note: "" });
+                document.getElementById('playerName').value = '';
+                renderPlayers();
+                logEvent(`Người chơi ${playerName} đã được thêm vào.`);
+            }
+        }
+
+        function addRole() {
+            const newRole = prompt("Nhập tên role mới:");
+            if (newRole) {
+                const roleSelect = document.getElementById('roles');
+                const option = document.createElement("option");
+                option.value = newRole;
+                option.text = newRole;
+                roleSelect.add(option);
+                logEvent(`Vai trò mới "${newRole}" đã được thêm.`);
+            }
+        }
+
+        function changeRole(playerName) {
+            const roleSelect = document.createElement("select");
+            roleSelect.onchange = function() {
+                const selectedRole = roleSelect.value;
+                const player = players.find(p => p.name === playerName);
+                if (player) {
+                    player.role = selectedRole;
+                    renderPlayers();
+                    logEvent(`Vai trò của ${playerName} đã được đổi thành ${selectedRole}.`);
+                    if (selectedRole === "Thần Tình Yêu") {
+                        addLoveButtons();
+                    }
+                }
+            };
+
+            const roles = document.getElementById('roles').options;
+            for (let i = 0; i < roles.length; i++) {
+                const option = document.createElement("option");
+                option.value = roles[i].value;
+                option.text = roles[i].text;
+                roleSelect.add(option);
+            }
+
+            const playerRow = document.getElementById(playerName).querySelector('.role-cell');
+            playerRow.innerHTML = '';
+            playerRow.appendChild(roleSelect);
+        }
+
+        function addLoveButtons() {
+            players.forEach(player => {
+                if (!document.getElementById(`${player.name}-heart`)) {
+                    const heartButton = document.createElement("button");
+                    heartButton.id = `${player.name}-heart`;
+                    heartButton.textContent = "❤️";
+                    heartButton.onclick = function() {
+                        selectLovePair(player.name);
+                    };
+                    document.getElementById(player.name).querySelector('.actions-cell').appendChild(heartButton);
+                }
+            });
+        }
+
+        function selectLovePair(playerName) {
+            if (lovePair.length < 2 && !lovePair.includes(playerName)) {
+                lovePair.push(playerName);
+                logEvent(`${playerName} đã được chọn là một nửa của cặp đôi.`);
+            }
+            if (lovePair.length === 2) {
+                logEvent(`Cặp đôi đã chọn là: ${lovePair[0]} và ${lovePair[1]}`);
+                // Vô hiệu hóa tất cả các nút trái tim sau khi chọn cặp đôi
+                players.forEach(player => {
+                    const heartButton = document.getElementById(`${player.name}-heart`);
+                    if (heartButton) heartButton.disabled = true;
+                });
+                renderPlayers(); // Render lại danh sách người chơi để hiển thị trái tim bên cạnh cặp đôi
+            }
+        }
+
+        function toggleStatus(playerName) {
+            const player = players.find(p => p.name === playerName);
+            if (player) {
+                player.status = player.status === 'Sống' ? 'Chết' : 'Sống';
+                renderPlayers();
+                logEvent(`Trạng thái của ${playerName} đã thay đổi thành ${player.status}.`);
+                checkLovePairStatus(playerName);
+            }
+        }
+
+        function checkLovePairStatus(playerName) {
+            if (lovePair.includes(playerName) && players.find(p => p.name === playerName).status === 'Chết') {
+                const partner = lovePair.find(name => name !== playerName);
+                const partnerPlayer = players.find(p => p.name === partner);
+                if (partnerPlayer && partnerPlayer.status === 'Sống') {
+                    partnerPlayer.status = 'Chết';
+                    renderPlayers();
+                    logEvent(`${partner} đã chết theo ${playerName} vì là cặp đôi.`);
+                }
+            }
+        }
+
+        function renderPlayers() {
+            const playersTable = document.getElementById('playersTable');
+            playersTable.innerHTML = `<tr>
+                <th>Tên Người Chơi</th>
+                <th>Vai Trò</th>
+                <th>Trạng Thái</th>
+                <th>Ghi Chú</th>
+                <th class="actions-cell">Thao Tác</th>
+            </tr>`;
+
+            players.forEach(player => {
+                const rowClass = player.status === 'Sống' ? 'alive' : 'dead';
+                const isLovePair = lovePair.includes(player.name) ? " ❤️" : ""; // Thêm trái tim nếu là cặp đôi
+                playersTable.innerHTML += `<tr id="${player.name}" class="${rowClass}">
+                    <td>${player.name}${isLovePair}</td>
+                    <td class="role-cell">${player.role}</td>
+                    <td>${player.status}</td>
+                    <td><input type="text" value="${player.note}" onchange="updateNote('${player.name}', this.value)" /></td>
+                    <td class="actions-cell">
+                        <button onclick="toggleStatus('${player.name}')">Đổi Trạng Thái</button>
+                        <button onclick="changeRole('${player.name}')">Đổi Vai Trò</button>
+                        <button onclick="deletePlayer('${player.name}')">Xóa</button>
+                    </td>
+                </tr>`;
+            });
+        }
+
+        function updateNote(playerName, note) {
+            const player = players.find(p => p.name === playerName);
+            if (player) {
+                player.note = note;
+            }
+        }
+
+        function startResetCountdown() {
+            resetCounter = 10;
+            document.getElementById("countdownDisplay").textContent = `Đếm ngược: ${resetCounter} giây`;
+            document.getElementById("cancelResetButton").style.display = "inline-block";
+
+            resetTimeout = setInterval(() => {
+                resetCounter--;
+                document.getElementById("countdownDisplay").textContent = `Đếm ngược: ${resetCounter} giây`;
+
+                if (resetCounter === 0) {
+                    clearInterval(resetTimeout);
+                    resetRolesAndStatus();
+                }
+            }, 1000);
+        }
+
+        function cancelReset() {
+            clearInterval(resetTimeout);
+            document.getElementById("countdownDisplay").textContent = "";
+            document.getElementById("cancelResetButton").style.display = "none";
+            logEvent("Đặt lại đã bị hủy.");
+        }
+
+        function resetRolesAndStatus() {
+            players.forEach(player => {
+                player.role = "Chưa gán";
+                player.status = "Sống";
+                player.note = ""; // Xóa ghi chú
+            });
+            lovePair = [];
+            protectedPlayer = null;
+
+            renderPlayers();
+            document.getElementById("gameLog").innerHTML = "";
+            document.getElementById("countdownDisplay").textContent = "";
+            document.getElementById("cancelResetButton").style.display = "none";
+            logEvent("Toàn bộ trò chơi đã đặt lại.");
+        }
+
+        function startDayCountdown() {
+            dayCounter = 300;
+            document.getElementById("dayEndWarning").style.display = "none";
+            document.getElementById("dayCountdownDisplay").textContent = `Thời gian ban ngày: ${Math.floor(dayCounter / 60)}:${String(dayCounter % 60).padStart(2, '0')}`;
+            
+            dayCountdown = setInterval(() => {
+                dayCounter--;
+                document.getElementById("dayCountdownDisplay").textContent = `Thời gian ban ngày: ${Math.floor(dayCounter / 60)}:${String(dayCounter % 60).padStart(2, '0')}`;
+
+                if (dayCounter === 0) {
+                    clearInterval(dayCountdown);
+                    document.getElementById("dayEndWarning").style.display = "inline-block";
+                    logEvent("Thời gian ban ngày đã kết thúc!");
+                }
+            }, 1000);
+        }
+
+        function startNight() {
+            const nightRoleList = document.getElementById('nightRoleList');
+            nightRoleList.innerHTML = "<p><strong>Lần lượt gọi tên các vai trò</strong></p>"; // Add the note dynamically
+            nightRoleList.style.display = "flex";
+
+            const roleOptions = Array.from(document.getElementById('roles').options).map(option => option.value);
+            const uniqueRoles = [...nightRolesOrder, ...roleOptions.filter(role => !nightRolesOrder.includes(role))];
+
+            uniqueRoles.forEach(role => {
+                const roleButton = document.createElement("button");
+                roleButton.classList.add("role-button");
+                roleButton.textContent = role;
+                roleButton.onclick = function() {
+                    roleButton.classList.add("red");
+                    roleButton.disabled = true;
+                    checkNightRolesComplete();
+                };
+                nightRoleList.appendChild(roleButton);
+            });
+        }
+
+        function checkNightRolesComplete() {
+            const roleButtons = document.querySelectorAll(".role-button");
+            const allRed = Array.from(roleButtons).every(button => button.classList.contains("red"));
+            if (allRed) {
+                setTimeout(() => {
+                    document.getElementById("nightRoleList").style.display = "none";
+                }, 500);
+            }
+        }
+
+        function logEvent(event) {
+            const gameLog = document.getElementById('gameLog');
+            const logEntry = document.createElement('li');
+            logEntry.textContent = event;
+            gameLog.appendChild(logEntry);
+        }
+
+             let protectedPlayer = null; // Biến để lưu người chơi được bảo vệ
+
+function renderPlayers() {
+    const playersTable = document.getElementById('playersTable');
+    playersTable.innerHTML = `<tr>
+        <th>Tên Người Chơi</th>
+        <th>Vai Trò</th>
+        <th>Trạng Thái</th>
+        <th>Ghi Chú</th>
+        <th class="actions-cell">Thao Tác</th>
+    </tr>`;
+
+    players.forEach(player => {
+        const rowClass = player.status === 'Sống' ? 'alive' : 'dead';
+        const isLovePair = lovePair.includes(player.name) ? " ❤️" : ""; // Thêm trái tim nếu là cặp đôi
+        playersTable.innerHTML += `<tr id="${player.name}" class="${rowClass}">
+            <td>${player.name}${isLovePair}</td>
+            <td class="role-cell">${player.role}</td>
+            <td>${player.status}</td>
+            <td><input type="text" value="${player.note}" onchange="updateNote('${player.name}', this.value)" /></td>
+            <td class="actions-cell">
+                <button onclick="toggleStatus('${player.name}')">Đổi Trạng Thái</button>
+                <button onclick="changeRole('${player.name}')">Đổi Vai Trò</button>
+                ${player.role === "Bảo Vệ" ? '<button onclick="activateShield()" class="shield-button">🛡️</button>' : ""}
+                <button onclick="deletePlayer('${player.name}')">Xóa</button>
+            </td>
+        </tr>`;
+    });
+}
+
+function activateShield() {
+    const selectedPlayer = prompt("Nhập tên người chơi mà Bảo Vệ muốn bảo vệ:");
+    const player = players.find(p => p.name === selectedPlayer);
+    if (player && player.status === 'Sống') {
+        protectedPlayer = player.name;
+        logEvent(`${protectedPlayer} đã được bảo vệ bởi Bảo Vệ.`);
+    } else {
+        alert("Người chơi không hợp lệ hoặc không tồn tại.");
+    }
+}
+
+function toggleStatus(playerName) {
+    const player = players.find(p => p.name === playerName);
+    if (player) {
+        if (player.status === 'Sống' && playerName === protectedPlayer) {
+            logEvent(`${playerName} đã được bảo vệ và không bị chết.`);
+            protectedPlayer = null; // Reset bảo vệ sau khi dùng
+        } else if (player.role === 'Bán Sói' && player.status === 'Sống') {
+            player.role = 'Ma Sói';
+            logEvent(`${playerName} từ bán sói đã biến đổi thành Ma Sói và được sống lại.`);
+        } else {
+            player.status = player.status === 'Sống' ? 'Chết' : 'Sống';
+            renderPlayers();
+            logEvent(`Trạng thái của ${playerName} đã thay đổi thành ${player.status}.`);
+            checkLovePairStatus(playerName);
+        }
+    }
+    renderPlayers(); // Cập nhật lại danh sách người chơi để hiển thị thay đổi
+}
+
+function startDayCountdown() {
+    dayCounter = 300;
+    document.getElementById("dayEndWarning").style.display = "none";
+    document.getElementById("dayCountdownDisplay").textContent = `Thời gian ban ngày: ${Math.floor(dayCounter / 60)}:${String(dayCounter % 60).padStart(2, '0')}`;
+    
+    dayCountdown = setInterval(() => {
+        dayCounter--;
+        document.getElementById("dayCountdownDisplay").textContent = `Thời gian ban ngày: ${Math.floor(dayCounter / 60)}:${String(dayCounter % 60).padStart(2, '0')}`;
+
+        if (dayCounter === 0) {
+            clearInterval(dayCountdown);
+            document.getElementById("dayEndWarning").style.display = "inline-block";
+            logEvent("Thời gian ban ngày đã kết thúc!");
+        }
+    }, 1000);
+    
+    // Reset bảo vệ vào đầu ngày mới
+    protectedPlayer = null;
+    logEvent("Trạng thái bảo vệ đã được đặt lại.");
+}
+
+    </script>
+</body>
+</html>
