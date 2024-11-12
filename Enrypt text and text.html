@@ -4,125 +4,196 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mật thư thay thế Chữ bằng Chữ</title>
+    <link rel="icon" href="logo/logoweb-dammekynang.png" type="image/png">
     <style>
+        /* Reset CSS */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #e8f0fe;
             margin: 0;
-            padding: 5px;
+            padding: 6px;
         }
 
         .container {
-            max-width: 1600px;
-            margin: 0 auto;
-            background: #fff;
+            max-width: 800px;
+            margin: 20px auto;
+            background: #ffffff;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 50px;
+            transition: background-color 0.3s ease;
+            color: #fff;
+        }
+
+        .navbar a.home {
+            background-color: #56a058;
+        }
+
+        .navbar a.letters, .navbar a.numbers {
+            background-color: #3fb6a2;
+        }
+
+        .navbar a:hover {
+            opacity: 0.8;
         }
 
         h1 {
             text-align: center;
-        }
-
-        .letters {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            margin: 10px 0;
-        }
-
-        .letter {
-            background-color: #007bff;
-            color: white;
-            padding: 10px;
-            margin: 5px;
-            cursor: pointer;
-            border-radius: 4px;
-            text-align: center;
-            width: 30px;
-        }
-
-        .letter.selected {
-            background-color: #ffa500;
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
-            margin: 10px 0 5px;
+            margin: 15px 0 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .slider-container span {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            margin: 0 10px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin: 0 15px;
         }
 
         input[type="text"] {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
+            padding: 12px;
+            margin-bottom: 15px;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 6px;
+            font-size: 16px;
         }
 
         p {
-            font-size: 16px;
+            font-size: 22px;
             margin: 10px 0;
+            line-height: 2.6;
+            color: #444;
         }
 
         span {
             font-weight: bold;
-            color: #007bff;
+            color: #ff0000;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .navbar {
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+            }
+
+            .navbar a {
+                padding: 8px 16px;
+                font-size: 16px;
+            }
+
+            .slider-container span {
+                font-size: 20px;
+            }
+
+            input[type="text"] {
+                padding: 10px;
+                font-size: 15px;
+            }
+
+            p {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
 <body>
-    <a href="index.html" class="active">Trang Chủ</a>
+    <div class="navbar">
+        <a href="index.html" class="home">Trang Chủ</a>
+        <a href="Enrypt text and text.html" class="letters">Chữ bằng Chữ</a>
+        <a href="Enrypttext text and number.html" class="numbers">Số bằng Chữ</a>
+    </div>
+
     <div class="container">
         <h1>Thay thế Chữ bằng Chữ</h1>
-        
+
         <label>Chọn ký tự nguồn:</label>
-        <div class="letters" id="sourceLetters">
-            <!-- Các ký tự từ A-Z sẽ được tạo động trong JavaScript -->
+        <div class="slider-container">
+            <span id="sourceCharDisplay">A</span>
+            <input type="range" id="sourceSlider" min="0" max="25" value="0" oninput="updateSourceChar()">
         </div>
 
         <label>Chọn ký tự đích:</label>
-        <div class="letters" id="targetLetters">
-            <!-- Các ký tự từ A-Z sẽ được tạo động trong JavaScript -->
+        <div class="slider-container">
+            <span id="targetCharDisplay">A</span>
+            <input type="range" id="targetSlider" min="0" max="25" value="0" oninput="updateTargetChar()">
         </div>
 
         <label for="textInput">Nhập nội dung:</label>
         <input type="text" id="textInput" placeholder="Nhập nội dung..." oninput="encryptText()">
 
-        <p><strong>Mã hóa chiều thuận:</strong> <span id="forwardResult"></span></p>
-        <p><strong>Mã hóa chiều nghịch:</strong> <span id="backwardResult"></span></p>
+        <p><strong>Chiều thuận:</strong> <span id="forwardResult"></span></p>
+        <p><strong>Chiều nghịch:</strong> <span id="backwardResult"></span></p>
     </div>
 
     <script>
         const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        let sourceChar = '';
-        let targetChar = '';
+        let sourceChar = 'A';
+        let targetChar = 'A';
 
-        // Tạo danh sách các ký tự từ A-Z cho phần chọn ký tự
-        function createLetterButtons(containerId, onClickHandler) {
-            const container = document.getElementById(containerId);
-            alphabet.split('').forEach(letter => {
-                const letterBtn = document.createElement('div');
-                letterBtn.className = 'letter';
-                letterBtn.textContent = letter;
-                letterBtn.onclick = () => onClickHandler(letter, letterBtn);
-                container.appendChild(letterBtn);
-            });
-        }
-
-        // Xử lý khi người dùng chọn ký tự nguồn
-        function selectSourceChar(letter, element) {
-            document.querySelectorAll('#sourceLetters .letter').forEach(btn => btn.classList.remove('selected'));
-            element.classList.add('selected');
-            sourceChar = letter;
+        // Cập nhật ký tự nguồn dựa trên thanh kéo
+        function updateSourceChar() {
+            const sourceSlider = document.getElementById('sourceSlider');
+            sourceChar = alphabet[sourceSlider.value];
+            document.getElementById('sourceCharDisplay').innerText = sourceChar;
             encryptText();
         }
 
-        // Xử lý khi người dùng chọn ký tự đích
-        function selectTargetChar(letter, element) {
-            document.querySelectorAll('#targetLetters .letter').forEach(btn => btn.classList.remove('selected'));
-            element.classList.add('selected');
-            targetChar = letter;
+        // Cập nhật ký tự đích dựa trên thanh kéo
+        function updateTargetChar() {
+            const targetSlider = document.getElementById('targetSlider');
+            targetChar = alphabet[targetSlider.value];
+            document.getElementById('targetCharDisplay').innerText = targetChar;
             encryptText();
         }
 
@@ -130,7 +201,12 @@
         function encryptText() {
             const text = document.getElementById('textInput').value;
 
-            if (!sourceChar || !targetChar || text === '') return;
+            // Nếu ô nhập nội dung trống, xóa kết quả và thoát khỏi hàm
+            if (text === '') {
+                document.getElementById('forwardResult').innerText = '';
+                document.getElementById('backwardResult').innerText = '';
+                return;
+            }
 
             let forwardResult = '';
             let backwardResult = '';
@@ -147,11 +223,9 @@
                     let isUpperCase = char === char.toUpperCase();
                     let baseCharCode = isUpperCase ? 'A'.charCodeAt(0) : 'a'.charCodeAt(0);
 
-                    // Mã hóa chiều thuận
                     let forwardCharCode = ((char.charCodeAt(0) - baseCharCode + shiftForward) % 26) + baseCharCode;
                     forwardResult += String.fromCharCode(forwardCharCode);
 
-                    // Mã hóa chiều nghịch
                     let backwardCharCode = ((char.charCodeAt(0) - baseCharCode + shiftBackward) % 26) + baseCharCode;
                     backwardResult += String.fromCharCode(backwardCharCode);
                 } else {
@@ -164,9 +238,9 @@
             document.getElementById('backwardResult').innerText = backwardResult;
         }
 
-        // Khởi tạo các nút chọn ký tự khi trang được tải
-        createLetterButtons('sourceLetters', selectSourceChar);
-        createLetterButtons('targetLetters', selectTargetChar);
+        // Khởi tạo thanh kéo và cập nhật giá trị ban đầu
+        updateSourceChar();
+        updateTargetChar();
     </script>
 </body>
 </html>
