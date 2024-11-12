@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kỹ Năng </title>
+    <link rel="icon" href="logo/logoweb-dammekynang.png" type="image/png">
     <style>
         /* Tổng thể */
         body, html {
@@ -46,10 +47,10 @@
 
         /* Thanh điều hướng */
         .navbar {
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.336);
             display: flex;
             justify-content: center;
-            padding: 15px 0;
+            padding: 30px 0;
             position: fixed;
             width: 100%;
             top: 0;
@@ -72,8 +73,8 @@
             color: #fff;
             font-weight: bold;
             text-decoration: none;
-            font-size: 16px;
-            transition: color 0.3s;
+            font-size: 30px;
+            transition: color 0.1s;
         }
 
         .navbar li a:hover {
@@ -109,9 +110,9 @@
 
         /* Nội dung chính */
         .content {
-            text-align: center;
+            text-align: 0;
             color: white;
-            padding: 100px 300px 60px 300px;
+            padding: 100px 40px 60px 40px;
         }
 
         .content h1 {
@@ -130,14 +131,14 @@
 
         /* Chân trang */
         .footer {
-            background-color: #222;
+            background-color: hsla(0, 0%, 0%, 0.336);
             color: #f1f1f1;
             text-align: center;
-            padding: 20px;
+            padding: 10px;
             position: relative;
             bottom: 0;
             width: 100%;
-            margin-top: 200px;
+            margin-top: 50px;
         }
 
         .footer a {
@@ -149,6 +150,27 @@
         .footer a:hover {
             color: #fff;
         }
+
+        /* Điều chỉnh cho di động */
+        @media (max-width: 768px) {
+            .navbar img {
+                height: 50px;
+            }
+
+            .title-container h1 {
+                font-size: 1em;
+            }
+
+            .title-container p {
+                font-size: 0.8em;
+            }
+
+            .camp-spot {
+                font-size: 1em;
+                padding: 3px;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -161,37 +183,6 @@
     <nav class="navbar">
         <ul>
             <li><a href="index.html">Trang Chủ</a></li>
-            <li>
-                <a href="#dangnhap">Giải Mật Thư</a>
-                <div class="dropdown-content">
-                    <a href="Enrypt text and text.html">Thay Thế Chữ Bằng Chữ</a>
-                    <a href="Enrypttext text and number.html">Thay Thế Chữ Bằng Số</a>
-                    <a href="#bophankhac">Tọa Độ</a>
-                    <a href="camranh.html">Cam Ranh</a>
-                </div>
-            </li>
-            <li>
-                <a href="#tailieu">Tài Liệu</a>
-                <div class="dropdown-content">
-                    <a href="tailieu/banxoay.html">Bản xoay mật thư</a>
-                    <a href="tailieu/matthu.html">Mật thư</a>
-                    <a href="/tailieu/muadanvu.html">Múa, dân vũ</a>
-                    <a href="tailieu/nutday.html">Nút dây</a>
-                    <a href="tailieu/sinhhoatvt.html">Sinh hoat vòng tròn</a>
-                    <a href="tailieu/thucongtrai.html">Thủ công trại</a>
-                    <a href="tailieu/trochoilon.html">Trò chơi lớn</a>
-                    <a href="tailieu/trochoinho.html">Trò chơi nhỏ</a>
-                </div>
-            </li>
-            <li>
-                <a href="#mon">Mon</a> 
-                <div class="dropdown-content"> 
-                    <a href="#nhap">Nhập</a> 
-                    <a href="#baoh">Báo H</a>
-                    <a href="#kycuong">Kỷ Cương</a>
-                    <a href="#dichthuat">Dịch Thuật</a>
-                </div>
-            </li>
         </ul>
     </nav>
 
@@ -199,10 +190,10 @@
     <!-- Nội dung chính -->
 <section class="content">
     <h1>Chính Sách Bảo Mật</h1>
-    <p>Trang web này cam kết bảo vệ quyền riêng tư của người dùng. Chính sách bảo mật này mô tả cách chúng tôi thu thập, sử dụng và bảo vệ thông tin cá nhân của bạn khi truy cập trang web.</p>
+    <h3>Trang web này cam kết bảo vệ quyền riêng tư của người dùng. Chính sách bảo mật này mô tả cách chúng tôi thu thập, sử dụng và bảo vệ thông tin cá nhân của bạn khi truy cập trang web.</p>
 
     <h2>1. Thu Thập Thông Tin Cá Nhân</h2>
-    <p>Chúng tôi có thể thu thập các loại thông tin sau đây:</p>
+    <h3>Chúng tôi có thể thu thập các loại thông tin sau đây:</p>
     <ul>
         <li><strong>Thông tin nhận dạng cá nhân:</strong> Bao gồm tên, địa chỉ email, số điện thoại và các thông tin khác mà bạn cung cấp khi đăng ký nhận tin, gửi yêu cầu hoặc tham gia các dịch vụ trên trang web.</li>
         <li><strong>Thông tin tài khoản:</strong> Nếu bạn tạo tài khoản trên trang, chúng tôi có thể yêu cầu thông tin như tên đăng nhập và mật khẩu.</li>
@@ -210,7 +201,7 @@
     </ul>
 
     <h2>2. Sử Dụng Thông Tin</h2>
-    <p>Thông tin mà chúng tôi thu thập được sử dụng cho các mục đích sau:</p>
+    <h3>Thông tin mà chúng tôi thu thập được sử dụng cho các mục đích sau:</p>
     <ul>
         <li><strong>Cung cấp dịch vụ:</strong> Đảm bảo các tính năng và dịch vụ trên trang hoạt động một cách tối ưu.</li>
         <li><strong>Liên lạc:</strong> Cung cấp các thông tin quan trọng như thông báo cập nhật hoặc thay đổi dịch vụ, trả lời câu hỏi và giải đáp thắc mắc.</li>
@@ -219,7 +210,7 @@
     </ul>
 
     <h2>3. Bảo Mật Thông Tin</h2>
-    <p>Chúng tôi áp dụng các biện pháp bảo mật kỹ thuật và quản trị để bảo vệ thông tin cá nhân của bạn, bao gồm:</p>
+    <h3>Chúng tôi áp dụng các biện pháp bảo mật kỹ thuật và quản trị để bảo vệ thông tin cá nhân của bạn, bao gồm:</p>
     <ul>
         <li><strong>Mã hóa:</strong> Dữ liệu nhạy cảm được mã hóa khi truyền tải và lưu trữ.</li>
         <li><strong>Kiểm soát truy cập:</strong> Chỉ những nhân viên được ủy quyền mới có quyền truy cập vào thông tin cá nhân của bạn.</li>
@@ -227,20 +218,20 @@
     </ul>
 
     <h2>4. Chia Sẻ Thông Tin Cá Nhân</h2>
-    <p>Chúng tôi không chia sẻ, bán hoặc cho thuê thông tin cá nhân của bạn với bên thứ ba trừ khi:</p>
+    <h3>Chúng tôi không chia sẻ, bán hoặc cho thuê thông tin cá nhân của bạn với bên thứ ba trừ khi:</p>
     <ul>
         <li><strong>Theo yêu cầu pháp lý:</strong> Chúng tôi có thể chia sẻ thông tin của bạn để tuân thủ pháp luật, quy định, lệnh tòa, hoặc quá trình pháp lý hợp lệ.</li>
         <li><strong>Nhà cung cấp dịch vụ:</strong> Các bên thứ ba cung cấp dịch vụ cho chúng tôi (ví dụ: phân tích dữ liệu, thanh toán, hỗ trợ khách hàng) có thể được truy cập vào thông tin để thực hiện các dịch vụ thay mặt chúng tôi.</li>
     </ul>
 
     <h2>5. Cookies và Công Nghệ Theo Dõi</h2>
-    <p>Trang web này sử dụng cookies để thu thập dữ liệu như hoạt động của người dùng, sở thích và các lựa chọn cá nhân nhằm nâng cao trải nghiệm.</p>
+    <h3>Trang web này sử dụng cookies để thu thập dữ liệu như hoạt động của người dùng, sở thích và các lựa chọn cá nhân nhằm nâng cao trải nghiệm.</p>
 
     <h3>5.1 Cookies</h3>
-    <p>Cookies là các tệp nhỏ được lưu trữ trên trình duyệt của bạn để giúp cải thiện trải nghiệm người dùng. Chúng tôi có thể sử dụng cookies để lưu trữ tùy chọn của bạn và cung cấp nội dung phù hợp.</p>
+    <h3>Cookies là các tệp nhỏ được lưu trữ trên trình duyệt của bạn để giúp cải thiện trải nghiệm người dùng. Chúng tôi có thể sử dụng cookies để lưu trữ tùy chọn của bạn và cung cấp nội dung phù hợp.</p>
 
     <h3>5.2 Quản Lý Cookies</h3>
-    <p>Bạn có thể quản lý cookies thông qua cài đặt trình duyệt của mình. Nếu từ chối cookies, bạn có thể không thể sử dụng được tất cả các tính năng của trang web.</p>
+    <h3>Bạn có thể quản lý cookies thông qua cài đặt trình duyệt của mình. Nếu từ chối cookies, bạn có thể không thể sử dụng được tất cả các tính năng của trang web.</p>
 
     <h2>6. Quyền Riêng Tư của Người Dùng</h2>
     <ul>
@@ -250,15 +241,15 @@
     </ul>
 
     <h2>7. Liên Kết Đến Các Trang Web Bên Ngoài</h2>
-    <p>Trang web có thể chứa liên kết đến các trang web bên ngoài. Chúng tôi không kiểm soát và không chịu trách nhiệm về nội dung hoặc chính sách bảo mật của các trang web đó. Hãy xem xét chính sách bảo mật của các trang web bên ngoài khi rời khỏi trang của chúng tôi.</p>
+    <h3>Trang web có thể chứa liên kết đến các trang web bên ngoài. Chúng tôi không kiểm soát và không chịu trách nhiệm về nội dung hoặc chính sách bảo mật của các trang web đó. Hãy xem xét chính sách bảo mật của các trang web bên ngoài khi rời khỏi trang của chúng tôi.</p>
 
     <h2>8. Cập Nhật Chính Sách Bảo Mật</h2>
-    <p>Chính sách bảo mật này có thể thay đổi để phù hợp với các quy định pháp luật và nhu cầu của trang web. Mọi thay đổi sẽ được đăng tải tại đây, và ngày cập nhật cuối cùng sẽ được ghi rõ. Bạn nên kiểm tra thường xuyên để biết những thay đổi mới nhất.</p>
+    <h3>Chính sách bảo mật này có thể thay đổi để phù hợp với các quy định pháp luật và nhu cầu của trang web. Mọi thay đổi sẽ được đăng tải tại đây, và ngày cập nhật cuối cùng sẽ được ghi rõ. Bạn nên kiểm tra thường xuyên để biết những thay đổi mới nhất.</p>
 
     <h2>9. Thông Tin Liên Hệ</h2>
-    <p>Nếu bạn có bất kỳ câu hỏi hoặc yêu cầu nào liên quan đến Chính Sách Bảo Mật, vui lòng liên hệ với chúng tôi qua:</p>
+    <h3>Nếu bạn có bất kỳ câu hỏi hoặc yêu cầu nào liên quan đến Chính Sách Bảo Mật, vui lòng liên hệ với chúng tôi qua:</p>
     <ul>
-        <li><strong>Email:</strong> cuong.dn@pctu.edut.vn</li>
+        <li><strong>Email:</strong> cuong.dn@pctu.edu.vn</li>
         <li><strong>Số điện thoại:</strong> 0369225402</li>
         <li><strong>Địa chỉ:</strong> Điện Bàn - Quảng Nam</li>
     </ul>
