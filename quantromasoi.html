@@ -13,7 +13,7 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #000000;
-            color: #f0f0f0;
+            color: #ffffff;
             text-align: center;
             background-image: url('logo/logoweb-dammekynang.png'); /* Đường dẫn đến logo */
             background-size: 3; /* Logo phủ toàn bộ nền */
@@ -91,7 +91,7 @@
         th, td {
             padding: 10px;
             border: 1px solid #444;
-            color: #ddd;
+            color: #ffffff;
             font-size: 1em;
         }
         .alive {
@@ -166,6 +166,45 @@
         .guide-button:hover {
             background-color: darkred;
         }
+
+        #dayCountdownDisplay {
+            background-color: rgba(54, 202, 66, 0.555); /* Nền mờ màu đen với độ mờ 50% */
+            color: #fff; /* Màu chữ trắng để dễ đọc trên nền mờ */
+            padding: 8px; /* Tạo khoảng cách giữa văn bản và viền */
+            border-radius: 5px; /* Bo tròn các góc */
+            display: inline-block;
+        }
+
+        #foolVictoryModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Màu nền mờ */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: #1b1b1b;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .potion-button {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+
     </style>
 </head>
 <body>
@@ -176,10 +215,10 @@
         <button class="cancel-button" id="cancelResetButton" onclick="cancelReset()" style="display: none;">Hủy</button>
 
         <div class="controls">
-            <input type="text" id="playerName" placeholder="Nhập tên người chơi">
+            <input type="text" id="playerName" placeholder="Nhập tên người chơi" onkeydown="handleEnter(event)">
             <button class="button" onclick="addPlayer()">Thêm Người Chơi</button>
             <select id="roles">
-                <option value="Chọn role">Chọn role</option>
+                <option value="Role mặc định">Role mặc định</option>
                 <option value="Ma Sói">Ma Sói</option>
                 <option value="Phù Thủy">Phù Thủy</option>
                 <option value="Bảo Vệ">Bảo Vệ</option>
@@ -216,7 +255,18 @@
             <h2>Ghi Chú Trò Chơi</h2>
             <ul id="gameLog"></ul>
         </div>
+
+        <div id="foolVictoryModal" style="display: none;">
+            <div class="modal-content">
+                <h2>Thằng Ngố Chiến Thắng!</h2>
+                <p id="foolVictoryMessage"></p>
+                <button onclick="startResetCountdown()" class="reset-button">Bắt Đầu Lại</button>
+            </div>
+        </div>
+        
     </div>
+
+    
 
     <script>
         let players = [];
@@ -230,8 +280,32 @@
         function addPlayer() {
             const playerName = document.getElementById('playerName').value;
             if (playerName) {
+                const player = {
+                    name: playerName,
+                    role: "Chưa gán",
+                    status: 'Sống',
+                    note: "",
+                    hasBlackPotion: false,
+                    hasWhitePotion: false
+                };
+                players.push(player);
+                document.getElementById('playerName').value = ''; // Xóa nội dung ô nhập sau khi thêm
+                renderPlayers();
+                logEvent(`Người chơi ${playerName} đã được thêm vào.`);
+            }
+        }
+
+        function handleEnter(event) {
+            if (event.key === "Enter") {
+                addPlayer();
+            }
+        }
+
+        function addPlayer() {
+            const playerName = document.getElementById('playerName').value;
+            if (playerName) {
                 players.push({ name: playerName, role: "Chưa gán", status: 'Sống', note: "" });
-                document.getElementById('playerName').value = '';
+                document.getElementById('playerName').value = ''; // Xóa nội dung ô nhập sau khi thêm
                 renderPlayers();
                 logEvent(`Người chơi ${playerName} đã được thêm vào.`);
             }
@@ -303,6 +377,10 @@ function updateNightRoleList() {
                 const player = players.find(p => p.name === playerName);
                 if (player) {
                     player.role = selectedRole;
+                    if (selectedRole === "Phù Thủy") {
+                        player.hasBlackPotion = true; // Cấp bình thuốc đen
+                        player.hasWhitePotion = true; // Cấp bình thuốc trắng
+                    }
                     renderPlayers();
                     logEvent(`Vai trò của ${playerName} đã được đổi thành ${selectedRole}.`);
                     if (selectedRole === "Thần Tình Yêu") {
@@ -407,13 +485,16 @@ function updateNightRoleList() {
         }
 
         function startResetCountdown() {
-            resetCounter = 10;
-            document.getElementById("countdownDisplay").textContent = `Đếm ngược: ${resetCounter} giây`;
+            resetCounter = 30;
+            document.getElementById("countdownDisplay").textContent = `Sau ${resetCounter} giây sẽ reset từ đầu`;
             document.getElementById("cancelResetButton").style.display = "inline-block";
+
+                // Ẩn modal chiến thắng nếu có
+            document.getElementById("foolVictoryModal").style.display = "none";
 
             resetTimeout = setInterval(() => {
                 resetCounter--;
-                document.getElementById("countdownDisplay").textContent = `Đếm ngược: ${resetCounter} giây`;
+                document.getElementById("countdownDisplay").textContent = `Sau ${resetCounter} giây sẽ reset từ đầu`;
 
                 if (resetCounter === 0) {
                     clearInterval(resetTimeout);
@@ -436,6 +517,8 @@ function updateNightRoleList() {
             });
             lovePair = [];
             protectedPlayer = null;
+            hasBlackPotion = true; // Đặt lại bình thuốc đen
+            hasWhitePotion = true; // Đặt lại bình thuốc trắng
 
             renderPlayers();
             document.getElementById("gameLog").innerHTML = "";
@@ -500,7 +583,7 @@ function updateNightRoleList() {
             gameLog.appendChild(logEntry);
         }
 
-             let protectedPlayer = null; // Biến để lưu người chơi được bảo vệ
+let protectedPlayer = null; // Biến để lưu người chơi được bảo vệ
 
 function renderPlayers() {
     const playersTable = document.getElementById('playersTable');
@@ -513,18 +596,66 @@ function renderPlayers() {
     players.forEach(player => {
         const rowClass = player.status === 'Sống' ? 'alive' : 'dead';
         const isLovePair = lovePair.includes(player.name) ? " ❤️" : ""; // Thêm trái tim nếu là cặp đôi
+        const isProtected = player.name === protectedPlayer ? " 🛡️" : ""; // Thêm chiếc khiên nếu được bảo vệ
+        
+                // Biểu tượng bình thuốc cho "Phù Thủy"
+        const witchActions = player.role === "Phù Thủy" && player.status === 'Sống' ? `
+            ${player.hasBlackPotion ? `<button onclick="useBlackPotion('${player.name}')" class="potion-button" title="Giết">☠️</button>` : ""}
+            ${player.hasWhitePotion ? `<button onclick="useWhitePotion('${player.name}')" class="potion-button" title="Cứu">🚑</button>` : ""}
+        ` : "";
+
         playersTable.innerHTML += `<tr id="${player.name}" class="${rowClass}">
-            <td>${player.name}${isLovePair}</td>
+            <td>${player.name}${isLovePair}${isProtected}</td>
             <td class="role-cell">${player.role}</td>
             <td class="actions-cell">
                 <button onclick="toggleStatus('${player.name}')">Giết</button>
                 <button onclick="changeRole('${player.name}')">Đổi Role</button>
                 ${player.role === "Bảo Vệ" ? '<button onclick="activateShield()" class="shield-button">🛡️</button>' : ""}
+                ${witchActions}
                 <button onclick="deletePlayer('${player.name}')">Xóa</button>
             </td>
         </tr>`;
     });
 }
+
+let hasBlackPotion = true; // Kiểm soát trạng thái bình thuốc đen
+let hasWhitePotion = true; // Kiểm soát trạng thái bình thuốc trắng
+
+function useBlackPotion(witchName) {
+    const witchPlayer = players.find(p => p.name === witchName);
+    if (!witchPlayer || !witchPlayer.hasBlackPotion) return; // Nếu đã dùng bình thuốc đen thì thoát
+
+    const targetName = prompt("Nhập tên người chơi bạn muốn giết:");
+    const targetPlayer = players.find(p => p.name === targetName && p.status === 'Sống');
+    
+    if (targetPlayer) {
+        targetPlayer.status = 'Chết';
+        witchPlayer.hasBlackPotion = false; // Bình thuốc đen không còn sau khi dùng
+        renderPlayers();
+        logEvent(`Phù Thủy ${witchName} đã giết ${targetName} bằng bình thuốc đen.`);
+        hasBlackPotion = false; // Bình thuốc đen không còn sau khi dùng
+    } else {
+        alert("Người chơi không hợp lệ hoặc đã chết.");
+    }
+}
+
+function useWhitePotion(witchName) {
+    const witchPlayer = players.find(p => p.name === witchName);
+    if (!witchPlayer || !witchPlayer.hasWhitePotion) return; // Nếu đã dùng bình thuốc trắng thì thoát
+    const targetName = prompt("Nhập tên người chơi bạn muốn hồi sinh:");
+
+    const targetPlayer = players.find(p => p.name === targetName && p.status === 'Chết');
+    if (targetPlayer) {
+        targetPlayer.status = 'Sống';
+        witchPlayer.hasWhitePotion = false; // Bình thuốc trắng không còn sau khi dùng
+        renderPlayers();
+        logEvent(`Phù Thủy ${witchName} đã hồi sinh ${targetName} bằng bình thuốc trắng.`);
+        hasWhitePotion = false; // Bình thuốc trắng không còn sau khi dùng
+    } else {
+        alert("Người chơi không hợp lệ hoặc đang sống.");
+    }
+}
+
 
 function activateShield() {
     const selectedPlayer = prompt("Nhập tên người chơi mà Bảo Vệ muốn bảo vệ:");
@@ -532,6 +663,7 @@ function activateShield() {
     if (player && player.status === 'Sống') {
         protectedPlayer = player.name;
         logEvent(`${protectedPlayer} đã được bảo vệ bởi Bảo Vệ.`);
+        renderPlayers(); // Cập nhật lại danh sách người chơi để hiển thị biểu tượng khiên
     } else {
         alert("Người chơi không hợp lệ hoặc không tồn tại.");
     }
@@ -574,8 +706,39 @@ function startDayCountdown() {
     
     // Reset bảo vệ vào đầu ngày mới
     protectedPlayer = null;
-    logEvent("Trạng thái bảo vệ đã được đặt lại.");
+    logEvent("Bộ đếm ngược 5 phút thời gian ban ngày bắt đầu.");
 }
+
+function toggleStatus(playerName) {
+    const player = players.find(p => p.name === playerName);
+    if (player) {
+        if (player.status === 'Sống' && playerName === protectedPlayer) {
+            logEvent(`${playerName} đã được bảo vệ và không bị chết.`);
+            protectedPlayer = null; // Reset bảo vệ sau khi dùng
+        } else if (player.role === 'Bán Sói' && player.status === 'Sống') {
+            player.role = 'Ma Sói';
+            logEvent(`${playerName} từ bán sói đã biến đổi thành Ma Sói và được sống lại.`);
+        } else {
+            player.status = player.status === 'Sống' ? 'Chết' : 'Sống';
+            renderPlayers();
+            logEvent(`Trạng thái của ${playerName} đã thay đổi thành ${player.status}.`);
+            checkLovePairStatus(playerName);
+
+            // Kiểm tra nếu vai trò là "Thằng Ngố" và người chơi bị giết
+            if (player.role === "Thằng Ngố" && player.status === "Chết") {
+                displayFoolVictory(playerName);
+            }
+        }
+    }
+    renderPlayers(); // Cập nhật lại danh sách người chơi để hiển thị thay đổi
+}
+
+// Hàm hiển thị thông báo "Thằng Ngố Chiến Thắng"
+function displayFoolVictory(playerName) {
+    document.getElementById("foolVictoryMessage").textContent = `Người chơi ${playerName} (Thằng Ngố) đã chiến thắng!`;
+    document.getElementById("foolVictoryModal").style.display = "flex";
+}
+
 
     </script>
     
