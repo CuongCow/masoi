@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dân Vũ & Múa Hát Tập Thể</title>
+    <style>
+        /* Tổng thể */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+        }
+
+        /* Nền gradient động */
+        .background-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(45deg, #ff6b6b, #f0e68c, #48c9b0, #5dade2, #e74c3c);
+            background-size: 300% 300%;
+            animation: gradientAnimation 15s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Overlay gradient để làm mờ nền */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+
+        /* Thanh điều hướng */
+        .navbar {
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 10;
+        }
+
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        .navbar li {
+            position: relative;
+            padding: 0 15px;
+        }
+
+        .navbar li a {
+            color: #fff;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .navbar li a:hover {
+            color: #f1c40f;
+        }
+
+        /* Dropdown */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.4);
+            z-index: 1;
+            top: 100%;
+        }
+
+        .dropdown-content a {
+            color: #f1f1f1;
+            padding: 10px;
+            display: block;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #4caf50;
+        }
+
+        .navbar li:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Tab nội dung */
+        .tabs {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            margin-bottom: 0px;
+        }
+
+        .tab-button {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background-color: #f0f0f0;
+            font-size: 26px;
+            transition: background-color 0.5s;
+        }
+
+        .tab-button.active {
+            background-color: #d0d0d0;
+        }
+
+        .tab-content {
+            display: none;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .video-container {
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        /* Chân trang */
+        .footer {
+            background-color: #222;
+            color: #f1f1f1;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+        }
+
+        .footer a {
+            color: #f1c40f;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Nền gradient động -->
+    <div class="background-gradient"></div>
+    <div class="overlay"></div>
+
+    <!-- Thanh điều hướng -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.html">Trang Chủ</a></li>
+            <li>
+                <a href="#dangnhap">Giải Mật Thư</a>
+                <div class="dropdown-content">
+                    <a href="Enrypt text and text.html">Thay Thế Chữ Bằng Chữ</a>
+                    <a href="Enrypttext text and number.html">Thay Thế Chữ Bằng Số</a>
+                    <a href="#bophankhac">Tọa Độ</a>
+                    <a href="camranh.html">Cam Ranh</a>
+                </div>
+            </li>
+            <li>
+                <a href="#khampha">Tài Liệu</a>
+                <div class="dropdown-content">
+                    <a href="https://drive.google.com/drive/folders/1bifDD5Z-IRZ0-k81IhwUOkRn-FVav9Ud?usp=sharing" target="_blank">Bản xoay mật thư</a>
+                    <a href="#matthu">Mật thư</a>
+                    <a href="muadanvu.html">Múa, dân vũ</a>
+                    <a href="#vongtron">Nút dây</a>
+                    <a href="#vongtron">Sinh hoat vòng tròn</a>
+                    <a href="#thucongtrai">Thủ công trại</a>
+                    <a href="#trochoilon">Trò chơi lớn</a>
+                    <a href="#trochoinho">Trò chơi nhỏ</a>
+                </div>
+            </li>
+            <li>
+                <a href="#mon">Mon</a> 
+                <div class="dropdown-content"> 
+                    <a href="#nhap">Nhập</a> 
+                    <a href="#baoh">Báo H</a>
+                    <a href="#kycuong">Kỷ Cương</a>
+                    <a href="#dichthuat">Dịch Thuật</a>
+                </div>
+            </li>
+            <li><a href="quantromasoi.html">Quản trò Ma sói</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <h1>Dân Vũ & Múa Hát Tập Thể</h1>
+
+        <!-- Tab Buttons -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab('danvu')">Dân Vũ</button>
+            <button class="tab-button" onclick="openTab('muahat')">Múa Hát Tập Thể</button>
+        </div>
+
+        <!-- Tab Content for Dân Vũ -->
+        <div id="danvu" class="tab-content active">
+            <div class="video-container">
+                <h2>Rasa Sayang</h2>
+                <iframe width="695" height="391" src="https://www.youtube.com/embed/P9h8kG8ul-Q" title="Dân vũ Rasa Sayang" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="video-container">
+                <h2>Những Trái Tim Việt Nam</h2>
+                <iframe width="695" height="391" src="https://www.youtube.com/embed/c_1IiSTaATQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="video-container">
+                <h2>Run to You</h2>
+                <iframe width="695" height="391" src="https://www.youtube.com/embed/mSnjSCrU_T0" title="Đồng diễn Flashmob" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="video-container">
+                <h2>What Makes You Beautiful</h2>
+                <iframe width="695" height="391" src="https://www.youtube.com/embed/DObegvwRZ0g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="video-container">
+                <h2>Trống Cơm</h2>
+                <iframe width="695" height="391" src="https://www.youtube.com/embed/30Bdf9S01Rw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="video-container">
+                <h2>Té Nước</h2>
+                <iframe width="695" height="391" src="https://www.youtube.com/embed/NgSNKZEWj7E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="video-container">
+                <h2>Pokemon Go</h2>
+                <iframe width="695" height="391" src="https://www.youtube.com/embed/XxEZaKyNGrI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="video-container">
+                <h2>Rửa Tay</h2>
+                <iframe width="695" height="391" src="https://www.youtube.com/embed/eCMBUVlkUcU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="video-container">
+                <h2>Nhà Mình Rất Vui</h2>
+                <iframe width="695" height="391" src="https://www.youtube.com/embed/ZRSdNXDuwvE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <!-- Tab Content for Múa Hát Tập Thể -->
+        <div id="muahat" class="tab-content">
+            <div class="video-container">
+                <h2>Tiến về Sài Gòn</h2>
+                <iframe width="695" height="391" src="https://www.youtube.com/embed/pkcZvQJAtMI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="video-container">
+                <h2>Hát mãi khúc quân hành</h2>
+                <iframe width="695" height="391" src="https://www.youtube.com/embed/KynH1IlaZCY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="video-container">
+                <h2>Thanh niên làm theo lời Bác</h2>
+                <iframe width="695" height="391" src="https://www.youtube.com/embed/3u6JqQYMhIs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="video-container">
+                <h2>Mùa hè xanh</h2>
+                <iframe width="695" height="391" src="https://www.youtube.com/embed/sx6Z6IO-zwE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="video-container">
+                <h2>Nụ cười hồng</h2>
+                <iframe width="695" height="391" src="https://www.youtube.com/embed/mg9gZVV18Mk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="video-container">
+                <h2>Ta ra trận hôm nay</h2>
+                <iframe width="695" height="391" src="https://www.youtube.com/embed/UeZaoPu8TaA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="video-container">
+                <h2>Hành trình nối vòng tay lớn</h2>
+                <iframe width="695" height="391" src="https://www.youtube.com/embed/B__8Y5Jw3K4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="video-container">
+                <h2>LÁ XANH</h2>
+                <iframe width="695" height="391" src="https://www.youtube.com/embed/RD3KSmcz_sw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chân trang -->
+    <footer class="footer">
+        <p>&copy; 2024 Kỹ Năng. Mọi quyền được bảo lưu. Vui lòng không sao chép</p>
+        <p><a href="#lienhe">Liên Hệ</a> | <a href="#chinhsach">Chính Sách Bảo Mật</a> | <a href="#dieukhoan">Điều Khoản Sử Dụng</a></p>
+    </footer>
+
+    <script>
+        function openTab(tabName) {
+            var contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            var buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => button.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
