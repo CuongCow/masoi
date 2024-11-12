@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kỹ Năng </title>
+    <link rel="icon" href="logo/logoweb-dammekynang.png" type="image/png">
     <style>
         /* Tổng thể */
         body, html {
@@ -48,11 +49,11 @@
 
         /* Thanh điều hướng */
         .navbar {
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.336);
             display: flex;
             justify-content: center;
-            padding: 15px 0;
-            position: fixed;
+            padding: 30px 0;
+            position: 25;
             width: 100%;
             top: 0;
             z-index: 10;
@@ -74,8 +75,8 @@
             color: #fff;
             font-weight: bold;
             text-decoration: none;
-            font-size: 16px;
-            transition: color 0.3s;
+            font-size: 30px;
+            transition: color 0.1s;
         }
 
         .navbar li a:hover {
@@ -117,7 +118,7 @@
         }
 
         .content h1 {
-            font-size: 48px;
+            font-size: 60px;
             margin-bottom: 20px;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
         }
@@ -129,17 +130,16 @@
             line-height: 1.5;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
-
         /* Chân trang */
         .footer {
-            background-color: #222;
+            background-color: hsla(0, 0%, 0%, 0.336);
             color: #f1f1f1;
             text-align: center;
-            padding: 20px;
+            padding: 10px;
             position: relative;
             bottom: 0;
             width: 100%;
-            margin-top: 200px;
+            margin-top: 360px;
         }
 
         .footer a {
@@ -150,6 +150,25 @@
 
         .footer a:hover {
             color: #fff;
+        }
+        /* Điều chỉnh cho di động */
+        @media (max-width: 768px) {
+            .navbar img {
+                height: 50px;
+            }
+
+            .title-container h1 {
+                font-size: 1em;
+            }
+
+            .title-container p {
+                font-size: 0.8em;
+            }
+
+            .camp-spot {
+                font-size: 1em;
+                padding: 3px;
+            }
         }
     </style>
 </head>
@@ -163,38 +182,6 @@
     <nav class="navbar">
         <ul>
             <li><a href="index.html">Trang Chủ</a></li>
-            <li>
-                <a href="#dangnhap">Giải Mật Thư</a>
-                <div class="dropdown-content">
-                    <a href="Enrypt text and text.html">Thay Thế Chữ Bằng Chữ</a>
-                    <a href="Enrypttext text and number.html">Thay Thế Chữ Bằng Số</a>
-                    <a href="#bophankhac">Tọa Độ</a>
-                    <a href="camranh.html">Cam Ranh</a>
-                </div>
-            </li>
-            <li>
-                <a href="#tailieu">Tài Liệu</a>
-                <div class="dropdown-content">
-                    <a href="tailieu/banxoay.html">Bản xoay mật thư</a>
-                    <a href="tailieu/matthu.html">Mật thư</a>
-                    <a href="/tailieu/muadanvu.html">Múa, dân vũ</a>
-                    <a href="tailieu/nutday.html">Nút dây</a>
-                    <a href="tailieu/sinhhoatvt.html">Sinh hoat vòng tròn</a>
-                    <a href="tailieu/thucongtrai.html">Thủ công trại</a>
-                    <a href="tailieu/trochoilon.html">Trò chơi lớn</a>
-                    <a href="tailieu/trochoinho.html">Trò chơi nhỏ</a>
-                </div>
-            </li>
-            <li>
-                <a href="#mon">Mon</a> 
-                <div class="dropdown-content"> 
-                    <a href="#nhap">Nhập</a> 
-                    <a href="#baoh">Báo H</a>
-                    <a href="#kycuong">Kỷ Cương</a>
-                    <a href="#dichthuat">Dịch Thuật</a>
-                </div>
-            </li>
-            <li><a href="quantromasoi.html">Quản trò Ma sói</a></li>
         </ul>
     </nav>
 
