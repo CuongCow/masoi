@@ -1,6 +1,27 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+
+    <!-- Firebase App (the core Firebase SDK) -->
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js"></script>
+
+<script>
+  // Cấu hình Firebase (thay bằng thông tin cấu hình của bạn từ Firebase Console)
+  const firebaseConfig = {
+    apiKey: "AIzaSyCz3KwfK_hZysS7IjtVPaojhBX20NXWOgU",
+    authDomain: "thongdiep-4e500.firebaseapp.com",
+    databaseURL: "https://thongdiep-4e500-default-rtdb.firebaseio.com",
+    projectId: "thongdiep-4e500",
+    storageBucket: "thongdiep-4e500.firebasestorage.app",
+    messagingSenderId: "338536013196",
+    appId: "1:338536013196:web:0dc8a4288ff80520554aa9"
+  };
+
+  // Khởi tạo Firebase
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+</script>
 <script>
  window.difyChatbotConfig = {
   token: '7EtSLftGUqDSlodq'
@@ -445,29 +466,17 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
           const messageDotsContainer = document.getElementById('message-dots');
-          const messages = JSON.parse(localStorage.getItem('messages') || '[]');
 
-              // Kiểm tra và giới hạn số lượng thông điệp
-    if (messages.length > 300) {
-      // Lấy các thông điệp cũ nhất (tất cả những thông điệp nằm trước thông điệp thứ 300)
-      const oldMessages = messages.slice(0, messages.length - 300);
-      messages = messages.slice(messages.length - 300); // Giữ lại 300 thông điệp mới nhất
+    // Tải thông điệp từ Firebase
+    firebase.database().ref('messages').on('value', (snapshot) => {
+        messageDotsContainer.innerHTML = ''; // Xóa các dấu chấm cũ
+        const messages = snapshot.val();
+        if (messages) {
+            Object.values(messages).forEach(message => {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
 
-      // Lưu lại các thông điệp cũ vào file JSON
-      const oldMessagesBlob = new Blob([JSON.stringify(oldMessages, null, 2)], { type: 'application/json' });
-      const downloadLink = document.createElement('a');
-      downloadLink.href = URL.createObjectURL(oldMessagesBlob);
-      downloadLink.download = 'old_messages_backup.json';
-      downloadLink.click();
 
-      // Cập nhật lại `localStorage` với chỉ 300 thông điệp mới nhất
-      localStorage.setItem('messages', JSON.stringify(messages));
-    }
-        // Tạo các dấu chấm ngẫu nhiên cho mỗi thông điệp
-          messages.forEach(message => {
-            const dot = document.createElement('div');
-            dot.className = 'dot';
-      
             // Vị trí ngẫu nhiên cho dấu chấm
             dot.style.top = `${10 + Math.random() * 80}%`;
             dot.style.left = `${10 + Math.random() * 80}%`;
@@ -499,8 +508,19 @@
               tooltip.style.display = 'none';
             });
             messageDotsContainer.appendChild(dot);
-          });
         });
+        }
+    });
+
+    // Hàm lưu thông điệp mới vào Firebase
+    function saveMessage(recipient, text) {
+        const newMessageRef = firebase.database().ref('messages').push();
+        newMessageRef.set({
+            recipient: recipient,
+            text: text
+        });
+    }
+});
     </script>
 
     <!-- Bản đồ và các địa điểm cắm trại -->
