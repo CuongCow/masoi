@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gửi Thông Điệp</title>
+  <style>
+    body {
+      background: #f5f5f5;
+      font-family: Arial, sans-serif;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 3;
+    }
+    
+    .container {
+      background-color: #fff;
+      border: 10px solid #ddd;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 5rem;
+      max-width: 700px;
+      border-radius: 30px;
+      text-align: center;
+    }
+    h1 {
+      font-family: 'Georgia', serif;
+      color: #007bff;
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      color: #555;
+      margin-bottom: 5px;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 30px;
+      border: 5px solid #ddd;
+      border-radius: 20px;
+      font-family: 'Courier New', monospace;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 50px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>✉️ Gửi Thông Điệp Yêu THƯN✉️</h1>
+    <form id="messageForm">
+      <label for="recipientName">Tên người nhận</label>
+      <input type="text" id="recipientName" rows="10" placeholder="Nhập tên người nhận" required>
+      
+      <label for="messageText">Thông điệp của bạn</label>
+      <textarea id="messageText" rows="9" placeholder="Nhập thông điệp..." required></textarea>
+      
+      <button type="submit">Đăng Thông Điệp</button>
+      <h5>Khi bạn đăng những lời nhắn nhủ, lời khen, lời chúc,... thì sẽ nằm trong trang chủ của trang. Nó sẽ là một dấu chấm."Hãy tìm dấu chấm đó"</h5>
+      
+    </form>
+  </div>
+  
+  <script>
+    document.getElementById('messageForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const recipientName = document.getElementById('recipientName').value;
+      const messageText = document.getElementById('messageText').value;
+
+      // Lưu thông điệp và tên người nhận vào localStorage
+      let messages = JSON.parse(localStorage.getItem('messages') || '[]');
+      messages.push({ recipient: recipientName, text: messageText });
+      localStorage.setItem('messages', JSON.stringify(messages));
+      
+      alert('Thông điệp đã được đăng lên trang chủ bằng một dấu chấm, hãy tìm kiếm thông điệp của bạn hoặc gửi cho bạn bè tìm kiếm!');
+      window.location.href = 'index.html';  // Quay lại trang chính
+    });
+  </script>
+</body>
+</html>
