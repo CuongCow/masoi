@@ -4,28 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gửi Thông Điệp</title>
+
   <!-- Firebase App (the core Firebase SDK) -->
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"></script>
 
   <script>
+    // Import các chức năng cần thiết từ Firebase SDK
+    const { initializeApp } = firebase;
+    const { getDatabase, ref, push, set } = firebase.database;
+
     // Cấu hình Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyCz3KwfK_hZysS7IjtVPaojhBX20NXWOgU",
       authDomain: "thongdiep-4e500.firebaseapp.com",
       databaseURL: "https://thongdiep-4e500-default-rtdb.firebaseio.com",
       projectId: "thongdiep-4e500",
-      storageBucket: "thongdiep-4e500.firebasestorage.app",
+      storageBucket: "thongdiep-4e500.appspot.com",
       messagingSenderId: "338536013196",
       appId: "1:338536013196:web:0dc8a4288ff80520554aa9"
     };
 
-    // Khởi tạo Firebase
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
+    // Khởi tạo Firebase và Database
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
   </script>
 
   <style>
+    /* Các style */
     body {
       background: #f5f5f5;
       font-family: Arial, sans-serif;
@@ -103,19 +109,18 @@
       const messageText = document.getElementById('messageText').value;
 
       // Tạo một reference mới trong cơ sở dữ liệu Firebase
-      const newMessageRef = firebase.database().ref('messages').push();
+      const newMessageRef = push(ref(database, 'messages'));
 
       // Lưu thông điệp và tên người nhận vào Firebase
-      newMessageRef.set({
+      set(newMessageRef, {
         recipient: recipientName,
         text: messageText
-      }, function(error) {
-        if (error) {
-          alert('Đã xảy ra lỗi khi lưu thông điệp. Vui lòng thử lại.');
-        } else {
-          alert('Thông điệp đã được đăng lên trang chủ bằng một dấu chấm, hãy tìm kiếm thông điệp của bạn hoặc gửi cho bạn bè tìm kiếm!');
-          window.location.href = 'index.html';  // Quay lại trang chính
-        }
+      }).then(() => {
+        alert('Thông điệp đã được đăng lên trang chủ bằng một dấu chấm, hãy tìm kiếm thông điệp của bạn hoặc gửi cho bạn bè tìm kiếm!');
+        window.location.href = 'index.html';  // Quay lại trang chính
+      }).catch((error) => {
+        console.error("Lỗi khi lưu thông điệp:", error); // Ghi lỗi vào console để kiểm tra
+        alert('Đã xảy ra lỗi khi lưu thông điệp. Vui lòng thử lại.');
       });
     });
   </script>
