@@ -5,14 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gửi Thông Điệp</title>
 
-  <!-- Firebase App (the core Firebase SDK) -->
-  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"></script>
-
-  <script>
-    // Import các chức năng cần thiết từ Firebase SDK
-    const { initializeApp } = firebase;
-    const { getDatabase, ref, push, set } = firebase.database;
+  <!-- Firebase SDK -->
+  <script type="module">
+    // Import các hàm từ Firebase SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+    import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 
     // Cấu hình Firebase
     const firebaseConfig = {
@@ -28,6 +25,30 @@
     // Khởi tạo Firebase và Database
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
+
+    // Xử lý sự kiện gửi thông điệp
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById('messageForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const recipientName = document.getElementById('recipientName').value;
+        const messageText = document.getElementById('messageText').value;
+
+        // Tạo một reference mới trong cơ sở dữ liệu Firebase
+        const newMessageRef = push(ref(database, 'messages'));
+
+        // Lưu thông điệp và tên người nhận vào Firebase
+        set(newMessageRef, {
+          recipient: recipientName,
+          text: messageText
+        }).then(() => {
+          alert('Thông điệp đã được đăng lên trang chủ bằng một dấu chấm, hãy tìm kiếm thông điệp của bạn hoặc gửi cho bạn bè tìm kiếm!');
+          window.location.href = 'index.html';  // Quay lại trang chính
+        }).catch((error) => {
+          console.error("Lỗi khi lưu thông điệp:", error); // Ghi lỗi vào console để kiểm tra
+          alert('Đã xảy ra lỗi khi lưu thông điệp. Vui lòng thử lại.');
+        });
+      });
+    });
   </script>
 
   <style>
@@ -101,28 +122,5 @@
       <p>Khi bạn đăng những lời nhắn nhủ, lời khen, lời chúc,... thì sẽ nằm trong trang chủ của trang. Nó sẽ là một dấu chấm. "Hãy tìm dấu chấm đó"</p>
     </form>
   </div>
-
-  <script>
-    document.getElementById('messageForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const recipientName = document.getElementById('recipientName').value;
-      const messageText = document.getElementById('messageText').value;
-
-      // Tạo một reference mới trong cơ sở dữ liệu Firebase
-      const newMessageRef = push(ref(database, 'messages'));
-
-      // Lưu thông điệp và tên người nhận vào Firebase
-      set(newMessageRef, {
-        recipient: recipientName,
-        text: messageText
-      }).then(() => {
-        alert('Thông điệp đã được đăng lên trang chủ bằng một dấu chấm, hãy tìm kiếm thông điệp của bạn hoặc gửi cho bạn bè tìm kiếm!');
-        window.location.href = 'index.html';  // Quay lại trang chính
-      }).catch((error) => {
-        console.error("Lỗi khi lưu thông điệp:", error); // Ghi lỗi vào console để kiểm tra
-        alert('Đã xảy ra lỗi khi lưu thông điệp. Vui lòng thử lại.');
-      });
-    });
-  </script>
 </body>
 </html>
