@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mật thư thay thế Số bằng Chữ</title>
+    <link rel="icon" href="logo/logoweb-dammekynang.png" type="image/png">
+    <style>
+        /* Reset CSS */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e8f0fe;
+            margin: 0;
+            padding: 6px;
+        }
+        
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 50px;
+            transition: background-color 0.3s ease;
+            color: #fff;
+        }
+
+        .navbar a.home {
+            background-color: #56a058;
+        }
+
+        .navbar a.letters, .navbar a.numbers {
+            background-color: #3fb6a2;
+        }
+
+        .navbar a:hover {
+            opacity: 0.8;
+        }
+        .toggle-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.toggle-buttons .dropdown-btn {
+    padding: 10px 20px;
+    border-radius: 50px;
+    background-color: #3fb6a2;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-buttons .dropdown-btn:hover {
+    opacity: 0.8;
+}
+
+        
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-btn {
+            background-color: #3fb6a2;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-btn:hover {
+            opacity: 0.8;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 160px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #3fb6a2;
+            color: white;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #b81a1ad2;
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .slider-container span {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            margin: 0 10px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin: 0 15px;
+            height: 8px; /* Chiều cao của thanh trượt */
+        }
+
+        /* Chỉnh nút kéo cho trình duyệt WebKit (Chrome, Safari) */
+        input[type="range"]::-webkit-slider-thumb {
+            width: 20px; /* Chiều rộng của nút kéo */
+            height: 20px; /* Chiều cao của nút kéo */
+            background-color: #3fb6a2;
+            border-radius: 50%;
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        /* Chỉnh nút kéo cho Firefox */
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background-color: #3fb6a2;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        p {
+            font-size: 22px;
+            margin: 10px 0;
+            line-height: 2.6;
+            color: #444;
+        }
+
+        span {
+            font-weight: bold;
+            color: #ff0000;
+        }
+        
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .navbar {
+                flex-direction: 10;
+                gap: 10px;
+                align-items: center;
+            }
+
+            .navbar a {
+                padding: 8px 16px;
+                font-size: 16px;
+            }
+
+            .slider-container span {
+                font-size: 20px;
+            }
+
+            input[type="text"] {
+                padding: 100px;
+                font-size: 15px;
+            }
+
+            p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="index.html" class="home">Trang Chủ</a>
+        <button class="dropdown-btn" onclick="window.location.href='sobangchuvn.html'">Thay thế tiếng Việt</button>
+        <div class="dropdown">
+            <button class="dropdown-btn">Chọn khóa</button>
+            <div class="dropdown-content">
+                <a href="thaytheen.html">Chữ = Chữ EN</a>
+                <a href="sobangchuen.html">Số = Chữ EN</a>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="container">
+        <h1>Thay thế Số bằng Chữ</h1>
+        <h2>Tiếng Anh</h2>
+        <div class="toggle-buttons">
+            <button onclick="toggleMode(true)" class="dropdown-btn">Số = Chữ</button>
+            <button onclick="toggleMode(false)" class="dropdown-btn">Chữ = Số</button>
+        </div>
+    
+
+        <label>Chọn số nguồn (1-26):</label>
+        <div class="slider-container">
+            <span id="sourceCharDisplay">1</span>
+            <input type="range" id="sourceSlider" min="1" max="26" value="1" oninput="updateSourceNumber()">
+        </div>
+
+        <label>Chọn ký tự đích:</label>
+        <div class="slider-container">
+            <span id="targetCharDisplay">A</span>
+            <input type="range" id="targetSlider" min="0" max="25" value="0" oninput="updateTargetChar()">
+        </div>
+
+        <label for="textInput">Nhập nội dung (số cách nhau bằng dấu cách):</label>
+        <input type="text" id="textInput" placeholder="Nhập số từ 1 đến 26 hoặc ký tự từ A đến Z..." oninput="encryptText()">
+
+        <p><strong>Kết quả:</strong> <span id="result"></span></p>
+    </div>
+
+    <script>
+        const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        let sourceNumber = 1;
+        let targetChar = 'A';
+        let isNumberToLetter = true;
+
+        function toggleMode(mode) {
+            isNumberToLetter = mode;
+            updateUI();
+        }
+
+        function updateUI() {
+            if (isNumberToLetter) {
+                document.querySelector('label[for="textInput"]').innerText = "Nhập nội dung (số cách nhau bằng dấu cách):";
+                document.querySelector('h1').innerText = "Thay thế Số bằng Chữ";
+            } else {
+                document.querySelector('label[for="textInput"]').innerText = "Nhập nội dung (chữ cách nhau bằng dấu cách):";
+                document.querySelector('h1').innerText = "Thay thế Chữ bằng Số";
+            }
+            encryptText(); // Update results when mode changes
+        }
+
+        function updateSourceNumber() {
+            const sourceSlider = document.getElementById('sourceSlider');
+            sourceNumber = parseInt(sourceSlider.value);
+            document.getElementById('sourceCharDisplay').innerText = sourceNumber;
+            encryptText();
+        }
+
+        function updateTargetChar() {
+            const targetSlider = document.getElementById('targetSlider');
+            targetChar = alphabet[targetSlider.value];
+            document.getElementById('targetCharDisplay').innerText = targetChar;
+            encryptText();
+        }
+
+        function encryptText() {
+            const text = document.getElementById('textInput').value.trim();
+            if (text === '') {
+                document.getElementById('result').innerText = '';
+                return;
+            }
+
+            let result = '';
+            let sourceIdx = sourceNumber - 1;
+            let targetIdx = targetChar.charCodeAt(0) - 'A'.charCodeAt(0);
+            let shift = (targetIdx - sourceIdx + 26) % 26;
+
+            const items = text.split(' ');
+            items.forEach(item => {
+                if (isNumberToLetter) {
+                    const parsedNum = parseInt(item);
+                    if (parsedNum >= 1 && parsedNum <= 26) {
+                        let convertedChar = alphabet[(parsedNum - 1 + shift) % 26];
+                        result += convertedChar + ' ';
+                    } else {
+                        result += item + ' ';  // Giữ nguyên ký tự không hợp lệ
+                    }
+                } else {
+                    const charCode = item.toUpperCase().charCodeAt(0) - 'A'.charCodeAt(0);
+                    if (charCode >= 0 && charCode < 26) {
+                        let convertedNum = (charCode - shift + 26) % 26 + 1;
+                        result += convertedNum + ' ';
+                    } else {
+                        result += item + ' ';  // Giữ nguyên ký tự không hợp lệ
+                    }
+                }
+            });
+
+            document.getElementById('result').innerText = result.trim();
+        }
+
+        // Khởi tạo thanh kéo và cập nhật giá trị ban đầu
+        updateSourceNumber();
+        updateTargetChar();
+    </script>
+</body>
+</html>
