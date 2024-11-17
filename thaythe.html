@@ -158,6 +158,14 @@
             font-weight: bold;
             color: #ff0000;
         }
+                    /* Chân trang */
+                    footer {
+            background-color: rgba(0, 0, 0, 0);
+            color: #000000;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
@@ -170,7 +178,7 @@
             }
 
             .navbar {
-                flex-direction: column;
+                flex-direction: 10;
                 gap: 10px;
                 align-items: center;
             }
@@ -199,7 +207,7 @@
     <div class="navbar">
         <a href="index.html" class="home">Trang Chủ</a>
         <div class="dropdown">
-            <button class="dropdown-btn">Chọn chức năng</button>
+            <button class="dropdown-btn">Chọn khóa</button>
             <div class="dropdown-content">
                 <a href="thaythe.html">Chữ bằng Chữ</a>
                 <a href="sobangchu.html">Số bằng Chữ</a>
@@ -296,5 +304,6 @@
         updateSourceChar();
         updateTargetChar();
     </script>
+    
 </body>
 </html>
