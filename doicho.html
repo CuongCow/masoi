@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giải mật thư CAM RANH</title>
+  <link rel="icon" href="logo/logoweb-dammekynang.png" type="logo/logoweb-dammekynang.png">
+  <style>
+    /* Reset và bố cục chính */
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      margin: 0;
+      background-color: #eef2f7;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      color: #2c3e50;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    .container {
+      text-align: center;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 500px;
+    }
+    .navbar {
+            display: flex;
+            justify-content: center;
+            gap: 100px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .navbar a {
+            text-decoration: 10;
+            font-weight: bold;
+            padding: 20px 40px;
+            border-radius: 50px;
+            transition: background-color 0.3s ease;
+            color: #fff;
+        }
+
+        .navbar a.home {
+            background-color: #56a058;
+        }
+
+        .navbar a.letters, .navbar a.numbers {
+            background-color: #3fb6a2;
+        }
+
+        .navbar a:hover {
+            opacity: 0.8;
+        }
+        .toggle-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.toggle-buttons .dropdown-btn {
+    padding: 10px 20px;
+    border-radius: 50px;
+    background-color: #3fb6a2;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-buttons .dropdown-btn:hover {
+    opacity: 0.8;
+}
+
+        
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-btn {
+            background-color: #3fb6a2;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-btn:hover {
+            opacity: 0.8;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 160px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #3fb6a2;
+            color: white;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+
+    .input-box {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background-color: #3498db;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    .output-box {
+      background-color: #f9f9f9;
+      color: #333;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      flex-direction: column;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    th {
+      background-color: #f0f0f0;
+    }
+
+    .final-result {
+      margin-top: 10px;
+      padding: 12px;
+      background-color: #ffe6e6;
+      border: 1px solid #ffcccc;
+      border-radius: 6px;
+      font-weight: bold;
+      color: #e74c3c;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .copy-button {
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background-color: #84b99a;
+      color: white;
+      transition: background-color 0.3s ease;
+      width: 100%;
+    }
+
+    .copy-button:hover {
+      background-color: #27ae60;
+    }
+            /* Chân trang */
+            footer {
+            background-color: rgba(0, 0, 0, 0);
+            color: #000000;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+    /* Thiết kế cho màn hình nhỏ */
+    @media screen and (max-width: 600px) {
+      h1 {
+        font-size: 20px;
+      }
+
+      .container {
+        padding: 15px;
+      }
+
+      button, .input-box, .copy-button {
+        font-size: 14px;
+        padding: 10px;
+      }
+
+      th, td {
+        font-size: 12px;
+        padding: 8px;
+      }
+
+      .final-result {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+      <div class="navbar">
+        <a href="index.html" class="home">Trang Chủ</a>
+        <div class="dropdown">
+            <button class="dropdown-btn">Chọn khóa</button>
+            <div class="dropdown-content">
+                <a href="doicho.html">CAM RANH</a>
+            </div>
+        </div>
+    </div>
+    
+<div class="container">
+  <h1>Khóa CAM RANH</h1>
+    <input id="keyInput" class="input-box" type="text" placeholder="Nhập khóa (Ví dụ: CAMRANH)">
+    <button onclick="generateKeyOrder()">Tạo bảng và đánh số</button>
+    <div id="letterOrder" class="output-box">Thứ tự ký tự trong khóa: </div>
+    <input id="encodedInput" class="input-box" type="text" placeholder="Nhập bản mã" style="display: none;">
+    <button onclick="decodeText()" style="display: none;" id="decodeButton">Giải mã</button>
+    <div id="decodedOutput" class="output-box" style="display: none;">Kết quả giải mã sẽ xuất hiện ở đây</div>
+  </div>
+
+  <script>
+    let keyOrder = []; // Lưu trữ thứ tự ký tự trong khóa
+
+    function generateKeyOrder() {
+      const key = document.getElementById("keyInput").value.toUpperCase().replace(/\s+/g, '');
+      if (!key) {
+        alert("Vui lòng nhập khóa để tạo bảng.");
+        return;
+      }
+
+      const letters = key.split('');
+      const letterOrder = {};
+      let sortedLetters = Array.from(new Set(letters)).sort();
+      let counter = 1;
+
+      sortedLetters.forEach(letter => {
+        for (let i = 0; i < letters.length; i++) {
+          if (letters[i] === letter && !letterOrder[i]) {
+            letterOrder[i] = counter++;
+          }
+        }
+      });
+
+      keyOrder = Object.keys(letterOrder).map(index => letterOrder[index]);
+      displayKeyOrder(keyOrder, key);
+
+      document.getElementById("encodedInput").style.display = "block";
+      document.getElementById("decodeButton").style.display = "block";
+      document.getElementById("decodedOutput").style.display = "flex";
+    }
+
+    function displayKeyOrder(order, key) {
+      const orderText = key.split('').map((char, index) => `${char}(${order[index]})`).join(' ');
+      document.getElementById("letterOrder").innerText = `Thứ tự ký tự trong khóa: ${orderText}`;
+    }
+
+    function decodeText() {
+      const encodedText = document.getElementById("encodedInput").value.trim();
+      if (!encodedText) {
+        alert("Vui lòng nhập bản mã để giải mã.");
+        return;
+      }
+
+      const encodedChunks = encodedText.split(/\s|-|_|,|\./).filter(chunk => chunk);
+
+      const chunkWords = encodedChunks.map(chunk => chunk.split(""));
+      const maxWordsPerChunk = Math.max(...chunkWords.map(chunk => chunk.length));
+
+      const table = document.createElement("table");
+
+      const headerRow = document.createElement("tr");
+      encodedChunks.forEach((_, index) => {
+        const headerCell = document.createElement("th");
+        headerCell.innerText = `${index + 1}`;
+        headerRow.appendChild(headerCell);
+      });
+      table.appendChild(headerRow);
+
+      for (let i = 0; i < maxWordsPerChunk; i++) {
+        const row = document.createElement("tr");
+        encodedChunks.forEach((chunk, chunkIndex) => {
+          const cell = document.createElement("td");
+          cell.innerText = chunkWords[chunkIndex][i] || "";
+          row.appendChild(cell);
+        });
+        table.appendChild(row);
+      }
+
+      const decodedOutput = document.getElementById("decodedOutput");
+      decodedOutput.innerHTML = "";
+      decodedOutput.appendChild(table);
+
+      addFinalResultButton();
+    }
+
+    function addFinalResultButton() {
+      const button = document.createElement("button");
+      button.innerText = "Kết quả cuối cùng";
+      button.onclick = generateFinalResult;
+      document.getElementById("decodedOutput").appendChild(button);
+    }
+
+    function generateFinalResult() {
+      if (keyOrder.length === 0) {
+        alert("Vui lòng tạo bảng thứ tự ký tự trong khóa trước khi sắp xếp.");
+        return;
+      }
+
+      const table = document.querySelector("#decodedOutput table");
+      if (!table) {
+        alert("Vui lòng giải mã và tạo bảng trước khi sắp xếp.");
+        return;
+      }
+
+      const rows = Array.from(table.querySelectorAll("tr"));
+      const reorderedColumns = [];
+      rows.forEach((row) => {
+        const cells = Array.from(row.querySelectorAll("td, th"));
+        const reorderedCells = keyOrder.map(orderIndex => cells[orderIndex - 1]);
+        reorderedColumns.push(reorderedCells);
+      });
+
+      table.innerHTML = "";
+      reorderedColumns.forEach((rowCells) => {
+        const row = document.createElement("tr");
+        rowCells.forEach((cell) => {
+          const clonedCell = cell.cloneNode(true);
+          row.appendChild(clonedCell);
+        });
+        table.appendChild(row);
+      });
+
+      const finalResult = [];
+      for (let i = 1; i < reorderedColumns.length; i++) {
+        reorderedColumns[i].forEach((cell) => {
+          if (cell && cell.innerText.trim()) {
+            finalResult.push(cell.innerText.trim());
+          }
+        });
+      }
+
+      const resultContainer = document.createElement("div");
+      resultContainer.className = "final-result";
+      resultContainer.innerText = `Kết quả cuối cùng: ${finalResult.join('')}`;
+
+      const copyButton = document.createElement("button");
+      copyButton.className = "copy-button";
+      copyButton.innerText = "Sao chép kết quả";
+      copyButton.onclick = () => {
+        navigator.clipboard.writeText(finalResult.join('')).then(() => {
+          alert("Kết quả đã được sao chép!");
+        });
+      };
+
+      const decodedOutput = document.getElementById("decodedOutput");
+      decodedOutput.appendChild(resultContainer);
+      decodedOutput.appendChild(copyButton);
+    }
+  </script>
+      <!-- Chân trang -->
+      <footer>
+        <p>&copy; 2024 Đam Mê Kỹ Năng. Mọi quyền được bảo lưu. Vui lòng không sao chép</p>
+        <p><a href="/lienhe.html">Liên Hệ</a> | <a href="/chinhsach.html">Chính Sách Bảo Mật</a> | <a href="/dieukhoan.html">Điều Khoản Sử Dụng</a></p>
+    </footer>
+
+</body>
+</html>
