@@ -62,63 +62,18 @@
 
     <style>
         /* CSS cho toàn trang */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        body, html {
-            font-family: Arial, sans-serif;
-            color: #333;
-            overflow: hidden;
-            height: 100%;
-        }
-
-        /* Thanh điều hướng */
-        .navbar {
-            position: fixed;
-            top: 1;
-            left: 0;
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.1);
+                        /* Nút Gửi Thông Điệp */
+                        .send-message-btn {
             padding: 10px 20px;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            color: #fff;
-        }
-
-        .navbar img {
-            height: 60px;
-        }
-
-        .navbar .title-container {
-            text-align: center;
-            flex-grow: 1;
-            color: #fff;
-        }
-
-        .navbar .title-container h1 {
-            font-size: 1.2em;
-            margin: 5px 0;
-        }
-
-        .navbar .title-container p {
-            font-size: 0.9em;
-            opacity: 0.8;
-        }
-
-                /* Nút Gửi Thông Điệp */
-                .send-message-btn {
-            padding: 10px 20px;
-            background-color: #f3a1a1;
+            background-color: #55d355;
             color: white;
             border: none;
             border-radius: 5px;
             font-weight: bold;
             cursor: pointer;
+            top: 80px; /* Điều chỉnh khoảng cách bên trên nút */
+            left: -28px;
             position: relative;
             animation: pulse 1.5s infinite;
             transition: background-color 0.3s;
@@ -138,6 +93,57 @@
             background-color: #c3d425;
             color: #ffffff;
         }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            font-family: Arial, sans-serif;
+            color: #333;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        /* Thanh điều hướng */
+        .navbar {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.1);
+            padding: 10px 20px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #fff;
+        }
+        
+
+        .navbar img {
+            height: 60px;
+        }
+
+        .navbar .title-container {
+            text-align: 0;
+            flex-grow: 1;
+            color: #fff;
+            
+        }
+
+        .navbar .title-container h1 {
+            font-size: 1.2em;
+            margin: 5px 0;
+            
+        }
+
+        .navbar .title-container p {
+            font-size: 0.9em;
+            opacity: .8;
+            
+        }
         /* Bản đồ nền */
         .map-container {
             position: relative;
@@ -150,7 +156,7 @@
         }
         .dot {
     width: 10px;
-    height: 10px;
+    height: 100px;
     border-radius: 50%;
     background-color: #333;
     position: absolute;
@@ -211,15 +217,6 @@
         .camp-options a:hover {
             text-decoration: underline;
         }
-        
-        .dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: #333;
-  position: absolute;
-  cursor: pointer;
-}
 
         .tooltip {
             display: none;
@@ -327,47 +324,6 @@
             }
         }
 
-        .send-message-btn {
-      position: absolute;
-      top: 100px;
-      right: 50px;
-      padding: 10px 20px;
-      background-color: #71be3e;
-      color: rgb(255, 255, 255);
-      border: none;
-      cursor: pointer;
-      font-size: 1em;
-    }
-    .container {
-            position: relative;
-            width: 50%; /* Độ rộng khung chứa */
-            height: 300px; /* Chiều cao khung chứa */
-            margin: 50px auto;
-            background-color: #f0f0f0;
-            border: 1px solid #ddd;
-        }
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background-color: #333;
-      position: absolute;
-      cursor: pointer;
-    }
-    .tooltip {
-      display: none;
-      position: absolute;
-      background-color: white;
-      border: 1px solid #333;
-      padding: 10px;
-      z-index: 1000;
-    max-width: 500px; /* Giới hạn chiều rộng tối đa */
-    max-height: 500px; /* Giới hạn chiều cao tối đa */
-    overflow-y: auto; /* Thêm cuộn dọc nếu nội dung quá dài */
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5); /* Hiệu ứng bóng cho tooltip */
-    }
-
-
     </style>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
@@ -378,89 +334,6 @@
     </script>
 </head>
 <body>
-    <!-- Thanh điều hướng -->
-    <div class="navbar">
-        <a href="index.html">
-            <img src="logo/logoweb-dammekynang.png" alt="Logo">
-        </a>
-        <button class="send-message-btn" onclick="window.location.href='thongdiep.html'">Gửi thông điệp yêu THƯN</button>
-        <div class="title-container">
-            <h1>Chào các bạn đến với trang Kỹ năng</h1>
-            <p>Khám phá các kỹ năng cần thiết để chuẩn bị cho đợt trại của bạn.</p>
-        </div>
-    </div>   
-
-    <!-- Bản đồ và các địa điểm cắm trại -->
-    <div class="map-container">
-        <div id="spot-1" class="camp-spot" onmouseover="showOptions(1)" onmouseout="hideOptions(1)">
-            <span>Mật Thư</span>
-            <div class="camp-options" id="options-1">
-                <a href="Enrypt text and text.html">Chữ = Chữ</a>
-                <a href="Enrypttext text and number.html">Chữ = Số</a>
-                <a href="#bophankhac">Tọa Độ</a>
-                <a href="camranh.html">Cam Ranh</a>
-            </div>
-        </div>
-        
-        <div id="spot-2" class="camp-spot" onmouseover="showOptions(2)" onmouseout="hideOptions(2)">
-            <span>Tài Liệu</span>
-            <div class="camp-options" id="options-2">
-                <a href="https://drive.google.com/drive/folders/1bifDD5Z-IRZ0-k81IhwUOkRn-FVav9Ud?usp=sharing">Bản xoay MT</a>
-                <a href="https://drive.google.com/drive/folders/1pOZVhyIZe1hnYFTZ1ghu816twPPYeL-z?usp=sharing">Mật thư</a>
-                <a href="tailieu/muadanvu.html">Múa, dân vũ</a>
-                <a href="https://drive.google.com/drive/folders/1I6GvoY_p7DRe3aJcF7XB8O90tsl1ZjHB?usp=sharing">Nút dây</a>
-                <a href="https://drive.google.com/drive/folders/1mC-WOnBuPkrmCJkouRFKs2UBHTXmZ4kg?usp=sharing">SH vòng tròn</a>
-                <a href="https://drive.google.com/drive/folders/1Z-8nqt1d-QCK4vNqyudIefj4akklwSY4?usp=sharing">TC trại</a>
-                <a href="https://drive.google.com/drive/folders/1G3NoLJMvm1ubxaq8f-wiAb2Av37hvGA4?usp=sharing">Trò chơi lớn</a>
-                <a href="https://drive.google.com/drive/folders/1y7b-HG6ZN_DeDd6CIF8Rq_Mv9OpFRpCp?usp=sharing">Trò chơi nhỏ</a>
-            </div>
-        </div>
-
-        <div id="spot-3" class="camp-spot" onmouseover="showOptions(3)" onmouseout="hideOptions(3)">
-            <span>Ma Sói</span>
-            <div class="camp-options" id="options-3">
-                <a href="quantromasoi.html">Quản trò</a>
-                <a href="lawsandandguid.html">Hướng dẫn</a>
-            </div>
-        </div>
-
-        <div id="spot-4" class="camp-spot" onmouseover="showOptions(4)" onmouseout="hideOptions(4)">
-            <span>Bổ ích</span>
-            <div class="camp-options" id="options-4">
-                <a href="details3.html">Kỷ Cương</a>
-                <a href="booking3.html">Dịch AI</a>
-                <a href="activities3.html">Luật</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Chân trang -->
-    <footer>
-        <p>&copy; 2024 Đam Mê Kỹ Năng. Mọi quyền được bảo lưu. Vui lòng không sao chép</p>
-        <p><a href="/lienhe.html">Liên Hệ</a> | <a href="/chinhsach.html">Chính Sách Bảo Mật</a> | <a href="/dieukhoan.html">Điều Khoản Sử Dụng</a></p>
-    </footer>
-
-    <script>
-        function showOptions(id) {
-            document.getElementById(`options-${id}`).style.display = "block";
-        }
-
-        function hideOptions(id) {
-            document.getElementById(`options-${id}`).style.display = "none";
-        }
-    </script>
-<body>
-    <!-- Thanh điều hướng -->
-    <div class="navbar">
-        <a href="index.html">
-            <img src="logo/logoweb-dammekynang.png" alt="Logo">
-        </a>
-        <div class="title-container">
-            <h1>Chào các bạn đến với trang Kỹ năng</h1>
-            <p>Khám phá các kỹ năng cần thiết để chuẩn bị cho đợt trại của bạn.</p>
-        </div>
-    </div>
-
     <div id="message-dots"></div> <!-- Container cho các dấu chấm thông điệp -->
     
     <script>
@@ -495,8 +368,6 @@
 
                 // Thêm tooltip vào body
     document.body.appendChild(tooltip);
-
-      document.body.appendChild(tooltip); // Thêm tooltip vào toàn bộ body để có thể cố định ở giữa
       
             dot.addEventListener('mouseover', () => {
               tooltip.style.display = 'block';
@@ -522,16 +393,28 @@
     }
 });
     </script>
+    <!-- Thanh điều hướng -->
+    <div class="navbar">
+        <a href="index.html">
+            <img src="logo/logoweb-dammekynang.png" alt="Logo">
+        </a>
+        <button class="send-message-btn" onclick="window.location.href='thongdiep.html'">Gửi thông điệp yêu Thưn</button>
+        <div class="title-container">
+            <h1>Chào các bạn đến với trang Kỹ năng</h1>
+            <p>Khám phá các kỹ năng cần thiết để chuẩn bị cho đợt trại của bạn.</p>
+        </div>
+    </div>   
+    
 
     <!-- Bản đồ và các địa điểm cắm trại -->
     <div class="map-container">
         <div id="spot-1" class="camp-spot" onmouseover="showOptions(1)" onmouseout="hideOptions(1)">
             <span>Mật Thư</span>
             <div class="camp-options" id="options-1">
-                <a href="Enrypt text and text.html">Chữ = Chữ</a>
-                <a href="Enrypttext text and number.html">Chữ = Số</a>
-                <a href="#bophankhac">Tọa Độ</a>
-                <a href="camranh.html">Cam Ranh</a>
+                <a href="thaythe.html">Thay thế</a>
+                <a href="Enrypttext text and number.html">Dời chỗ</a>
+                <a href="#bophankhac">Ẩn dấu</a>
+                <a href="camranh.html">Nâng cao</a>
             </div>
         </div>
         
@@ -582,5 +465,4 @@
             document.getElementById(`options-${id}`).style.display = "none";
         }
     </script>
-</body>
 </html>
