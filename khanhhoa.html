@@ -515,21 +515,57 @@
             ).join('');
         }
 
-        // Cập nhật ký tự nguồn dựa trên thanh kéo
-        function updateSourceChar() {
-            const sourceIndex = parseInt(sourceSliderEl.value, 10);
-            sourceChar = finalSource[sourceIndex];
-            sourceCharDisplayEl.innerText = sourceChar;
-            encryptText();
-        }
+// Function to shift characters forward or backward
+function shiftCharacters(charArray, shift) {
+    const length = charArray.length;
 
-        // Cập nhật ký tự đích dựa trên thanh kéo
-        function updateTargetChar() {
-            const targetIndex = parseInt(targetSliderEl.value, 10);
-            targetChar = finalTarget[targetIndex];
-            targetCharDisplayEl.innerText = targetChar;
-            encryptText();
-        }
+    // Normalize the shift value within array bounds
+    shift = shift % length; // Prevent shifts larger than array size
+    if (shift < 0) shift = length + shift; // Convert negative shift to positive equivalent
+
+    // Perform the shift
+    const shiftedArray = charArray.slice(shift).concat(charArray.slice(0, shift));
+
+    // Update the original array in place
+    for (let i = 0; i < length; i++) {
+        charArray[i] = shiftedArray[i];
+    }
+}
+
+// Previous slider values to detect direction
+let previousSourceIndex = 0;
+let previousTargetIndex = 0;
+
+// Update source character on slider movement
+function updateSourceChar() {
+    const currentSourceIndex = parseInt(sourceSliderEl.value, 10);
+    const shift = currentSourceIndex - previousSourceIndex; // Calculate shift direction and magnitude
+    previousSourceIndex = currentSourceIndex; // Update the previous index for next calculation
+
+    if (shift !== 0) {
+        shiftCharacters(finalSource, shift); // Shift the source array
+        sourceChar = finalSource[0]; // Update the first character of the source
+        sourceCharDisplayEl.innerText = sourceChar; // Update display
+        encryptText(); // Update encryption with new mappings
+    }
+}
+
+// Update target character on slider movement
+function updateTargetChar() {
+    const currentTargetIndex = parseInt(targetSliderEl.value, 10);
+    const shift = currentTargetIndex - previousTargetIndex; // Calculate shift direction and magnitude
+    previousTargetIndex = currentTargetIndex; // Update the previous index for next calculation
+
+    if (shift !== 0) {
+        shiftCharacters(finalTarget, shift); // Shift the target array
+        targetChar = finalTarget[0]; // Update the first character of the target
+        targetCharDisplayEl.innerText = targetChar; // Update display
+        encryptText(); // Update encryption with new mappings
+    }
+}
+
+
+
 
         // Thêm ký tự nguồn vào bảng nhập và xóa khỏi bảng chữ
         function selectSourceChar(char) {
