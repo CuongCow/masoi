@@ -552,11 +552,14 @@
             renderSourceBoards();
         }
 
-        // Hoàn tất thay thế ký tự nguồn
-        function finalizeSource() {
-            finalSource = [...inputBoardSource, ...charBoardSource];
-            finalSourceEl.innerText = finalSource.join('');
-        }
+// Hoàn tất thay thế ký tự nguồn (giữ nguyên thứ tự mặc định)
+function finalizeSource() {
+    finalSource = [...alphabet]; // Ký tự nguồn luôn là A-Z
+    finalSourceEl.innerText = finalSource.join('');
+    sourceChar = finalSource[0];
+    sourceCharDisplayEl.innerText = sourceChar;
+    encryptText(); // Mã hóa lại nội dung
+}
 
         // Thêm ký tự đích vào bảng nhập và xóa khỏi bảng chữ
         function selectTargetChar(char) {
@@ -579,51 +582,54 @@
             renderTargetBoards();
         }
 
-        // Hoàn tất thay thế ký tự đích
-        function finalizeTarget() {
-            finalTarget = [...inputBoardTarget, ...charBoardTarget];
-            finalTargetEl.innerText = finalTarget.join('');
+// Hoàn tất thay thế ký tự đích
+function finalizeTarget() {
+    // Tạo bảng ký tự đích với các ký tự đã chọn ở đầu, phần còn lại ở sau
+    finalTarget = [...inputBoardTarget, ...charBoardTarget];
+    finalTargetEl.innerText = finalTarget.join('');
+    targetChar = finalTarget[0];
+    targetCharDisplayEl.innerText = targetChar;
+    encryptText(); // Mã hóa lại nội dung
+}
+
+// Mã hóa nội dung đầu vào
+function encryptText() {
+    const text = textInputEl.value;
+
+    if (!text) {
+        forwardResultEl.innerText = '';
+        backwardResultEl.innerText = '';
+        return;
+    }
+
+    let forwardResult = '';
+    let backwardResult = '';
+
+    for (let char of text) {
+        if (/[a-zA-Z]/.test(char)) {
+            const isUpperCase = char === char.toUpperCase();
+            const baseCharCode = isUpperCase ? 'A'.charCodeAt(0) : 'a'.charCodeAt(0);
+
+            // Chiều thuận: Từ nguồn -> đích
+            const sourceIndex = finalSource.indexOf(char.toUpperCase());
+            const forwardChar = finalTarget[sourceIndex] || char;
+            forwardResult += isUpperCase ? forwardChar : forwardChar.toLowerCase();
+
+            // Chiều nghịch: Từ đích -> nguồn
+            const targetIndex = finalTarget.indexOf(char.toUpperCase());
+            const backwardChar = finalSource[targetIndex] || char;
+            backwardResult += isUpperCase ? backwardChar : backwardChar.toLowerCase();
+        } else {
+            // Không phải ký tự chữ cái, giữ nguyên
+            forwardResult += char;
+            backwardResult += char;
         }
+    }
 
-        // Mã hóa nội dung đầu vào
-        function encryptText() {
-            const text = textInputEl.value;
+    forwardResultEl.innerText = forwardResult;
+    backwardResultEl.innerText = backwardResult;
+}
 
-            if (!text) {
-                forwardResultEl.innerText = '';
-                backwardResultEl.innerText = '';
-                return;
-            }
-
-            let forwardResult = '';
-            let backwardResult = '';
-
-            const sourceIdx = finalSource.indexOf(sourceChar);
-            const targetIdx = finalTarget.indexOf(targetChar);
-
-            const shiftForward = (targetIdx - sourceIdx + 26) % 26;
-            const shiftBackward = (sourceIdx - targetIdx + 26) % 26;
-
-            for (let char of text) {
-                if (/[a-zA-Z]/.test(char)) {
-                    const isUpperCase = char === char.toUpperCase();
-                    const baseCharCode = isUpperCase ? 'A'.charCodeAt(0) : 'a'.charCodeAt(0);
-                    const charIndex = char.charCodeAt(0) - baseCharCode;
-
-                    const forwardCharCode = ((charIndex + shiftForward) % 26) + baseCharCode;
-                    forwardResult += String.fromCharCode(forwardCharCode);
-
-                    const backwardCharCode = ((charIndex + shiftBackward) % 26) + baseCharCode;
-                    backwardResult += String.fromCharCode(backwardCharCode);
-                } else {
-                    forwardResult += char;
-                    backwardResult += char;
-                }
-            }
-
-            forwardResultEl.innerText = forwardResult;
-            backwardResultEl.innerText = backwardResult;
-        }
 
         // Khởi tạo
         function initializeSliders() {
