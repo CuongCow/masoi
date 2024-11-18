@@ -552,13 +552,16 @@
             renderSourceBoards();
         }
 
-// Hoàn tất thay thế ký tự nguồn (giữ nguyên thứ tự mặc định)
+// Hoàn tất thay thế ký tự nguồn
 function finalizeSource() {
-    finalSource = [...alphabet]; // Ký tự nguồn luôn là A-Z
+    // Đảm bảo ký tự đã chọn (inputBoardSource) nằm ở đầu, kết hợp với các ký tự còn lại (charBoardSource)
+    finalSource = [...inputBoardSource, ...charBoardSource];
+    // Hiển thị kết quả lên giao diện
     finalSourceEl.innerText = finalSource.join('');
+    // Cập nhật ký tự nguồn hiển thị
     sourceChar = finalSource[0];
     sourceCharDisplayEl.innerText = sourceChar;
-    encryptText(); // Mã hóa lại nội dung
+    encryptText(); // Cập nhật mã hóa với bảng mới
 }
 
         // Thêm ký tự đích vào bảng nhập và xóa khỏi bảng chữ
@@ -584,12 +587,14 @@ function finalizeSource() {
 
 // Hoàn tất thay thế ký tự đích
 function finalizeTarget() {
-    // Tạo bảng ký tự đích với các ký tự đã chọn ở đầu, phần còn lại ở sau
+    // Đảm bảo ký tự đã chọn (inputBoardTarget) nằm ở đầu, kết hợp với các ký tự còn lại (charBoardTarget)
     finalTarget = [...inputBoardTarget, ...charBoardTarget];
+    // Hiển thị kết quả lên giao diện
     finalTargetEl.innerText = finalTarget.join('');
+    // Cập nhật ký tự đích hiển thị
     targetChar = finalTarget[0];
     targetCharDisplayEl.innerText = targetChar;
-    encryptText(); // Mã hóa lại nội dung
+    encryptText(); // Cập nhật mã hóa với bảng mới
 }
 
 // Mã hóa nội dung đầu vào
