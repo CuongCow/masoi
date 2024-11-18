@@ -27,6 +27,83 @@
             border-radius: 10px;
             box-shadow: 0 4px 12px rgb(63, 182, 162);
         }
+        .navbar {
+            display: flex;
+            justify-content: center;
+            gap: 100px;
+            margin-bottom: 0px;
+            flex-wrap: wrap;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 50px;
+            transition: background-color 0.3s ease;
+            color: #fff;
+            text-align: center;
+        }
+
+        .navbar a.home {
+            background-color: #56a058;
+        }
+
+        .navbar a.letters, .navbar a.numbers {
+            background-color: #3fb6a2;
+        }
+
+        .navbar a:hover {
+            opacity: 0.8;
+        }
+        .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-btn {
+    background-color: #3fb6a2;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.dropdown-btn:hover {
+    opacity: 0.8;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 160px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+}
+
+.dropdown-content a:hover {
+    background-color: #3fb6a2;
+    color: white;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
 
         h1 {
             text-align: center;
@@ -269,6 +346,22 @@
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
         }
+        .home {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.home:hover {
+    background-color: #0056b3;
+}
+
+
 
         /* Button cho Ký tự nguồn */
         .btn-source {
@@ -299,10 +392,32 @@
             font-weight: bold;
             font-size: 23px;
         }
+                    /* Chân trang */
+                    footer {
+            background-color: rgba(0, 0, 0, 0);
+            color: #000000;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
         
     </style>
 </head>
 <body>
+    <div class="navbar">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <a href="index.html" class="home" style="margin: auto;">
+            <i class="fas fa-home"></i> Trang Chủ
+        </a>
+        <div class="dropdown">
+            <button class="dropdown-btn">Chọn khóa</button>
+            <div class="dropdown-content">
+                <a href="thaytheen.html">Chữ = Chữ EN</a>
+                <a href="sobangchuen.html">Số = Chữ EN</a>
+                <a href="khanhhoa.html">Khánh Hòa</a>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <h1>Mật thư thay thế Khánh Hòa</h1>
 
@@ -521,5 +636,10 @@
         initializeSliders();
         
     </script>
+          <!-- Chân trang -->
+          <footer>
+            <p>&copy; 2024 Đam Mê Kỹ Năng. Mọi quyền được bảo lưu. Vui lòng không sao chép</p>
+            <p><a href="/lienhe.html">Liên Hệ</a> | <a href="/chinhsach.html">Chính Sách Bảo Mật</a> | <a href="/dieukhoan.html">Điều Khoản Sử Dụng</a></p>
+        </footer>
 </body>
 </html>
