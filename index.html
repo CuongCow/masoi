@@ -36,14 +36,14 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
-        #video-background {
+        #background-image {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
+            width: 100%;
             height: 100vh;
-            object-fit: cover; /* Đảm bảo video bao phủ toàn màn hình */
-            z-index: -1; /* Đặt video dưới nội dung */
+            object-fit: cover;
+            z-index: -1;
         }
 
         /* Header Styles */
@@ -282,14 +282,14 @@
     .main-body {
         margin-left: 0; /* Remove large margin for smaller screens */
     }
-    #video-background {
+    #background-image {
             position: fixed;
-            top: 0%;
-            left: -110%;
-            width: 250vw;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100vh;
-            object-fit: cover; /* Đảm bảo video bao phủ toàn màn hình */
-            z-index: -1; /* Đặt video dưới nội dung */
+            object-fit: cover;
+            z-index: -1;
         }
             /* Footer Styles */
             footer {
@@ -349,11 +349,9 @@
     </style>
 </head>
 <body>
-    <!-- Video nền -->
-    <video id="video-background" autoplay muted loop>
-        <source id="video-source" src="" type="video/mp4">
-        Trình duyệt của bạn không hỗ trợ video nền.
-    </video>
+    <!-- Thay thẻ video bằng thẻ img -->
+    <img id="background-image" src="" alt="Background Image">
+
     <!-- Header Section -->
     <header>
         <div class="title-container">
@@ -444,25 +442,21 @@
     </footer>
     <script>
         // Hàm kiểm tra thời gian thực
-        function setVideoBackground() {
-            const hour = new Date().getHours(); // Lấy giờ hiện tại
-            const videoSource = document.getElementById('video-source');
-            const videoElement = document.getElementById('video-background');
+        function setBackgroundImage() {
+            const hour = new Date().getHours();
+            const backgroundImage = document.getElementById('background-image');
 
             if (hour >= 6 && hour < 18) {
                 // Ban ngày (từ 6h sáng đến 18h tối)
-                videoSource.src = "video/video1.mp4";
+                backgroundImage.src = "images/image1.jpg";
             } else {
                 // Ban đêm (từ 18h tối đến 6h sáng)
-                videoSource.src = "video/video2.mp4";
+                backgroundImage.src = "images/image2.jpg";
             }
-
-            // Cập nhật và phát video
-            videoElement.load();
         }
 
         // Gọi hàm khi trang tải
-        setVideoBackground();
+        setBackgroundImage();
     </script>
 
     <script>
