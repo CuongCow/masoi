@@ -627,5 +627,54 @@
         <footer>
             &copy; 2024 Đam Mê Kỹ Năng
         </footer>
+        <script>
+        // Toggle Sidebar and Menu Icon Animation
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const menuIcon = document.getElementById('menuIcon');
+            sidebar.classList.toggle('active');
+            menuIcon.classList.toggle('active');
+        }
+
+        // Dropdown functionality
+        const dropdownButtons = document.querySelectorAll('.dropdown-btn1');
+        dropdownButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const parent = btn.parentElement;
+                parent.classList.toggle('active');
+            });
+        });
+        document.addEventListener('click', (event) => {
+    const sidebar = document.getElementById('sidebar');
+    const menuIcon = document.getElementById('menuIcon');
+
+    // Check if the click is outside the sidebar and the menu button
+    if (!sidebar.contains(event.target) && !menuIcon.contains(event.target)) {
+        sidebar.classList.remove('active');
+        menuIcon.classList.remove('active');
+    }
+    // Lấy tất cả các phần tử có class 'has-submenu'
+const submenuTriggers = document.querySelectorAll('.has-submenu');
+
+submenuTriggers.forEach(trigger => {
+    trigger.addEventListener('click', function (e) {
+        e.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
+
+        // Lấy phần tử cha (dropdown-sub) và toggle class 'active'
+        const parent = this.parentElement;
+        parent.classList.toggle('active');
+
+        // Đóng các submenu khác nếu cần
+        submenuTriggers.forEach(item => {
+            if (item !== this) {
+                item.parentElement.classList.remove('active');
+            }
+        });
+    });
+});
+
+});
+
+    </script>
 </body>
 </html>
