@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nhập Key</title>
+  <link rel="icon" href="/logo/logoweb-dammekynang.png" type="image/png">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #2a9d8f; /* Tông màu chính */
+      color: white;
+      text-align: center;
+      padding: 50px;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      width: 70%;
+      max-width: 300px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #264653;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1b3d3a;
+    }
+
+    .note {
+      margin-top: 30px;
+      font-size: 16px;
+      color: #f5e4d6;
+    }
+
+    .note a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .note a:hover {
+      text-decoration: underline;
+    }
+  </style>
+  <script>
+    let validKeys = [];
+  
+    // Hàm tải các key từ keys.json
+    fetch('/keys.json')
+      .then(response => response.json())
+      .then(data => {
+        validKeys = data.keys;
+      });
+
+    function checkKey() {
+      const userKey = document.getElementById('key').value;
+      if (validKeys.includes(userKey)) {
+        window.location.href = '/Files-final734521873490435683486071/chubangchuvn.html';  // Ví dụ chuyển hướng đến file doicho.html
+      } else {
+        alert("Key không hợp lệ. Vui lòng thử lại.");
+      }
+    }
+  </script>
+</head>
+<body>
+  <h2>Nhập key để tiếp tục</h2>
+  <form onsubmit="event.preventDefault(); checkKey();">
+    <input type="text" id="key" placeholder="Nhập key" required>
+    <button type="submit">Kiểm tra</button>
+  </form>
+
+  <div class="note">
+    <p>Nhằm kiểm soát người dùng tránh lạm dụng tool để giải mật thư nên mình đã hạn chế một số danh mục tool. <br>
+    Các bạn hãy <a href="/lienhe.html">liên hệ tôi</a> để tôi cung cấp key cho bạn sử dụng.<br>
+    Các key là miễn phí, tôi không ngại cung cấp key cho bạn đâu, tôi muốn kiểm soát người dùng thôi.</p>
+  </div>
+</body>
+</html>
