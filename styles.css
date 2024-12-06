@@ -1,0 +1,519 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Header Styles */
+header {
+    width: 100%;
+    height: 70px;
+    background-color: rgb(42, 157, 144);
+    display: flex;
+    align-items: center;
+    padding: 0 25px;
+    color: white;
+    position: fixed;
+    top: 0;
+    z-index: 1001;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.671);
+}
+header .title-container {
+    display: flex;
+    align-items: center;
+}
+
+/* Menu Icon (Aligned with Title) */
+.menu-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+    margin-right: 15px; /* Space between menu and title */
+    transition: transform 0.3s ease;
+}
+.menu-icon span {
+    display: block;
+    width: 100%;
+    height: 4px;
+    background-color: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+.menu-icon.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+.menu-icon.active span:nth-child(2) {
+    opacity: 0;
+}
+.menu-icon.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+.logo img {
+    height: 60px;
+    padding: 2px 30px;
+    margin-right: 0;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 230px;
+    background-color: rgba(255, 255, 255, 0.658);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 70px;
+    left: -230px;
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: left 0.3s ease-in-out;
+    padding: 20px 0;
+    z-index: 1000;
+}
+.sidebar.active {
+    left: 0;
+}
+.sidebar a, .dropdown-btn {
+    text-decoration: none;
+    color: #000000;
+    font-size: 1rem;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.sidebar a:hover, .dropdown-btn:hover {
+    background-color: #ffffffc9;
+    color: #2a9d8f;
+    border-left: 4px solid #2a9d8f;
+}
+
+/* Smooth Dropdown Content */
+.dropdown-content {
+    display: flex;
+    flex-direction: column;
+    max-height: 0;
+    overflow: hidden;
+    padding-left: 20px;
+    transition: max-height 0.4s ease, opacity 0.4s ease;
+    opacity: 0;
+}
+.dropdown-content a {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    color: #000000;
+}
+.dropdown-content a:hover {
+    background-color: #eef2f7ce;
+    color: #2a9d8f;
+    border-left: 3px solid #2a9d8f;
+}
+.dropdown.active .dropdown-content {
+    max-height: 500px;
+    opacity: 1;
+}
+/* Ban đầu submenu bị ẩn */
+.submenu {
+display: none;
+flex-direction: column;
+padding-left: 20px;
+background-color: #f9f9f98f;
+border-left: 2px solid #2a9d8f;
+box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Kiểu dáng các mục trong submenu */
+.submenu a {
+padding: 8px 15px;
+font-size: 0.9rem;
+color: #333;
+text-decoration: none;
+transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hiệu ứng hover cho submenu */
+.submenu a:hover {
+background-color: #eef2f7;
+color: #2a9d8f;
+border-left: 3px solid #2a9d8f;
+}
+
+/* Khi submenu được kích hoạt (thêm class 'active') */
+.dropdown-sub.active .submenu {
+display: flex;
+}
+
+
+/* Hiệu ứng mục bên trong submenu */
+.submenu a {
+padding: 8px 15px;
+font-size: 0.9rem;
+color: #333;
+text-decoration: none;
+transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.submenu a:hover {
+background-color: #eef2f7;
+color: #2a9d8f;
+border-left: 3px solid #2a9d8f;
+}
+#userDisplay {
+font-size: 0.95rem;
+color: white;
+margin: 0 15px;
+display: inline-block;
+vertical-align: middle;
+}
+
+
+/* Footer Styles */
+footer {
+background-color: #ffffff00;
+color: rgb(0, 0, 0);
+text-align: center;
+padding: 15px 0px;
+position: fixed;
+bottom: 0;
+left: 50%;
+transform: translateX(-50%);
+width: 50%;
+max-width: 1200px;
+font-size: 1rem;
+z-index: 1;
+}
+
+
+@media (max-width: 768px) {
+    .main-body .content-placeholder {
+        width: 90%;
+        padding: 20px;
+        margin-top: 5%;
+    }
+}
+
+/* Footer Styles */
+footer {
+    background-color: #ffffff00;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding: 15px 0px;
+    width: 100%;
+    font-size: 1rem;
+    z-index: 1;
+}
+
+@media (max-width: 768px) {
+    .main-body {
+        padding: 10px;
+        margin-top: 20%;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px; /* Adjust sidebar width for smaller screens */
+        background-color: rgb(255, 255, 255);
+        z-index: 2;
+    }
+
+    .main-body {
+        margin-left: 0; /* Remove large margin for smaller screens */
+    }
+    /* Footer Styles */
+    footer {
+        background-color: #ffffff00;
+        color: rgb(0, 0, 0);
+        text-align: center;
+        padding: 15px 0px;
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 1000%;
+        max-width: 1000px;
+        font-size: 1rem;
+        z-index: 1;
+    }
+
+    .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+    }
+    .logo img {
+        height: 60px;
+        padding: 2px 5px;
+        margin-right: 100;
+    }
+}
+
+@media (min-width: 769px) {
+    .sidebar {
+        width: 230px; /* Default sidebar width for larger screens */
+    }
+
+    .main-body {
+        margin-left: 260px; /* Keep the sidebar space for desktops */
+    } 
+}
+@media (max-width: 768px) {
+    .sidebar {
+        left: -200px; /* Hide the sidebar off-screen for mobile */
+    }
+    .sidebar.active {
+        left: 0; /* Slide in when active */
+    }
+}
+@media (max-width: 768px) {
+    .menu-icon {
+        width: 30px; /* Slightly larger for touch accessibility */
+        height: 20px;
+    }
+}
+
+/* Style for dotlottie-player */
+dotlottie-player {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    margin-top: 8%;
+    left: 0;
+    z-index: -1;
+}
+
+@media (max-width: 1000px) {
+    dotlottie-player {
+        width: 100%;
+        height: 100%;
+        margin-top: 30%;
+    }
+}
+
+/* Main Body Styles */
+.main-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    top: 21%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-left: 0px;
+    z-index: 1;
+}
+
+.content-placeholder {
+    max-width: 800px;
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.content-placeholder h1 {
+    color: #2a9d8f;
+    margin-bottom: 25px;
+    font-size: 2.2rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.content-placeholder h2 {
+    color: #264653;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+    line-height: 1.4;
+}
+
+.content-placeholder h3 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+.content-placeholder h4 {
+    color: #e76f51;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .content-placeholder h1 {
+        font-size: 2rem;
+    }
+    
+    .content-placeholder h2 {
+        font-size: 1.5rem;
+    }
+    
+    .content-placeholder h3,
+    .content-placeholder h4 {
+        font-size: 1.1rem;
+    }
+}
+
+/* Thêm style cho nút login */
+.header-right {
+    margin-left: auto;
+    padding-right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.login-btn {
+    background-color: white;
+    color: #2a9d8f;
+    padding: 8px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.login-btn:hover {
+    background-color: #264653;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .logo {
+        font-size: 1.2rem;
+    }
+    
+    .logo img {
+        height: 50px;
+        padding: 2px 5px;
+    }
+
+    .login-btn {
+        padding: 6px 15px;
+        font-size: 0.9rem;
+        margin-left: 10px;
+    }
+
+    header {
+        padding: 0 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-right {
+        padding-right: 10px;
+    }
+    
+    .login-btn {
+        padding: 5px 12px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Thêm style cho phần hiển thị username */
+#userDisplay {
+    font-size: 0.95rem;
+    color: white;
+    margin: 0 15px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+@media (max-width: 768px) {
+    #userDisplay {
+        font-size: 0.85rem;
+        margin: 0 10px;
+    }
+}
+
+/* Thêm style cho modal */
+.login-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+}
+
+.login-modal h3 {
+    color: #2a9d8f;
+    margin-bottom: 15px;
+}
+
+.login-modal p {
+    margin-bottom: 20px;
+    color: #333;
+    line-height: 1.5;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.modal-btn {
+    padding: 8px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.modal-login {
+    background-color: #2a9d8f;
+    color: white;
+}
+
+.modal-register {
+    background-color: #264653;
+    color: white;
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 999;
+}

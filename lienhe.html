@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Thư viện Font Awesome cho biểu tượng -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên Hệ Với Tôi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="/logo/logoweb-dammekynang.png" type="image/png">
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+                /* Nội dung chính */
+                .content {
+            text-align: center;
+            color: rgb(42, 157, 144);
+            margin-top: 10%;
+        }
+
+        .content h1 {
+            font-size: 60px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgb(42, 157, 144);
+        }
+
+        .content p {
+            font-size: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+            text-shadow: 1px 1px 3px rgb(42, 157, 144);
+        }
+        .icon-black {
+            color: #000; /* Set icon color to black */
+            margin-top: 5%;
+            font-size: 40px;
+        }
+        
+
+        .content p {
+            font-size: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+            text-shadow: 1px 1px 3px rgb(42, 157, 144);
+        }
+
+
+        @media (max-width: 768px) {
+    .content {
+            text-align: 10;
+            color: rgb(42, 157, 144);
+            padding: 100px 50px 60px 24px;
+        }
+    
+}
+
+
+
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="title-container">
+            <div class="menu-icon" id="menuIcon" onclick="toggleSidebar()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="logo">
+                <a href="/index.html" style="text-decoration: none; color: inherit;">
+                    Đam mê Kỹ năng
+                </a>
+            </div>
+        </div>
+        <div class="header-right">
+            <a href="/login.html" class="login-btn" id="loginBtn">Đăng nhập</a>
+            <span id="userDisplay" style="color: white; font-weight: bold; margin-right: 15px;"></span>
+            <a href="#" onclick="logout()" class="login-btn" id="logoutBtn" style="display: none;">Đăng xuất</a>
+        </div>
+    </header>
+    <script>
+        // Kiểm tra trạng thái đăng nhập khi trang được tải
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = localStorage.getItem('currentUser');
+            const loginBtn = document.getElementById('loginBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const userDisplay = document.getElementById('userDisplay');
+            
+            if (currentUser) {
+                // Người dùng đã đăng nhập
+                loginBtn.style.display = 'none';
+                logoutBtn.style.display = 'inline-block';
+                userDisplay.textContent = `${currentUser}`; // Chỉ hiển thị tên người dùng
+            } else {
+                // Chưa đăng nhập
+                loginBtn.style.display = 'inline-block';
+                logoutBtn.style.display = 'none';
+                userDisplay.textContent = '';
+            }
+        });
+
+        function logout() {
+            if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                localStorage.removeItem('currentUser');
+                window.location.reload();
+            }
+        }
+        </script>
+
+    <!-- Sidebar Section -->
+    <div class="sidebar" id="sidebar">
+        <a href="/index.html"><span class="icon">🏠</span>Trang chủ</a>
+        <div class="dropdown">
+            <div class="dropdown-btn">
+                <span class="icon">📨</span>Tool Mật Thư<span>▼</span>
+            </div>
+            <div class="dropdown-content">
+                <div class="dropdown-sub">
+                    <a href="#" class="has-submenu">Thay thế</a>
+                    <div class="submenu">
+                        <a href="/toolmatthu/thaythe/chubangchuen.html">Chữ = Chữ EN</a>
+                        <a href="/toolmatthu/thaythe/sobangchuen.html">Số = Chữ EN</a>
+                        <a href="/toolmatthu/thaythe/chubangchuvn.html">Chữ = Chữ VN</a>
+                        <a href="/toolmatthu/thaythe/sobangchuvn.html">Số = Chữ VN</a>
+                        <a href="/toolmatthu/thaythe/khanhhoa.html">Khánh Hòa</a>
+                    </div>
+                </div>
+                <div class="dropdown-sub">
+                    <a href="#" class="has-submenu">Tọa độ</a>
+                    <div class="submenu">
+                        <a href="/toolmatthu/toado/10custom.html">10x10 Custom</a>
+                        <a href="/toolmatthu/toado/banhangcot.html">Bảng - Hàng - Cột</a>
+                        <a href="/toolmatthu/toado/maphuong.html">Ma Phương</a>
+                        <a href="/toolmatthu/toado/phuonghuong.html">Phương hướng</a>                    </div>
+                </div>
+                <div class="dropdown-sub">
+                    <a href="#" class="has-submenu">Dời chỗ</a>
+                    <div class="submenu">
+                        <a href="/toolmatthu/doicho/camranh.html">CAM RANH</a>
+                        <a href="/toolmatthu/doicho/docnguoc.html">Đọc Ngược</a>
+                    </div>
+                </div>
+                <a href="#">Ẩn dấu</a>
+                <a href="#">Nâng cao</a>
+            </div>
+        </div>
+        
+        <div class="dropdown">
+            <div class="dropdown-btn">
+                <span class="icon">🐺</span>Ma Sói<span>▼</span>
+            </div>
+            <div class="dropdown-content">
+                <a href="/masoi/quantro.html">🤵 Quản Trò</a>
+                <a href="/masoi/huongdan.html">📜 Hướng dẫn</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <div class="dropdown-btn">
+                <span class="icon">📖</span>Tài liệu<span>▼</span>
+            </div>
+            <div class="dropdown-content">
+                <a href="/tailieu/banxoaymatthu.html">Bản xoay MT</a>
+                <a href="/tailieu/matthu.html">Mật thư</a>
+                <a href="/tailieu/muavadanvu.html">Múa, dân vũ</a>
+                <a href="/tailieu/nutday.html">Nút dây</a>
+                <a href="/tailieu/sinhhoatvongtron.html">SH vòng tròn</a>
+                <a href="/tailieu/thucongtrai.html">TC trại</a>
+                <a href="/tailieu/trochoilon.html">Trò chơi lớn</a>
+                <a href="/tailieu/trochoinho.html">Trò chơi nhỏ</a>
+            </div>
+        </div>
+        <a href="/lienhe.html"><span class="icon">📮</span> Liên hệ tôi</a>
+        <a href="/dieukhoan.html"><span class="icon">📄</span> Điều khoản</a>
+    </div>
+    <!-- Nội dung chính -->
+    <section class="content">
+        <h1>Liên Hệ Với Tôi</h1>
+        <p>Theo dõi và liên hệ tôi qua các mạng xã hội:</p>
+        
+        <!-- Liên kết đến các mạng xã hội với icon -->
+        <div class="social-links">
+            <a href="https://www.facebook.com/cuongcowk" target="_turquoise" style="color: white; margin: 0 10px;">
+                <i class="fab fa-facebook icon-black"></i>
+            </a>
+            <a href="https://www.instagram.com/cuong_cow/" target="_turquoise" style="color: white; margin: 0 10px;">
+                <i class="fab fa-instagram icon-black"></i>
+            </a>
+            <a href="https://zalo.me/84799444052" target="_turquoise" style="color: white; margin: 0 10px;">
+                <i class="fas fa-comments icon-black"></i>
+            </a>
+            <a href="tel:0369225402" style="color: white; margin: 0 10px;">
+                <i class="fas fa-phone icon-black"></i>
+            </a>
+        </div>
+    </section>
+
+
+
+
+    <!-- Footer Section -->
+    <footer>
+        &copy; 2024 Đam Mê Kỹ Năng
+    </footer>
+
+    <script>
+        // Toggle Sidebar and Menu Icon Animation
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const menuIcon = document.getElementById('menuIcon');
+            sidebar.classList.toggle('active');
+            menuIcon.classList.toggle('active');
+        }
+
+        // Dropdown functionality
+        const dropdownButtons = document.querySelectorAll('.dropdown-btn');
+        dropdownButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const parent = btn.parentElement;
+                parent.classList.toggle('active');
+            });
+        });
+        document.addEventListener('click', (event) => {
+    const sidebar = document.getElementById('sidebar');
+    const menuIcon = document.getElementById('menuIcon');
+
+    // Check if the click is outside the sidebar and the menu button
+    if (!sidebar.contains(event.target) && !menuIcon.contains(event.target)) {
+        sidebar.classList.remove('active');
+        menuIcon.classList.remove('active');
+    }
+    // Lấy tất cả các phần tử có class 'has-submenu'
+const submenuTriggers = document.querySelectorAll('.has-submenu');
+
+submenuTriggers.forEach(trigger => {
+    trigger.addEventListener('click', function (e) {
+        e.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
+
+        // Lấy phần tử cha (dropdown-sub) và toggle class 'active'
+        const parent = this.parentElement;
+        parent.classList.toggle('active');
+
+        // Đóng các submenu khác nếu cần
+        submenuTriggers.forEach(item => {
+            if (item !== this) {
+                item.parentElement.classList.remove('active');
+            }
+        });
+    });
+});
+
+});
+
+    </script>
+    <!-- Thêm modal vào body -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="login-modal" id="loginModal">
+        <h3>Thông báo đăng nhập</h3>
+        <p>Bạn cần đăng nhập để dùng các công cụ tool. Vì một số lý do cộng đồng nên rất cần thiết để quản lý người dùng.</p>
+        <div class="modal-buttons">
+            <a href="/login.html" class="modal-btn modal-login">Đăng nhập</a>
+            <a href="/register.html" class="modal-btn modal-register">Đăng ký</a>
+        </div>
+    </div>
+    <script>
+        // Thêm hàm kiểm tra đăng nhập và hiển thị modal
+        function showLoginModal() {
+            document.getElementById('modalOverlay').style.display = 'block';
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        // Cập nhật các event listener cho menu items
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = localStorage.getItem('currentUser');
+            const loginBtn = document.getElementById('loginBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const userDisplay = document.getElementById('userDisplay');
+            
+            // Thêm event listeners cho các menu items cần bảo vệ
+            const protectedMenuItems = document.querySelectorAll('.dropdown-content a[href*="thaythe"], .dropdown-content a[href*="doicho"], .dropdown-content a[href="#"]');
+            
+            protectedMenuItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    if (!currentUser) {
+                        e.preventDefault();
+                        showLoginModal();
+                    }
+                });
+            });
+
+            // Đóng modal khi click bên ngoài
+            document.getElementById('modalOverlay').addEventListener('click', function() {
+                this.style.display = 'none';
+                document.getElementById('loginModal').style.display = 'none';
+            });
+            
+            if (currentUser) {
+                loginBtn.style.display = 'none';
+                logoutBtn.style.display = 'inline-block';
+                userDisplay.textContent = `${currentUser}`;
+            } else {
+                loginBtn.style.display = 'inline-block';
+                logoutBtn.style.display = 'none';
+                userDisplay.textContent = '';
+            }
+        });
+    </script>
+</body>
+</html>
