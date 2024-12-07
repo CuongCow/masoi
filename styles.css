@@ -517,3 +517,13 @@ dotlottie-player {
     background-color: rgba(0,0,0,0.5);
     z-index: 999;
 }
+.locked-item {
+    position: relative;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.lock-icon {
+    margin-left: 5px;
+    font-size: 14px;
+}
