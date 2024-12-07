@@ -1,98 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-    <!-- Thư viện Font Awesome cho biểu tượng -->
     <meta charset="UTF-8">
+    <meta name="robots" content="index, follow">
+    <!-- Thẻ tiêu đề và mô tả -->
+    <title>Đam Mê Kỹ Năng</title>
+    <meta name="description" content="Đam Mê Kỹ Năng - Tool giải mật thư, Bot học mật thư và tài liệu.">
+    <meta name="keywords" content="giải mật thư, mật thư, ma sói, quản trò ma sói, sinh hoạt vòng tròn, trò chơi lớn, trò chơi nhỏ, công cụ mật thư, tài liệu mật thư">
+    <meta name="robots" content="index, follow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liên Hệ Với Tôi</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Thẻ Open Graph để hiển thị logo khi chia sẻ -->
+    <meta property="og:title" content="Đam Mê Kỹ Năng">
+    <meta property="og:description" content="Tool giải mật thư, Bot học mật thư và tài liệu.">
+    <meta property="og:image" content="https://yourwebsite.com/images/logo.png">
+    <meta property="og:url" content="https://dammekynang.id.vn">
+    <meta property="og:type" content="website">
+
+    <!-- Thẻ Twitter card (nếu chia sẻ trên Twitter) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Đam Mê Kỹ Năng">
+    <meta name="twitter:description" content="Tool giải mật thư, Bot học mật thư và tài liệu.">
+    <meta name="twitter:image" content="https://yourwebsite.com/images/logo.png">
+
     <link rel="icon" href="/logo/logoweb-dammekynang.png" type="image/png">
     <link rel="stylesheet" href="/styles.css">
-    <style>
-                /* Nội dung chính */
-                .content {
-            text-align: center;
-            color: rgb(17, 104, 94);
-            margin-top: 10%;
-        }
+        <style>
+        /* ... existing styles ... */
 
-        .content h1 {
-            font-size: 60px;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 5px rgb(42, 157, 144);
-        }
-
-        .content p {
-            font-size: 20px;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.5;
-            text-shadow: 1px 1px 3px rgb(42, 157, 144);
-        }
-        .icon-black {
-            color: #000; /* Set icon color to black */
-            margin-top: 5%;
-            font-size: 40px;
-        }
-        
-
-        @media (max-width: 768px) {
-    .content {
-            text-align: center;
-            color: rgb(42, 157, 144);
-            padding: 20px;
-        }
-    
+@media (max-width: 768px) {
+    .main-body {
+        margin-top: 170px; /* Điều chỉnh giá trị này để tạo khoảng cách phù hợp */
+        background-color: rgba(255, 255, 255, 0.8); /* Nền trắng mờ */
+    }
 }
 
-    /* Thêm style cho social links */
-    .social-links a {
-        text-decoration: none;
-        transition: all 0.3s ease;
-        display: inline-block;
-        margin: 0 10px;
-    }
-
-    .social-links a:hover {
-        transform: translateY(-5px);
-    }
-
-    .icon-black {
-        color: rgb(12, 94, 84);
-        margin-top: 5%;
-        font-size: 45px;
-        transition: all 0.3s ease;
-    }
-
-    .social-links a:hover .icon-black {
-        color: #000;
-        text-shadow: 0 0 15px rgb(42, 157, 144);
-    }
-
-    /* Hiệu ứng riêng cho từng icon */
-    .fa-facebook:hover {
-        color: #1877f2 !important;
-    }
-
-    .fa-instagram:hover {
-        background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
-        background: -webkit-linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        text-fill-color: transparent;
-        color: transparent;
-    }
-
-    .fa-comments:hover {
-        color: #0068ff !important;
-    }
-
-    .fa-phone:hover {
-        color: #25D366 !important;
-    }
-
+/* ... existing styles ... */
     </style>
+
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
 </head>
 <body>
     <!-- Header Section -->
@@ -209,36 +155,28 @@
         <a href="/lienhe.html"><span class="icon">📮</span> Liên hệ tôi</a>
         <a href="/dieukhoan.html"><span class="icon">📄</span> Điều khoản</a>
     </div>
-    <!-- Nội dung chính -->
-    <section class="content">
-        <h1>Liên Hệ Với Tôi</h1>
-        <p>Theo dõi và liên hệ tôi qua các mạng xã hội:</p>
-        
-        <!-- Liên kết đến các mạng xã hội với icon -->
-        <div class="social-links">
-            <a href="https://www.facebook.com/cuongcowk" target="_blank">
-                <i class="fab fa-facebook icon-black"></i>
-            </a>
-            <a href="https://www.instagram.com/cuong_cow/" target="_blank">
-                <i class="fab fa-instagram icon-black"></i>
-            </a>
-            <a href="https://zalo.me/84799444052" target="_blank">
-                <i class="fas fa-comments icon-black"></i>
-            </a>
-            <a href="tel:0369225402">
-                <i class="fas fa-phone icon-black"></i>
-            </a>
+    <!-- Thay thẻ thẻ img cũ bằng dotlottie-player -->
+    <dotlottie-player src="https://lottie.host/46ec79c4-e259-47da-a8b7-58f7e0f53189/AIwNNZaw72.lottie" 
+                      background="transparent" 
+                      speed="1" 
+                      style="width: 100%; height: 100vh; position: fixed; top: 0; left: 0; z-index: -1;" 
+                      loop 
+                      autoplay>
+    </dotlottie-player>
+    <!-- Main Body Section -->
+    <div class="main-body">
+        <div class="content-placeholder">
+            <h1>Chào các bạn đến với trang Kỹ năng! </h1>
+            <h2>Khám phá các kỹ năng cần thiết để chuẩn bị cho đợt trại của bạn.</h2>
+            <h3>Lưu ý: Các Tool giúp người ra mật thư thử nghiệm lại mật thư và tạo đề mật thư nhanh chóng.</h3>
+            <h4> Các bạn tránh lạm dụng tool này để giải mật thư, nhằm tránh bào mòn thế hệ tương lai </h4>
         </div>
-    </section>
-
-
-
+    </div>
 
     <!-- Footer Section -->
     <footer>
         &copy; 2024 Đam Mê Kỹ Năng
     </footer>
-
     <script>
         // Toggle Sidebar and Menu Icon Animation
         function toggleSidebar() {
@@ -265,7 +203,7 @@
         sidebar.classList.remove('active');
         menuIcon.classList.remove('active');
     }
-    // Lấy tất cả các phần tử có class 'has-submenu'
+    // Lấy tất cả các phần t��� có class 'has-submenu'
 const submenuTriggers = document.querySelectorAll('.has-submenu');
 
 submenuTriggers.forEach(trigger => {
