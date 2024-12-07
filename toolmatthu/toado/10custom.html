@@ -741,60 +741,65 @@
     });
   });
 </script>
-
-<!-- Thêm modal vào body -->
-<div class="modal-overlay" id="modalOverlay"></div>
-<div class="login-modal" id="loginModal">
-    <h3>Thông báo đăng nhập</h3>
-    <p>Bạn cần đăng nhập để dùng các công cụ tool. Vì một số lý do cộng đồng nên rất cần thiết để quản lý người dùng.</p>
-    <div class="modal-buttons">
-        <a href="/login.html" class="modal-btn modal-login">Đăng nhập</a>
-        <a href="/register.html" class="modal-btn modal-register">Đăng ký</a>
+   <!-- Thêm modal vào body -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="login-modal" id="loginModal">
+        <h3>Thông báo đăng nhập</h3>
+        <p>Bạn cần đăng nhập để dùng các công cụ tool. Vì một số lý do cộng đồng nên rất cần thiết để quản lý người dùng.</p>
+        <div class="modal-buttons">
+            <a href="/login.html" class="modal-btn modal-login">Đăng nhập</a>
+            <a href="/register.html" class="modal-btn modal-register">Đăng ký</a>
+        </div>
     </div>
-</div>
-<script>
-    // Thêm hàm kiểm tra đăng nhập và hiển thị modal
-    function showLoginModal() {
-        document.getElementById('modalOverlay').style.display = 'block';
-        document.getElementById('loginModal').style.display = 'block';
-    }
+    <script>
+        // Thêm hàm kiểm tra đăng nhập và hiển thị modal
+        function showLoginModal() {
+            document.getElementById('modalOverlay').style.display = 'block';
+            document.getElementById('loginModal').style.display = 'block';
+        }
 
-    // Cập nhật các event listener cho menu items
-    document.addEventListener('DOMContentLoaded', function() {
-        const currentUser = localStorage.getItem('currentUser');
-        const loginBtn = document.getElementById('loginBtn');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const userDisplay = document.getElementById('userDisplay');
-        
-        // Thêm event listeners cho các menu items cần bảo vệ
-        const protectedMenuItems = document.querySelectorAll('.dropdown-content a[href*="thaythe"], .dropdown-content a[href*="doicho"], .dropdown-content a[href="toado"]');
-        
-        protectedMenuItems.forEach(item => {
-            item.addEventListener('click', function(e) {
+        // Cập nhật các event listener cho menu items
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = localStorage.getItem('currentUser');
+            const loginBtn = document.getElementById('loginBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const userDisplay = document.getElementById('userDisplay');
+            
+            // Thêm event listeners cho các menu items cần bảo vệ
+            const protectedMenuItems = document.querySelectorAll('.dropdown-content a[href*="thaythe"], .dropdown-content a[href*="doicho"], .dropdown-content a[href*="toado"]');
+            
+            protectedMenuItems.forEach(item => {
                 if (!currentUser) {
-                    e.preventDefault();
-                    showLoginModal();
+                    // Thêm icon khóa và class locked
+                    item.classList.add('locked-item');
+                    item.innerHTML += ' <span class="lock-icon">🔒</span>';
+                    
+                    // Thay thế href bằng javascript:void(0)
+                    item.setAttribute('href', 'javascript:void(0)');
+                    
+                    item.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        showLoginModal();
+                    });
                 }
             });
-        });
 
-        // Đóng modal khi click bên ngoài
-        document.getElementById('modalOverlay').addEventListener('click', function() {
-            this.style.display = 'none';
-            document.getElementById('loginModal').style.display = 'none';
+            // Đóng modal khi click bên ngoài
+            document.getElementById('modalOverlay').addEventListener('click', function() {
+                this.style.display = 'none';
+                document.getElementById('loginModal').style.display = 'none';
+            });
+            
+            if (currentUser) {
+                loginBtn.style.display = 'none';
+                logoutBtn.style.display = 'inline-block';
+                userDisplay.textContent = `${currentUser}`;
+            } else {
+                loginBtn.style.display = 'inline-block';
+                logoutBtn.style.display = 'none';
+                userDisplay.textContent = '';
+            }
         });
-        
-        if (currentUser) {
-            loginBtn.style.display = 'none';
-            logoutBtn.style.display = 'inline-block';
-            userDisplay.textContent = `${currentUser}`;
-        } else {
-            loginBtn.style.display = 'inline-block';
-            logoutBtn.style.display = 'none';
-            userDisplay.textContent = '';
-        }
-    });
-</script>
-
+    </script>
 </body>
 </html>
