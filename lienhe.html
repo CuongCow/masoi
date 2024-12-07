@@ -36,20 +36,11 @@
         }
         
 
-        .content p {
-            font-size: 20px;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.5;
-            text-shadow: 1px 1px 3px rgb(42, 157, 144);
-        }
-
-
         @media (max-width: 768px) {
     .content {
-            text-align: 10;
+            text-align: center;
             color: rgb(42, 157, 144);
-            padding: 100px 50px 60px 24px;
+            padding: 20px;
         }
     
 }
@@ -68,7 +59,7 @@
 
     .icon-black {
         color: rgb(12, 94, 84);
-        margin-top: 40%;
+        margin-top: 5%;
         font-size: 45px;
         transition: all 0.3s ease;
     }
@@ -84,9 +75,13 @@
     }
 
     .fa-instagram:hover {
+        background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
         background: -webkit-linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
         -webkit-background-clip: text;
+        background-clip: text;
         -webkit-text-fill-color: transparent;
+        text-fill-color: transparent;
+        color: transparent;
     }
 
     .fa-comments:hover {
@@ -318,7 +313,7 @@ submenuTriggers.forEach(trigger => {
             const userDisplay = document.getElementById('userDisplay');
             
             // Thêm event listeners cho các menu items cần bảo vệ
-            const protectedMenuItems = document.querySelectorAll('.dropdown-content a[href*="thaythe"], .dropdown-content a[href*="doicho"], .dropdown-content a[href="#"]');
+            const protectedMenuItems = document.querySelectorAll('.dropdown-content a[href*="thaythe"], .dropdown-content a[href*="doicho"], .dropdown-content a[href="toado"]');
             
             protectedMenuItems.forEach(item => {
                 item.addEventListener('click', function(e) {
