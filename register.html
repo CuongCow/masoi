@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng Ký - Đam Mê Kỹ Năng</title>
     <link rel="icon" href="/logo/logoweb-dammekynang.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -16,24 +17,48 @@
         body {
             font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding-top: 90px;
             min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
         .container {
+            position: relative;
             max-width: 800px;
-            margin: 0 auto;
-            padding: 30px 40px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            width: 100%;
+            padding: 80px 40px 40px;
+            margin: 60px 20px;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(42, 157, 144, 0.15);
             backdrop-filter: blur(10px);
-            transform: translateY(20px);
-            opacity: 0;
-            animation: fadeIn 0.6s ease forwards;
         }
 
-        @keyframes fadeIn {
+        .logo-container {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 100px;
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            animation: floatAnimation 3s ease-in-out infinite;
+        }
+
+        @keyframes floatAnimation {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -42,27 +67,106 @@
 
         h1 {
             text-align: center;
-            color: #2a9d8f;
-            margin-bottom: 30px;
-            font-size: 2em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            position: relative;
-        }
-
-        h1::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(90deg, #2a9d8f, #64dfdf);
-            border-radius: 2px;
+            color: rgb(42, 157, 144);
+            margin: 15px 0 25px 0;
+            font-size: 1.6em;
+            font-weight: 600;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            color: rgb(42, 157, 144);
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="tel"],
+        input[type="url"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 15px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: rgb(42, 157, 144);
+            box-shadow: 0 0 0 4px rgba(42, 157, 144, 0.1);
+            outline: none;
+        }
+
+        .btn {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+                /* Style cho button group */
+                .button-group {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            width: 100%;
+            max-width: 5000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(42, 157, 143, 0.2);
+        }
+
+        .btn-primary {
+            background: rgb(42, 157, 144);
+            color: white;
+            border: none;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: rgb(42, 157, 144);
+            border: 1.5px solid rgb(42, 157, 144);
+            text-decoration: none;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(42, 157, 143, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .form-group {
+            margin-bottom: 10px;
             position: relative;
         }
 
@@ -131,7 +235,7 @@
         button {
             width: 100%;
             padding: 12px;
-            background: linear-gradient(135deg, #2a9d8f 0%, #264653 100%);
+            background: linear-gradient(135deg, #2a9d8f 0%, #158eb3 100%);
             color: white;
             border: none;
             border-radius: 10px;
@@ -239,8 +343,9 @@
         /* Mobile optimization */
         @media (max-width: 768px) {
             .container {
-                margin: 10px;
-                padding: 15px;
+                margin: 40px 15px;
+                padding: 70px 20px 30px;
+                max-width: 100%;
             }
             
             .form-group {
@@ -268,61 +373,6 @@
             }
         }
 
-        /* Style cho button group */
-        .button-group {
-            grid-column: 1 / -1;
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 30px;
-            width: 100%;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Style chung cho các nút */
-        .btn {
-            flex: 1;
-            width: 100%;
-            min-width: 160px;
-            max-width: 200px;
-            padding: 12px 20px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-sizing: border-box;
-        }
-
-        /* Nút đăng ký */
-        .btn-primary {
-            background: linear-gradient(135deg, #2a9d8f 0%, #264653 100%);
-            color: white;
-            border: none;
-        }
-
-        /* Nút đăng nhập */
-        .btn-outline {
-            background: white;
-            color: #2a9d8f;
-            border: 2px solid #2a9d8f;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(42, 157, 143, 0.2);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
         /* Responsive cho mobile */
         @media (max-width: 768px) {
             .button-group {
@@ -332,32 +382,76 @@
                 max-width: 100%;
             }
             
-            .btn {
+            .btn-primary {
                 width: 100%;
                 max-width: 250px;
-                min-width: unset;
             }
+
+            .btn-outline {
+                width: 100%;
+                max-width: 220px;
+            }
+        }
+
+        .form-group label i {
+            color: rgb(42, 157, 144);
+            width: 20px;
+            margin-right: 8px;
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        /* Hiệu ứng hover cho icons */
+        .form-group:hover label i {
+            transform: scale(1.1);
+        }
+
+        .logo-container a {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .logo-container a:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="/logo/logoweb-dammekynang.png" alt="Đam Mê Kỹ Năng">
+            </a>
+        </div>
         <h1>Đăng Ký Tài Khoản</h1>
         <form id="registerForm" onsubmit="return validateForm(event)">
             <div class="form-group">
-                <label for="fullname">Họ và tên *</label>
+                <label for="fullname">
+                    <i class="fas fa-user"></i>
+                    Họ và tên *
+                </label>
                 <input type="text" id="fullname" name="fullname" required>
                 <div class="error" id="fullname-error">Vui lòng nhập họ và tên</div>
             </div>
 
             <div class="form-group">
-                <label for="age">Tuổi *</label>
+                <label for="age">
+                    <i class="fas fa-birthday-cake"></i>
+                    Tuổi *
+                </label>
                 <input type="number" id="age" name="age" min="1" max="100" required>
                 <div class="error" id="age-error">Vui lòng nhập tuổi hợp lệ</div>
             </div>
 
             <div class="form-group">
-                <label for="province">Tỉnh/Thành phố *</label>
+                <label for="province">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Tỉnh/Thành phố *
+                </label>
                 <select id="province" name="province" required onchange="loadDistricts()">
                     <option value="">Chọn Tỉnh/Thành phố</option>
                 </select>
@@ -365,7 +459,10 @@
             </div>
 
             <div class="form-group">
-                <label for="district">Quận/Huyện *</label>
+                <label for="district">
+                    <i class="fas fa-building"></i>
+                    Quận/Huyện *
+                </label>
                 <select id="district" name="district" required onchange="loadWards()" disabled>
                     <option value="">Chọn Quận/Huyện</option>
                 </select>
@@ -373,7 +470,10 @@
             </div>
 
             <div class="form-group">
-                <label for="ward">Xã/Phường *</label>
+                <label for="ward">
+                    <i class="fas fa-home"></i>
+                    Xã/Phường *
+                </label>
                 <select id="ward" name="ward" required disabled>
                     <option value="">Chọn Xã/Phường</option>
                 </select>
@@ -381,19 +481,28 @@
             </div>
 
             <div class="form-group">
-                <label for="phone">Số điện thoại *</label>
+                <label for="phone">
+                    <i class="fas fa-phone"></i>
+                    Số điện thoại *
+                </label>
                 <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
                 <div class="error" id="phone-error">Vui lòng nhập số điện thoại hợp lệ</div>
             </div>
 
             <div class="form-group">
-                <label for="facebook">Link Facebook *</label>
+                <label for="facebook">
+                    <i class="fab fa-facebook"></i>
+                    Link Facebook *
+                </label>
                 <input type="url" id="facebook" name="facebook" required>
                 <div class="error" id="facebook-error">Đây không phải link facebook.com</div>
             </div>
 
             <div class="form-group">
-                <label for="purpose">Mục đích sử dụng *</label>
+                <label for="purpose">
+                    <i class="fas fa-tasks"></i>
+                    Mục đích sử dụng *
+                </label>
                 <select id="purpose" name="purpose" required onchange="toggleOtherPurpose()">
                     <option value="">Chọn mục đích</option>
                     <option value="curious">Tò mò</option>
@@ -406,20 +515,32 @@
             </div>
 
             <div class="form-group">
-                <label for="username">Tên đăng nhập *</label>
+                <label for="username">
+                    <i class="fas fa-user-circle"></i>
+                    Tên đăng nhập *
+                </label>
                 <input type="text" id="username" name="username" required onblur="checkUsername()">
                 <div class="error" id="username-error">Vui lòng nhập tên đăng nhập</div>
             </div>
 
             <div class="form-group">
-                <label for="password">Mật khẩu *</label>
+                <label for="password">
+                    <i class="fas fa-lock"></i>
+                    Mật khẩu *
+                </label>
                 <input type="password" id="password" name="password" required>
                 <div class="error" id="password-error">Mật khẩu phải chứa ít nhất 1 chữ thường, 1 chữ in hoa, 1 số và 1 ký tự đặc biệt</div>
             </div>
 
             <div class="button-group">
-                <button type="submit" class="btn btn-primary">Đăng Ký</button>
-                <button type="button" class="btn btn-outline" onclick="window.location.href='login.html'">Đăng Nhập</button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i>
+                    Đăng Ký
+                </button>
+                <button type="button" class="btn btn-outline" onclick="window.location.href='login.html'">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Đăng Nhập
+                </button>
             </div>
         </form>
     </div>
