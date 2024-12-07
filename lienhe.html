@@ -12,7 +12,7 @@
                 /* Nội dung chính */
                 .content {
             text-align: center;
-            color: rgb(42, 157, 144);
+            color: rgb(17, 104, 94);
             margin-top: 10%;
         }
 
@@ -54,7 +54,48 @@
     
 }
 
+    /* Thêm style cho social links */
+    .social-links a {
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-block;
+        margin: 0 10px;
+    }
 
+    .social-links a:hover {
+        transform: translateY(-5px);
+    }
+
+    .icon-black {
+        color: rgb(12, 94, 84);
+        margin-top: 40%;
+        font-size: 45px;
+        transition: all 0.3s ease;
+    }
+
+    .social-links a:hover .icon-black {
+        color: #000;
+        text-shadow: 0 0 15px rgb(42, 157, 144);
+    }
+
+    /* Hiệu ứng riêng cho từng icon */
+    .fa-facebook:hover {
+        color: #1877f2 !important;
+    }
+
+    .fa-instagram:hover {
+        background: -webkit-linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .fa-comments:hover {
+        color: #0068ff !important;
+    }
+
+    .fa-phone:hover {
+        color: #25D366 !important;
+    }
 
     </style>
 </head>
@@ -180,16 +221,16 @@
         
         <!-- Liên kết đến các mạng xã hội với icon -->
         <div class="social-links">
-            <a href="https://www.facebook.com/cuongcowk" target="_turquoise" style="color: white; margin: 0 10px;">
+            <a href="https://www.facebook.com/cuongcowk" target="_blank">
                 <i class="fab fa-facebook icon-black"></i>
             </a>
-            <a href="https://www.instagram.com/cuong_cow/" target="_turquoise" style="color: white; margin: 0 10px;">
+            <a href="https://www.instagram.com/cuong_cow/" target="_blank">
                 <i class="fab fa-instagram icon-black"></i>
             </a>
-            <a href="https://zalo.me/84799444052" target="_turquoise" style="color: white; margin: 0 10px;">
+            <a href="https://zalo.me/84799444052" target="_blank">
                 <i class="fas fa-comments icon-black"></i>
             </a>
-            <a href="tel:0369225402" style="color: white; margin: 0 10px;">
+            <a href="tel:0369225402">
                 <i class="fas fa-phone icon-black"></i>
             </a>
         </div>
