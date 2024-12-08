@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/logo/logoweb-dammekynang.png" type="image/png">
+    <title>Bảng-Hàng-Cột</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+
+
+        .main-title {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 3em;
+            margin-top: 60px;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            font-weight: bold;
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 30px auto;
+            background-color: white;
+            box-shadow: 0 0 25px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            width: 90%;
+            max-width: 900px;
+        }
+
+        th, td {
+            border: 1px solid rgba(0,0,0,0.1);
+            padding: 20px;
+            text-align: center;
+            min-width: 60px;
+            font-size: 1.1em;
+        }
+
+        .header {
+            font-weight: bold;
+            background-color: #2a9d8f;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.2em;
+        }
+
+        .sub-cell {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 10px;
+            border-right: 1px solid rgba(126, 87, 87, 0.363);
+            background-color: white;
+            transition: all 0.3s ease;
+            font-size: 1.2em;
+        }
+
+        .sub-cell:last-child {
+            border-right: none;
+        }
+
+        .sub-cell:hover {
+            background-color: #f8f9fa;
+            transform: scale(1.1);
+            z-index: 1;
+        }
+
+        /* Đặc biệt cho hàng số */
+        .number-cell .sub-cell {
+            background-color: #2a9d8f;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .number-cell .sub-cell:hover {
+            transform: none;
+            cursor: default;
+        }
+
+        .input-container {
+            text-align: center;
+            margin: 20px auto;
+            width: 100%;
+            min-height: 200px;
+            padding: 20px;
+            border-radius: 20px;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-container:first-child {
+            margin-top: 0;
+        }
+
+        .input-container:last-child {
+            margin-bottom: 0;
+        }
+
+        .input-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .input-container:not(:last-child) {
+            border-bottom: 1px solid #eef2f7;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .input-title {
+            color: #2c3e50;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .input-title i {
+            color: #2a9d8f;
+        }
+
+        .input-row {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 10px 0;
+            flex: 1;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .input-group.centered {
+            max-width: 400px;
+        }
+
+        .input-group label {
+            color: #2a9d8f;
+            margin-bottom: 5px;
+            font-weight: 500;
+            font-size: 0.95em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-group label i {
+            color: #2a9d8f;
+        }
+
+        .custom-input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background-color: #f8f9fa;
+        }
+
+        .custom-input:focus {
+            outline: none;
+            border-color: #2a9d8f;
+            box-shadow: 0 0 15px rgba(74, 144, 226, 0.2);
+            background-color: white;
+        }
+
+        .custom-button {
+            min-width: 160px;
+            padding: 10px 20px;
+            margin: 15px auto;
+            background-color: #2a9d8f;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .custom-button:hover {
+            background-color: #2a9d8f;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        .result-display {
+            width: 100%;
+            min-width: 200px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1em;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-break: break-word;
+            overflow: hidden;
+            letter-spacing: 1px;
+        }
+
+        .result-char {
+            display: inline-block;
+            padding: 2px 4px;
+            margin: 2px;
+            background-color: #2a9d8f;
+            color: white;
+            border-radius: 4px;
+            min-width: 25px;
+            text-align: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-display:not(:empty) {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .letter-cell {
+            padding: 0 !important;
+            min-width: 180px;
+        }
+
+        .letter-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        body {
+            padding-top: 60px;
+        }
+
+        .result-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        .copy-button {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            min-width: 120px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .copy-button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .copy-button i {
+            font-size: 1em;
+        }
+
+        /* Thêm styles cho wrapper */
+        .inputs-wrapper {
+            background-color: white;
+            padding: 25px;
+            margin: 30px auto;
+            border-radius: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 900px;
+        }
+
+        /* Media queries cho thiết bị di động */
+        @media screen and (max-width: 768px) {
+            /* Điều chỉnh container chính */
+            body {
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+
+            /* Điều chỉnh bảng */
+            table {
+                width: 100%;
+                max-width: 100%;
+                margin: 15px auto;
+                font-size: 0.9em;
+            }
+
+            /* Điều chỉnh các ô */
+            .letter-cell {
+                min-width: unset; /* Bỏ min-width */
+                width: auto;
+            }
+
+            th, td {
+                padding: 8px 5px;
+                font-size: 0.85em;
+            }
+
+            /* Điều chỉnh wrapper */
+            .inputs-wrapper {
+                width: 100%;
+                max-width: 100%;
+                padding: 15px 10px;
+                margin: 15px auto;
+                border-radius: 15px;
+            }
+
+            /* Điều chỉnh các container input */
+            .input-container {
+                width: 100%;
+                padding: 10px;
+            }
+
+            /* Điều chỉnh các input */
+            .input-group {
+                width: 100%;
+            }
+
+            .custom-input {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .result-display {
+                font-size: 0.9em;
+                padding: 10px;
+                max-height: 150px;
+            }
+
+            .result-char {
+                padding: 1px 3px;
+                margin: 1px;
+                min-width: 20px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            table {
+                font-size: 0.8em;
+            }
+
+            th, td {
+                padding: 6px 3px;
+                font-size: 0.8em;
+            }
+
+            .inputs-wrapper {
+                padding: 10px 8px;
+            }
+
+            .input-container {
+                padding: 8px;
+            }
+            .main-title {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2em;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            font-weight: bold;
+        }
+
+            .result-display {
+                font-size: 0.85em;
+                padding: 8px;
+                max-height: 120px;
+            }
+        }
+
+        @media screen and (max-width: 320px) {
+            table {
+                font-size: 0.7em;
+            }
+
+            th, td {
+                padding: 4px 2px;
+                font-size: 0.75em;
+            }
+        }
+        
+        
+    </style>
+    <script src="/js/menu.js"></script>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="title-container">
+            <div class="menu-icon" id="menuIcon" onclick="toggleSidebar()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="logo">
+                <a href="/index.html" style="text-decoration: none; color: inherit;">
+                    Đam mê Kỹ năng
+                </a>
+            </div>
+        </div>
+        <div class="header-right">
+            <a href="/login.html" class="login-btn" id="loginBtn">Đăng nhập</a>
+            <span id="userDisplay" style="color: white; font-weight: bold; margin-right: 15px;"></span>
+            <a href="#" onclick="logout()" class="login-btn" id="logoutBtn" style="display: none;">Đăng xuất</a>
+        </div>
+    </header>
+    <div id="sidebar-container"></div>
+
+    <h1 class="main-title">Khóa Bảng-Hàng-Cột</h1>
+
+    <table>
+        <tr>
+            <th colspan="4" class="header">BẢNG</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th class="header">1</th>
+            <th class="header">2</th>
+            <th class="header">3</th>
+        </tr>
+        <tr>
+            <th class="header">HÀNG 1</th>
+            <td class="letter-cell">
+                <div class="letter-container">
+                    <div class="sub-cell" contenteditable="true">A</div>
+                    <div class="sub-cell" contenteditable="true">B</div>
+                    <div class="sub-cell" contenteditable="true">C</div>
+                </div>
+            </td>
+            <td class="letter-cell">
+                <div class="letter-container">
+                    <div class="sub-cell" contenteditable="true">J</div>
+                    <div class="sub-cell" contenteditable="true">K</div>
+                    <div class="sub-cell" contenteditable="true">L</div>
+                </div>
+            </td>
+            <td class="letter-cell">
+                <div class="letter-container">
+                    <div class="sub-cell" contenteditable="true">S</div>
+                    <div class="sub-cell" contenteditable="true">T</div>
+                    <div class="sub-cell" contenteditable="true">U</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th class="header">HÀNG 2</th>
+            <td class="letter-cell">
+                <div class="letter-container">
+                    <div class="sub-cell" contenteditable="true">D</div>
+                    <div class="sub-cell" contenteditable="true">E</div>
+                    <div class="sub-cell" contenteditable="true">F</div>
+                </div>
+            </td>
+            <td class="letter-cell">
+                <div class="letter-container">
+                    <div class="sub-cell" contenteditable="true">M</div>
+                    <div class="sub-cell" contenteditable="true">N</div>
+                    <div class="sub-cell" contenteditable="true">O</div>
+                </div>
+            </td>
+            <td class="letter-cell">
+                <div class="letter-container">
+                    <div class="sub-cell" contenteditable="true">V</div>
+                    <div class="sub-cell" contenteditable="true">W</div>
+                    <div class="sub-cell" contenteditable="true">X</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th class="header">HÀNG 3</th>
+            <td class="letter-cell">
+                <div class="letter-container">
+                    <div class="sub-cell" contenteditable="true">G</div>
+                    <div class="sub-cell" contenteditable="true">H</div>
+                    <div class="sub-cell" contenteditable="true">I</div>
+                </div>
+            </td>
+            <td class="letter-cell">
+                <div class="letter-container">
+                    <div class="sub-cell" contenteditable="true">P</div>
+                    <div class="sub-cell" contenteditable="true">Q</div>
+                    <div class="sub-cell" contenteditable="true">R</div>
+                </div>
+            </td>
+            <td class="letter-cell">
+                <div class="letter-container">
+                    <div class="sub-cell" contenteditable="true">Y</div>
+                    <div class="sub-cell" contenteditable="true">Z</div>
+                    <div class="sub-cell" contenteditable="true"> ️</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th class="header">CỘT</th>
+            <td class="letter-cell number-cell">
+                <div class="letter-container">
+                    <div class="sub-cell">1</div>
+                    <div class="sub-cell">2</div>
+                    <div class="sub-cell">3</div>
+                </div>
+            </td>
+            <td class="letter-cell number-cell">
+                <div class="letter-container">
+                    <div class="sub-cell">1</div>
+                    <div class="sub-cell">2</div>
+                    <div class="sub-cell">3</div>
+                </div>
+            </td>
+            <td class="letter-cell number-cell">
+                <div class="letter-container">
+                    <div class="sub-cell">1</div>
+                    <div class="sub-cell">2</div>
+                    <div class="sub-cell">3</div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    
+    <!-- Thêm container chung cho 3 bảng nhập -->
+    <div class="inputs-wrapper">
+        <!-- 1. Nhập Chữ Cái Theo Tọa Độ -->
+        <div class="input-container">
+            <div class="input-title">
+                <i class="fas fa-edit"></i>
+                Nhập Chữ Cái Theo Tọa Độ
+            </div>
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="letterCoordinates">
+                        <i class="fas fa-map-marker-alt"></i> Tọa độ:
+                    </label>
+                    <input type="text" id="letterCoordinates" class="custom-input" 
+                           placeholder="VD: 123">
+                </div>
+                <div class="input-group">
+                    <label for="newLetter">
+                        <i class="fas fa-font"></i> Chữ cái:
+                    </label>
+                    <input type="text" id="newLetter" class="custom-input" 
+                           placeholder="VD: A" maxlength="1">
+                </div>
+            </div>
+            <button onclick="setLetterByCoordinates()" class="custom-button">
+                <i class="fas fa-sync-alt"></i> Cập nhật
+            </button>
+            <div id="setLetterResult" class="result-display"></div>
+        </div>
+
+        <!-- 2. Đổi Khóa -->
+        <div class="input-container">
+            <div class="input-title">
+                <i class="fas fa-key"></i>
+                Đổi Khóa (Bảng 1, Hàng 1, Cột 1)
+            </div>
+            <div class="input-group centered">
+                <label for="letterInput">
+                    <i class="fas fa-keyboard"></i> Nhập chữ cái:
+                </label>
+                <input type="text" id="letterInput" class="custom-input" 
+                       placeholder="VD: C" maxlength="1">
+            </div>
+            <button onclick="rotateByLetter()" class="custom-button">
+                <i class="fas fa-exchange-alt"></i> Đổi
+            </button>
+            <div id="letterResult" class="result-display"></div>
+        </div>
+
+        <!-- 3. Tìm Chữ Cái -->
+        <div class="input-container">
+            <div class="input-title">
+                <i class="fas fa-search"></i>
+                Nhập bảng mã
+            </div>
+            <div class="input-group centered">
+                <label for="coordinates">
+                    <i class="fas fa-map-marked-alt"></i>Từng tọa độ được nhận biết bằng dấu: , -, _, dấu cách:
+                </label>
+                <input type="text" id="coordinates" class="custom-input" 
+                       placeholder="Nhập bảng mã">
+            </div>
+            <button onclick="findLetter()" class="custom-button">
+                <i class="fas fa-search"></i> Kết quả
+            </button>
+            <div class="result-container">
+                <div id="result" class="result-display"></div>
+                <button id="copyButton" onclick="copyResult()" class="copy-button" style="display: none;">
+                    <i class="fas fa-copy"></i> Sao chép
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    const originalOrder = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ️";
+
+    function findLetter() {
+        const input = document.getElementById('coordinates').value;
+        const coordinates = input.split(/[\s,\-_]+/);
+        
+        let results = [];
+        
+        for (let coord of coordinates) {
+            if (coord.length !== 3 || !/^[123]{3}$/.test(coord)) {
+                alert('Vui lòng nhập các tọa độ hợp lệ (3 số từ 1-3)');
+                return;
+            }
+
+            const [bang, hang, cot] = coord.split('').map(Number);
+            const rows = document.querySelectorAll('tr');
+            const targetRow = rows[hang + 1];
+            if (targetRow) {
+                const cells = targetRow.querySelectorAll('.letter-cell');
+                const targetCell = cells[bang - 1];
+                if (targetCell) {
+                    const subCells = targetCell.querySelectorAll('.sub-cell');
+                    const letter = subCells[cot - 1]?.textContent;
+                    if (letter) {
+                        results.push(letter);
+                    }
+                }
+            }
+        }
+        
+        updateResult(results);
+    }
+
+    function rotateByLetter() {
+        const input = document.getElementById('letterInput').value.toUpperCase();
+        if (!input || input.length !== 1) {
+            alert('Vui lòng nhập một chữ cái');
+            return;
+        }
+
+        // Tìm vị trí của chữ cái trong bảng chữ cái gốc
+        const keyIndex = originalOrder.indexOf(input);
+        if (keyIndex === -1) {
+            alert('Chữ cái không hợp lệ');
+            return;
+        }
+
+        // Tạo chuỗi xoay vòng
+        const rotatedAlphabet = originalOrder.slice(keyIndex) + originalOrder.slice(0, keyIndex);
+
+        // Cập nhật tất cả các ô trong bảng
+        let currentIndex = 0;
+        const allSubCells = document.querySelectorAll('.letter-cell .sub-cell');
+        allSubCells.forEach(cell => {
+            if (!cell.parentElement.parentElement.classList.contains('number-cell')) {
+                cell.textContent = rotatedAlphabet[currentIndex];
+                currentIndex++;
+            }
+        });
+
+        document.getElementById('letterResult').innerHTML = 
+            `Bảng đã được cập nhật với khóa: ${input}`;
+    }
+
+    function setLetterByCoordinates() {
+        const coordinates = document.getElementById('letterCoordinates').value;
+        const newLetter = document.getElementById('newLetter').value.toUpperCase();
+
+        if (coordinates.length !== 3 || !/^[123]{3}$/.test(coordinates)) {
+            alert('Vui lòng nhập các tọa độ hợp lệ (3 số từ 1-3)');
+            return;
+        }
+
+        if (!newLetter || newLetter.length !== 1) {
+            alert('Vui lòng nhập chữ cái hợp lệ');
+            return;
+        }
+
+        // Tạo mng 27 ký tự (A-Z và  ️)
+        const fullAlphabet = [];
+        let currentChar = newLetter;
+        let count = 0;
+        
+        while (count < 27) {
+            if (currentChar === 'Z') {
+                fullAlphabet.push(currentChar);
+                fullAlphabet.push(' ️');
+                currentChar = 'A';
+                count += 2;
+            } else {
+                fullAlphabet.push(currentChar);
+                currentChar = String.fromCharCode(currentChar.charCodeAt(0) + 1);
+                count++;
+            }
+            
+            if (currentChar > 'Z') {
+                currentChar = 'A';
+            }
+        }
+
+        // Tìm vị trí dựa trên tọa độ
+        const [bang, hang, cot] = coordinates.split('').map(Number);
+        const startIndex = ((hang - 1) * 9) + ((bang - 1) * 3) + (cot - 1);
+
+        // Tạo mảng xoay vòng
+        const rotatedAlphabet = [
+            ...fullAlphabet.slice(-startIndex),
+            ...fullAlphabet.slice(0, -startIndex)
+        ];
+
+        // Cập nhật bảng
+        const cells = document.querySelectorAll('.letter-cell .sub-cell');
+        let currentIndex = 0;
+        
+        cells.forEach(cell => {
+            if (!cell.parentElement.parentElement.classList.contains('number-cell')) {
+                cell.textContent = rotatedAlphabet[currentIndex % 27];
+                currentIndex++;
+            }
+        });
+
+        document.getElementById('setLetterResult').innerHTML = 
+            `Bảng đã được cập nhật với chữ cái: ${newLetter} tại vị trí ${coordinates}`;
+    }
+
+    function copyResult() {
+        const resultDiv = document.getElementById('result');
+        // Lấy text không bao gồm HTML tags
+        const resultText = resultDiv.textContent.replace('Kết quả: ', '').trim();
+        
+        navigator.clipboard.writeText(resultText).then(() => {
+            const copyButton = document.getElementById('copyButton');
+            const originalText = copyButton.innerHTML;
+            
+            copyButton.innerHTML = '<i class="fas fa-check"></i> Đã sao chép';
+            copyButton.classList.add('copied');
+            
+            setTimeout(() => {
+                copyButton.innerHTML = originalText;
+                copyButton.classList.remove('copied');
+            }, 2000);
+        });
+    }
+
+    function updateResult(results) {
+        const resultDiv = document.getElementById('result');
+        const copyButton = document.getElementById('copyButton');
+        
+        if (results.length > 0) {
+            let formattedResults = 'Kết quả: ';
+            let htmlContent = '';
+            
+            // Tạo HTML cho t��ng ký tự
+            results.forEach((char, index) => {
+                htmlContent += `<span class="result-char">${char}</span>`;
+                // Xuống hàng sau mỗi 10 ký tự
+                if ((index + 1) % 10 === 0 && index !== results.length - 1) {
+                    htmlContent += '<br>';
+                }
+            });
+            
+            resultDiv.innerHTML = formattedResults + htmlContent;
+            copyButton.style.display = 'flex';
+        } else {
+            resultDiv.innerHTML = 'Không tìm thấy kết quả';
+            copyButton.style.display = 'none';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Cho input chữ cái mới
+        const newLetterInput = document.getElementById('newLetter');
+        newLetterInput.addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+        });
+
+        // Cho input đổi khóa
+        const letterInput = document.getElementById('letterInput');
+        letterInput.addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+        });
+
+        // Cho các ô trong bảng
+        const subCells = document.querySelectorAll('.sub-cell[contenteditable="true"]');
+        subCells.forEach(cell => {
+            cell.addEventListener('input', function() {
+                this.textContent = this.textContent.toUpperCase();
+            });
+        });
+    });
+    </script>
+
+    <!-- Footer Section -->
+    <footer>
+        &copy; 2024 Đam Mê Kỹ Năng
+    </footer>
+    <!-- Thêm modal vào body -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="login-modal" id="loginModal">
+        <h3>Thông báo đăng nhập</h3>
+        <p>Bạn cần đăng nhập để dùng các công cụ tool. Vì một số lý do cộng đồng nên rất cần thiết để quản lý người dùng.</p>
+        <div class="modal-buttons">
+            <a href="/login.html" class="modal-btn modal-login">Đăng nhập</a>
+            <a href="/register.html" class="modal-btn modal-register">Đăng ký</a>
+        </div>
+    </div>
+</body>
+</html>
