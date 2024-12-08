@@ -208,7 +208,7 @@
         }
 
         .result-display {
-            width: 100%;
+            flex: 1;
             min-width: 200px;
             padding: 15px;
             background-color: #f8f9fa;
@@ -218,7 +218,8 @@
             line-height: 1.8;
             white-space: pre-wrap;
             word-break: break-word;
-            overflow: hidden;
+            max-height: 200px;
+            overflow-y: auto;
             letter-spacing: 1px;
         }
 
@@ -267,8 +268,7 @@
 
         .result-container {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            flex-wrap: wrap;
             gap: 10px;
             margin-top: 15px;
             width: 100%;
@@ -288,7 +288,6 @@
             transition: all 0.3s ease;
             min-width: 120px;
             justify-content: center;
-            margin-top: 10px;
         }
 
         .copy-button:hover {
@@ -563,7 +562,7 @@
         <!-- 1. Nhập Chữ Cái Theo Tọa Độ -->
         <div class="input-container">
             <div class="input-title">
-                <i class="fas fa-edit"></i>
+                <i class="fas fa-key"></i>
                 Nhập Chữ Cái Theo Tọa Độ
             </div>
             <div class="input-row">
@@ -588,26 +587,7 @@
             <div id="setLetterResult" class="result-display"></div>
         </div>
 
-        <!-- 2. Đổi Khóa -->
-        <div class="input-container">
-            <div class="input-title">
-                <i class="fas fa-key"></i>
-                Đổi Khóa (Bảng 1, Hàng 1, Cột 1)
-            </div>
-            <div class="input-group centered">
-                <label for="letterInput">
-                    <i class="fas fa-keyboard"></i> Nhập chữ cái:
-                </label>
-                <input type="text" id="letterInput" class="custom-input" 
-                       placeholder="VD: C" maxlength="1">
-            </div>
-            <button onclick="rotateByLetter()" class="custom-button">
-                <i class="fas fa-exchange-alt"></i> Đổi
-            </button>
-            <div id="letterResult" class="result-display"></div>
-        </div>
-
-        <!-- 3. Tìm Chữ Cái -->
+        <!-- 2. Tìm Chữ Cái -->
         <div class="input-container">
             <div class="input-title">
                 <i class="fas fa-search"></i>
@@ -620,14 +600,16 @@
                 <input type="text" id="coordinates" class="custom-input" 
                        placeholder="Nhập bảng mã">
             </div>
-            <button onclick="findLetter()" class="custom-button">
-                <i class="fas fa-search"></i> Kết quả
-            </button>
-            <div class="result-container">
-                <div id="result" class="result-display"></div>
+            <div class="button-group">
+                <button onclick="findLetter()" class="custom-button">
+                    <i class="fas fa-search"></i> Kết quả
+                </button>
                 <button id="copyButton" onclick="copyResult()" class="copy-button" style="display: none;">
                     <i class="fas fa-copy"></i> Sao chép
                 </button>
+            </div>
+            <div class="result-container">
+                <div id="result" class="result-display"></div>
             </div>
         </div>
     </div>
@@ -664,37 +646,6 @@
         }
         
         updateResult(results);
-    }
-
-    function rotateByLetter() {
-        const input = document.getElementById('letterInput').value.toUpperCase();
-        if (!input || input.length !== 1) {
-            alert('Vui lòng nhập một chữ cái');
-            return;
-        }
-
-        // Tìm vị trí của chữ cái trong bảng chữ cái gốc
-        const keyIndex = originalOrder.indexOf(input);
-        if (keyIndex === -1) {
-            alert('Chữ cái không hợp lệ');
-            return;
-        }
-
-        // Tạo chuỗi xoay vòng
-        const rotatedAlphabet = originalOrder.slice(keyIndex) + originalOrder.slice(0, keyIndex);
-
-        // Cập nhật tất cả các ô trong bảng
-        let currentIndex = 0;
-        const allSubCells = document.querySelectorAll('.letter-cell .sub-cell');
-        allSubCells.forEach(cell => {
-            if (!cell.parentElement.parentElement.classList.contains('number-cell')) {
-                cell.textContent = rotatedAlphabet[currentIndex];
-                currentIndex++;
-            }
-        });
-
-        document.getElementById('letterResult').innerHTML = 
-            `Bảng đã được cập nhật với khóa: ${input}`;
     }
 
     function setLetterByCoordinates() {
@@ -758,6 +709,31 @@
             `Bảng đã được cập nhật với chữ cái: ${newLetter} tại vị trí ${coordinates}`;
     }
 
+    function updateResult(results) {
+        const resultDiv = document.getElementById('result');
+        const copyButton = document.getElementById('copyButton');
+        
+        if (results.length > 0) {
+            let formattedResults = 'Kết quả: ';
+            let htmlContent = '';
+            
+            // Tạo HTML cho từng ký tự
+            results.forEach((char, index) => {
+                htmlContent += `<span class="result-char">${char}</span>`;
+                // Xuống hàng sau mỗi 10 ký tự
+                if ((index + 1) % 10 === 0 && index !== results.length - 1) {
+                    htmlContent += '<br>';
+                }
+            });
+            
+            resultDiv.innerHTML = formattedResults + htmlContent;
+            copyButton.style.display = 'flex';
+        } else {
+            resultDiv.innerHTML = 'Không tìm thấy kết quả';
+            copyButton.style.display = 'none';
+        }
+    }
+
     function copyResult() {
         const resultDiv = document.getElementById('result');
         // Lấy text không bao gồm HTML tags
@@ -777,31 +753,6 @@
         });
     }
 
-    function updateResult(results) {
-        const resultDiv = document.getElementById('result');
-        const copyButton = document.getElementById('copyButton');
-        
-        if (results.length > 0) {
-            let formattedResults = 'Kết quả: ';
-            let htmlContent = '';
-            
-            // Tạo HTML cho t��ng ký tự
-            results.forEach((char, index) => {
-                htmlContent += `<span class="result-char">${char}</span>`;
-                // Xuống hàng sau mỗi 10 ký tự
-                if ((index + 1) % 10 === 0 && index !== results.length - 1) {
-                    htmlContent += '<br>';
-                }
-            });
-            
-            resultDiv.innerHTML = formattedResults + htmlContent;
-            copyButton.style.display = 'flex';
-        } else {
-            resultDiv.innerHTML = 'Không tìm thấy kết quả';
-            copyButton.style.display = 'none';
-        }
-    }
-
     document.addEventListener('DOMContentLoaded', function() {
         // Cho input chữ cái mới
         const newLetterInput = document.getElementById('newLetter');
@@ -809,13 +760,6 @@
             this.value = this.value.toUpperCase();
         });
 
-        // Cho input đổi khóa
-        const letterInput = document.getElementById('letterInput');
-        letterInput.addEventListener('input', function() {
-            this.value = this.value.toUpperCase();
-        });
-
-        // Cho các ô trong bảng
         const subCells = document.querySelectorAll('.sub-cell[contenteditable="true"]');
         subCells.forEach(cell => {
             cell.addEventListener('input', function() {
