@@ -1,69 +1,573 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Trang Không Tồn Tại</title>
+    <title>Ma Phương 5x5</title>
+    <link rel="icon" href="/logo/logoweb-dammekynang.png" type="image/png">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #ffffff;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .magic-square {
+            border-collapse: collapse;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: -60px;
         }
-        .container {
+        
+        .magic-square td {
+            width: 60px;
+            height: 60px;
+            border: 1px solid rgb(42, 157, 144);
+            text-align: left;
+            font-size: 20px;
+            position: relative;
+            transition: background-color 0.3s;
+        }
+        
+        .magic-square input {
+            width: 40px;
+            height: 40px;
+            border: none;
+            text-align: left;
+            font-size: 20px;
+            padding: 2px 5px;
+            margin: 0;
+            position: absolute;
+            top: -5px;
+            left: 8px;
+            background-color: transparent;
+            -moz-appearance: textfield;
+        }
+        
+        .magic-square input::-webkit-outer-spin-button,
+        .magic-square input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+        .magic-square input:hover {
+            background-color: rgba(42, 157, 144, 0.1);
+        }
+        
+        .magic-square input:focus {
+            background-color: rgba(42, 157, 144, 0.2);
+        }
+        
+        .coordinates {
+            font-size: 20px;
+            text-align: center;
+            padding: 5px;
+        }
+        
+        .row-coord {
+            position: absolute;
+            left: -30px;
+            width: 20px;
+        }
+        
+        .col-coord {
+            position: absolute;
+            top: -30px;
+            width: 60px;
+        }
+        
+        .row-coordinates {
+            position: absolute;
+            left: 3%;
+            top: -5.5%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .row-number {
+            height: 59px;
+            font-size: 22px;
+            font-weight: bold;
+            text-align: right;
+            padding-left: 165px;
+            width: 30px;
+            color: rgba(42, 157, 144, 0.63);
+        }
+        
+        .col-coordinates {
+            position: absolute;
+            top: -13%;
+            left: 6%;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(5, 64px);
+        }
+        
+        .col-number {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            padding-left: 180px;
+            color: rgba(42, 157, 144, 0.63);
+        }
+        
+        .input-form {
+            margin-top: 20px;
             text-align: center;
             padding: 20px;
-            max-width: 8000px;
-            margin: 0 auto;
-            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgb(42, 157, 144);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        p {
-            line-height: 1.6;
-            color: #057c76;
-            margin: 15px 0;
+        
+        .input-form:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .input-form h3 {
+            margin: 0 0 15px 0;
+            color: rgb(42, 157, 144);
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .input-form label {
+            font-size: 16px;
+            margin-right: 5px;
+            color: #495057;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        .input-form input {
+            width: 60px;
+            height: 35px;
+            margin: 0 15px 0 5px;
+            text-align: center;
+            font-size: 16px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            padding: 5px;
+            transition: border-color 0.2s;
+        }
+        
+        .input-form input:focus {
+            border-color: rgb(42, 157, 144);
+        }
+        
+        .input-form button {
+            margin-left: 15px;
+            padding: 8px 20px;
+            font-size: 16px;
+            background-color: rgb(42, 157, 144);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        
+        .input-form button:hover {
+            background-color: rgb(34, 139, 126);
+            transform: scale(1.05);
+        }
+        
+        .input-form button:active {
+            transform: scale(0.95);
+        }
+        
+        #message {
+            padding: 5px;
+            color: rgb(42, 157, 144);
+            font-weight: 500;
+        }
+        
+        .cell-letter {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: rgb(42, 157, 144);
+        }
+        
+        .main-title {
+            text-align: center;
+            color: rgb(42, 157, 144);
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 90px 10px;  /* Điều chỉnh margin */
+            position: relative;
+            letter-spacing: 2px;
+        }
+        
+        
+        .input-form i {
+            margin-right: 5px;
+            color: rgb(42, 157, 144);
+        }
+        
+        .input-form button i {
+            color: white;
+        }
+        
+        .input-form h3 i {
             font-size: 20px;
         }
-        .animation {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 20px auto;
-        }
-        .message-text {
-            margin: 20px 0;
-            padding: 0 20px;
+        
+        #copyMessage i {
+            color: #28a745;
         }
     </style>
+        <script src="/js/menu.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="animation">
-            <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
-            <dotlottie-player 
-                src="https://lottie.host/9138bcc0-0e4f-4ed8-86b2-f96760d8b55f/Zh29NYhr1j.lottie" 
-                background="transparent" 
-                speed="1" 
-                style="width: 400px; height: 400px" 
-                loop 
-                autoplay>
-            </dotlottie-player>
+    <!-- Header Section -->
+    <header>
+        <div class="title-container">
+            <div class="menu-icon" id="menuIcon" onclick="toggleSidebar()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="logo">
+                <a href="/index.html" style="text-decoration: none; color: inherit;">
+                    Đam mê Kỹ năng
+                </a>
+            </div>
+        </div>
+        <div class="header-right">
+            <a href="/login.html" class="login-btn" id="loginBtn">Đăng nhập</a>
+            <span id="userDisplay" style="color: white; font-weight: bold; margin-right: 15px;"></span>
+            <a href="#" onclick="logout()" class="login-btn" id="logoutBtn" style="display: none;">Đăng xuất</a>
+        </div>
+    </header>
+
+    <h1 class="main-title">Khóa Ma Phương 5x5</h1>
+
+    <div id="sidebar-container"></div>
+    <div style="position: relative; width: fit-content; margin: 50px auto;">
+        <div class="col-coordinates">
+            <div class="col-number">1</div>
+            <div class="col-number">2</div>
+            <div class="col-number">3</div>
+            <div class="col-number">4</div>
+            <div class="col-number">5</div>
+        </div>
+        
+        <div class="row-coordinates">
+            <div class="row-number">1</div>
+            <div class="row-number">2</div>
+            <div class="row-number">3</div>
+            <div class="row-number">4</div>
+            <div class="row-number">5</div>
         </div>
 
-        <div class="message-text">
-            <p>
-                Bạn đợi mình chút nhé, mình đang cố gắng nổ lực làm các công cụ hỗ trợ mật thư. Sẽ không lâu đâu, thời gian ngắn thôi
-            </p>
-            <p>
-                Hãy quay lại đây sau
-            </p>
-            <p>
-                Nếu bạn có ý tưởng gì hay ho thú vị hãy liên hệ tôi ngay lập tức nhé, tôi sẽ phát triển ý tưởng đó của bạn
-            </p>
+        <table class="magic-square">
+            <tr>
+                <td><input type="number" value="3"><span class="cell-letter" contenteditable="true">A</span></td>
+                <td><input type="number" value="16"><span class="cell-letter" contenteditable="true">B</span></td>
+                <td><input type="number" value="9"><span class="cell-letter" contenteditable="true">C</span></td>
+                <td><input type="number" value="22"><span class="cell-letter" contenteditable="true">D</span></td>
+                <td><input type="number" value="15"><span class="cell-letter" contenteditable="true">E</span></td>
+            </tr>
+            <tr>
+                <td><input type="number" value="20"><span class="cell-letter" contenteditable="true">F</span></td>
+                <td><input type="number" value="8"><span class="cell-letter" contenteditable="true">G</span></td>
+                <td><input type="number" value="21"><span class="cell-letter" contenteditable="true">H</span></td>
+                <td><input type="number" value="14"><span class="cell-letter" contenteditable="true">I</span></td>
+                <td><input type="number" value="2"><span class="cell-letter" contenteditable="true">J</span></td>
+            </tr>
+            <tr>
+                <td><input type="number" value="7"><span class="cell-letter" contenteditable="true">K</span></td>
+                <td><input type="number" value="25"><span class="cell-letter" contenteditable="true">L</span></td>
+                <td><input type="number" value="13"><span class="cell-letter" contenteditable="true">M</span></td>
+                <td><input type="number" value="1"><span class="cell-letter" contenteditable="true">N</span></td>
+                <td><input type="number" value="19"><span class="cell-letter" contenteditable="true">O</span></td>
+            </tr>
+            <tr>
+                <td><input type="number" value="24"><span class="cell-letter" contenteditable="true">P</span></td>
+                <td><input type="number" value="12"><span class="cell-letter" contenteditable="true">Q</span></td>
+                <td><input type="number" value="5"><span class="cell-letter" contenteditable="true">R</span></td>
+                <td><input type="number" value="18"><span class="cell-letter" contenteditable="true">S</span></td>
+                <td><input type="number" value="6"><span class="cell-letter" contenteditable="true">T</span></td>
+            </tr>
+            <tr>
+                <td><input type="number" value="11"><span class="cell-letter" contenteditable="true">U</span></td>
+                <td><input type="number" value="4"><span class="cell-letter" contenteditable="true">V</span></td>
+                <td><input type="number" value="17"><span class="cell-letter" contenteditable="true">W</span></td>
+                <td><input type="number" value="10"><span class="cell-letter" contenteditable="true">X</span></td>
+                <td><input type="number" value="23"><span class="cell-letter" contenteditable="true">Y</span></td>
+            </tr>
+        </table>
+        <div id="message" style="text-align: center; margin-top: 20px; font-size: 16px;"></div>
+
+        <div class="input-form">
+            <h3><i class="fas fa-map-marker-alt"></i> Nhập tọa độ</h3>
+            <label><i class="fas fa-arrows-alt-v"></i> Hàng:</label>
+            <input type="number" id="rowInput" min="1" max="5">
+            <label><i class="fas fa-arrows-alt-h"></i> Cột:</label>
+            <input type="number" id="colInput" min="1" max="5">
+            <button onclick="updateValue()"><i class="fas fa-sync-alt"></i> Cập nhật Ma phương</button>
         </div>
+
+        <div class="input-form">
+            <h3><i class="fas fa-key"></i> Nhập khóa chữ cái theo tọa độ</h3>
+            <label><i class="fas fa-font"></i> Chữ cái:</label>
+            <input type="text" id="letterKeyInput" maxlength="1">
+            <label><i class="fas fa-arrows-alt-v"></i> Hàng:</label>
+            <input type="number" id="rowKeyInput" min="1" max="5">
+            <label><i class="fas fa-arrows-alt-h"></i> Cột:</label>
+            <input type="number" id="colKeyInput" min="1" max="5">
+            <button onclick="updateLetterByCoordinates()"><i class="fas fa-edit"></i> Cập nhật chữ cái</button>
+        </div>
+        <div class="input-form">
+            <h3><i class="fas fa-lock"></i> Nhập bản mã</h3>
+            <input type="text" id="numberInput" placeholder="Ví dụ: 1 2,3-4_5" style="width: 500px;">
+            <button onclick="getLetterByNumber()"><i class="fas fa-search"></i> Kết quả</button>
+            <div id="result" style="text-align: center; margin-top: 20px; font-size: 16px;"></div>
+            <button id="copyButton" style="display: none;" onclick="copyResult()"><i class="fas fa-copy"></i> Sao chép kết quả</button>
+            <span id="copyMessage" style="display: none;"><i class="fas fa-check"></i> Đã sao chép kết quả!</span>
+        </div>
+
     </div>
+
+    <script>
+    function updateValue() {
+        const row = parseInt(document.getElementById('rowInput').value);
+        const col = parseInt(document.getElementById('colInput').value);
+        const value = 1;
+        const messageDiv = document.getElementById('message');
+        
+        if (row < 1 || row > 5 || col < 1 || col > 5) {
+            messageDiv.innerHTML = 'Lỗi: Hàng và cột phải từ 1 đến 5';
+            messageDiv.style.color = 'red';
+            return;
+        }
+        
+        // Xóa tất cả các ô trước khi điền lại
+        clearAllCells();
+        
+        // Điền số 1 vào vị trí được chọn
+        const cells = document.querySelectorAll('.magic-square tr');
+        const targetCell = cells[row-1].getElementsByTagName('input')[col-1];
+        targetCell.value = value;
+        
+        // Điền các số còn lại
+        let currentRow = row-1;
+        let currentCol = col-1;
+        let currentValue = value;
+        
+        for (let i = 0; i < 24; i++) {
+            [currentRow, currentCol, currentValue] = getNextPosition(currentRow, currentCol, currentValue);
+        }
+        
+        // Hiển thị thông báo kết quả
+        messageDiv.innerHTML = `Đã tạo ma phương với số 1 ở vị trí: Hàng ${row}, Cột ${col}`;
+        messageDiv.style.color = '#28a745';
+        
+        // Xóa giá trị trong form
+        document.getElementById('rowInput').value = '';
+        document.getElementById('colInput').value = '';
+    }
+
+    function clearAllCells() {
+        const inputs = document.querySelectorAll('.magic-square input');
+        inputs.forEach(input => input.value = '');
+    }
+
+    function getNextPosition(currentRow, currentCol, currentValue) {
+        // Tính số tiếp theo
+        let nextValue = currentValue + 1;
+        if (nextValue > 25) nextValue = 1;
+        
+        // Tính vị trí tiếp theo (chéo phải trên)
+        let nextRow = currentRow - 1;
+        let nextCol = currentCol + 1;
+        
+        // Xử lý khi vượt ra ngoài bảng
+        if (nextRow < 0 && nextCol > 4) {
+            nextRow = 4;
+            nextCol = 0;
+        } else if (nextRow < 0) {
+            nextRow = 4;
+        } else if (nextCol > 4) {
+            nextCol = 0;
+        }
+        
+        const cells = document.querySelectorAll('.magic-square tr');
+        const nextCell = cells[nextRow].getElementsByTagName('input')[nextCol];
+        
+        // Kiểm tra nếu ô đã có số
+        if (nextCell.value !== '') {
+            nextRow = currentRow + 1;
+            nextCol = currentCol;
+            if (nextRow > 4) {
+                nextRow = 0;
+            }
+        }
+        
+        // Điền số tiếp theo
+        const targetCell = cells[nextRow].getElementsByTagName('input')[nextCol];
+        targetCell.value = nextValue;
+        
+        return [nextRow, nextCol, nextValue];
+    }
+
+    function updateLetter() {
+        const currentLetter = document.getElementById('letterInput').value.toUpperCase();
+        const newLetter = document.getElementById('newLetterInput').value.toUpperCase();
+        
+        if (!currentLetter || !newLetter) {
+            alert('Vui lòng nhập cả hai chữ cái');
+            return;
+        }
+        
+        const letterSpans = document.querySelectorAll('.cell-letter');
+        let found = false;
+        
+        letterSpans.forEach(span => {
+            if (span.textContent === currentLetter) {
+                span.textContent = newLetter;
+                found = true;
+            }
+        });
+        
+        if (!found) {
+            alert('Không tìm thấy chữ cái ' + currentLetter + ' trong bảng');
+        } else {
+            alert('Đã cập nhật chữ cái ' + currentLetter + ' thành ' + newLetter);
+        }
+        
+        // Xóa giá trị trong form
+        document.getElementById('letterInput').value = '';
+        document.getElementById('newLetterInput').value = '';
+    }
+
+    function updateLetterByCoordinates() {
+        const letter = document.getElementById('letterKeyInput').value.toUpperCase();
+        const row = parseInt(document.getElementById('rowKeyInput').value);
+        const col = parseInt(document.getElementById('colKeyInput').value);
+        const messageDiv = document.getElementById('message');
+        
+        if (!letter || row < 1 || row > 5 || col < 1 || col > 5) {
+            messageDiv.innerHTML = 'Lỗi: Vui lòng nhập chữ cái và tọa độ hợp lệ';
+            messageDiv.style.color = 'red';
+            return;
+        }
+        
+        const cells = document.querySelectorAll('.magic-square tr');
+        let currentRow = row - 1;
+        let currentCol = col - 1;
+        let currentLetter = letter.charCodeAt(0);
+        
+        for (let i = 0; i < 5; i++) {
+            for (let j = 0; j < 5; j++) {
+                const targetCell = cells[currentRow].getElementsByTagName('span')[currentCol];
+                targetCell.textContent = String.fromCharCode(currentLetter);
+                
+                // Tăng chữ cái, xoay vòng từ A đến Y
+                currentLetter++;
+                if (currentLetter > 'Y'.charCodeAt(0)) {
+                    currentLetter = 'A'.charCodeAt(0);
+                }
+                
+                // Tính vị trí tiếp theo
+                currentCol++;
+                if (currentCol > 4) {
+                    currentCol = 0;
+                    currentRow++;
+                    if (currentRow > 4) {
+                        currentRow = 0;
+                    }
+                }
+            }
+        }
+        
+        messageDiv.innerHTML = `Đã cập nhật chữ cái từ Hàng ${row}, Cột ${col} và điền xoay vòng từ ${letter}`;
+        messageDiv.style.color = '#28a745';
+        
+        // Xóa giá trị trong form
+        document.getElementById('letterKeyInput').value = '';
+        document.getElementById('rowKeyInput').value = '';
+        document.getElementById('colKeyInput').value = '';
+    }
+
+    function getLetterByNumber() {
+        const numberInput = document.getElementById('numberInput').value;
+        const resultDiv = document.getElementById('result');
+        const copyButton = document.getElementById('copyButton');
+        
+        // Tách chuỗi thành mảng số sử dụng nhiều dấu phân cách
+        const numbers = numberInput.split(/[\s,\-_]+/).map(num => parseInt(num.trim())).filter(num => !isNaN(num));
+        
+        if (numbers.length === 0) {
+            resultDiv.innerHTML = 'Lỗi: Vui lòng nhập ít nhất một số từ 1 đến 25';
+            resultDiv.style.color = 'red';
+            copyButton.style.display = 'none';
+            return;
+        }
+        
+        const cells = document.querySelectorAll('.magic-square tr');
+        let result = '';
+        
+        numbers.forEach(number => {
+            if (number < 1 || number > 25) {
+                result += '?';
+                return;
+            }
+            
+            let found = false;
+            cells.forEach(row => {
+                const inputs = row.getElementsByTagName('input');
+                const spans = row.getElementsByTagName('span');
+                for (let i = 0; i < inputs.length; i++) {
+                    if (parseInt(inputs[i].value) === number) {
+                        result += spans[i].textContent;
+                        found = true;
+                        break;
+                    }
+                }
+            });
+            
+            if (!found) {
+                result += '?';
+            }
+        });
+        
+        resultDiv.innerHTML = result;
+        resultDiv.style.color = '#28a745';
+        
+        // Hiển thị nút sao chép nếu có kết quả
+        copyButton.style.display = result ? 'block' : 'none';
+    }
+
+    function copyResult() {
+        const resultText = document.getElementById('result').innerText;
+        navigator.clipboard.writeText(resultText).then(() => {
+            const copyMessage = document.getElementById('copyMessage');
+            copyMessage.style.display = 'inline';
+            setTimeout(() => {
+                copyMessage.style.display = 'none';
+            }, 2000);
+        }).catch(err => {
+            console.error('Lỗi khi sao chép: ', err);
+            alert('Không thể sao chép kết quả!');
+        });
+    }
+    </script>
+        <!-- Footer Section -->
+        <footer>
+            &copy; 2024 Đam Mê Kỹ Năng
+        </footer>
+        <!-- Thêm modal vào body -->
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="login-modal" id="loginModal">
+            <h3>Thông báo đăng nhập</h3>
+            <p>Bạn cần đăng nhập để dùng các công cụ tool. Vì một số lý do cộng đồng nên rất cần thiết để quản lý người dùng.</p>
+            <div class="modal-buttons">
+                <a href="/login.html" class="modal-btn modal-login">Đăng nhập</a>
+                <a href="/register.html" class="modal-btn modal-register">Đăng ký</a>
+            </div>
+        </div>
 </body>
 </html>
