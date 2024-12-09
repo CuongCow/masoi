@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ma Phương 5x5</title>
     <link rel="icon" href="/logo/logoweb-dammekynang.png" type="image/png">
     <link rel="stylesheet" href="/styles.css">
@@ -198,6 +199,8 @@
             margin: 90px 10px;  /* Điều chỉnh margin */
             position: relative;
             letter-spacing: 2px;
+            width: auto;
+            max-width: 100%;
         }
         
         
@@ -216,6 +219,163 @@
         
         #copyMessage i {
             color: #28a745;
+        }
+
+        /* Media queries cho thiết bị di động */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 1.8rem;
+                margin: 100px 10px;
+                letter-spacing: 1px;
+                width: auto;
+                max-width: 100%;
+                padding: 0 15px;
+                box-sizing: border-box;
+                text-align: center;  /* Đảm bảo căn giữa trên mobile */
+                position: relative;
+                left: 63%;
+                transform: translateX(-50%);
+                white-space: nowrap;  /* Ngăn text bị xuống dòng */
+            }
+
+            .magic-square {
+                transform: scale(0.85);
+                margin-top: -100px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .magic-square td {
+                width: 70px;
+                height: 65px;
+                border: 1px solid rgb(42, 157, 144);
+                text-align: left;
+                font-size: 20px;
+                position: relative;
+                transition: background-color 0.3s;
+            }
+            
+            .row-coordinates {
+                left: 14%;
+            }
+
+            .row-number {
+                padding-left: 0;
+                font-size: 18px;
+            }
+
+            .col-coordinates {
+                left: 20%;
+                top: -8.5%;
+            }
+
+            .col-number {
+                padding-left: 0;
+                font-size: 18px;
+            }
+
+            .input-form {
+                margin: 15px auto;
+                padding: 10px 5px;
+                width: auto;
+                max-width: 90%;
+                box-sizing: border-box;
+            }
+
+            .input-form h3 {
+                font-size: 16px;
+            }
+
+            .input-form label {
+                display: block;
+                width: 100%;
+                text-align: left;
+                margin: 8px 0 4px;
+            }
+
+            .input-form input {
+                width: 100%;
+                max-width: 100%;
+                margin: 5px 0;
+                box-sizing: border-box;
+                padding: 8px;
+            }
+
+            .input-form input[type="text"]#numberInput {
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+
+            .input-form button {
+                width: 100%;
+                margin: 10px 0;
+                padding: 10px;
+                box-sizing: border-box;
+            }
+
+            /* Điều chỉnh khoảng cách giữa các form */
+            .input-form + .input-form {
+                margin-top: 15px;
+            }
+
+            /* Tăng kích thước vùng có thể nhấn cho các nút */
+            .input-form button {
+                min-height: 44px;
+            }
+
+            /* Tăng kích thước vùng nhập liệu */
+            .input-form input {
+                min-height: 44px;
+                font-size: 16px; /* Ngăn iOS zoom khi focus */
+            }
+
+            /* Cải thiện khả năng đọc trên màn hình nhỏ */
+            #result {
+                word-break: break-all;
+                margin: 15px 0;
+                font-size: 18px;
+            }
+
+            #copyMessage {
+                display: block;
+                margin: 10px 0;
+            }
+
+            /* Đảm bảo các icon không làm vỡ layout */
+            .input-form i {
+                margin-right: 5px;
+            }
+
+            /* Điều chỉnh kích thước container chứa form */
+            #form-container {
+                width: 100%;
+                padding: 0 10px;
+                box-sizing: border-box;
+            }
+        }
+
+        /* Media queries cho màn hình rất nhỏ */
+        @media (max-width: 375px) {
+            .main-title {
+                font-size: 1.5rem;
+                margin: 80px 10px;
+                padding: 0 10px;
+            }
+
+            .magic-square {
+                transform: scale(0.75);
+                margin-top: -80px;
+            }
+
+            .input-form h3 {
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+
+            .input-form input,
+            .input-form button {
+                padding: 6px;
+            }
         }
     </style>
         <script src="/js/menu.js"></script>
@@ -380,7 +540,7 @@
         let nextValue = currentValue + 1;
         if (nextValue > 25) nextValue = 1;
         
-        // Tính vị trí tiếp theo (chéo phải trên)
+        // Tính vị trí tiếp theo (chéo ph��i trên)
         let nextRow = currentRow - 1;
         let nextCol = currentCol + 1;
         
