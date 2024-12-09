@@ -527,3 +527,18 @@ dotlottie-player {
     margin-left: 5px;
     font-size: 14px;
 }
+.main-title::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 3px;
+    background-color: rgb(42, 157, 144);
+    border-radius: 2px;
+}
+.main-title:hover::after {
+    width: 300px;
+    transition: width 0.3s ease;
+}
