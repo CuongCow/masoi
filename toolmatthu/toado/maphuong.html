@@ -240,9 +240,7 @@
 
             .magic-square {
                 transform: scale(0.85);
-                margin-top: -100px;
-                margin-left: auto;
-                margin-right: auto;
+                margin: 20px auto;  /* Điều chỉnh margin */
             }
             .magic-square td {
                 width: 70px;
@@ -255,62 +253,43 @@
             }
             
             .row-coordinates {
-                left: 14%;
+                left: 5%;  /* Điều chỉnh vị trí số hàng */
             }
 
             .row-number {
-                padding-left: 0;
-                font-size: 18px;
+                padding-left: 20px;  /* Giảm padding cho số hàng */
+                height: 50px;  /* Điều chỉnh chiều cao */
             }
 
             .col-coordinates {
-                left: 20%;
-                top: -8.5%;
+                left: 8%;  /* Điều chỉnh vị trí số cột */
             }
 
             .col-number {
-                padding-left: 0;
-                font-size: 18px;
+                padding-left: 20px;  /* Giảm padding cho số cột */
             }
 
             .input-form {
+                width: 90%;
                 margin: 15px auto;
-                padding: 10px 5px;
-                width: auto;
-                max-width: 90%;
-                box-sizing: border-box;
-            }
-
-            .input-form h3 {
-                font-size: 16px;
+                padding: 15px;
             }
 
             .input-form label {
-                display: block;
-                width: 100%;
+                display: block;  /* Hiển thị nhãn trên một dòng riêng */
+                margin: 10px 0 5px;
                 text-align: left;
-                margin: 8px 0 4px;
             }
 
             .input-form input {
-                width: 100%;
-                max-width: 100%;
+                width: 90%;
                 margin: 5px 0;
-                box-sizing: border-box;
-                padding: 8px;
-            }
-
-            .input-form input[type="text"]#numberInput {
-                width: 100%;
-                max-width: 100%;
-                box-sizing: border-box;
             }
 
             .input-form button {
-                width: 100%;
-                margin: 10px 0;
-                padding: 10px;
-                box-sizing: border-box;
+                width: 90%;
+                margin: 15px auto;
+                display: block;
             }
 
             /* Điều chỉnh khoảng cách giữa các form */
@@ -358,13 +337,27 @@
         @media (max-width: 375px) {
             .main-title {
                 font-size: 1.5rem;
-                margin: 80px 10px;
-                padding: 0 10px;
+                margin: 30px 10px;
             }
 
             .magic-square {
                 transform: scale(0.75);
-                margin-top: -80px;
+            }
+
+            .row-coordinates {
+                left: 2%;
+            }
+            
+            .col-coordinates {
+                left: 5%;
+            }
+
+            .row-number {
+                padding-left: 10px;
+            }
+
+            .col-number {
+                padding-left: 10px;
             }
 
             .input-form h3 {
@@ -392,6 +385,40 @@
     width: 300px;
     transition: width 0.3s ease;
 }
+.magic-type-selector {
+    text-align: center;
+    margin: 80px auto;
+    margin-top: -5%;
+    width: 300px;
+}
+
+.magic-type-selector select {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid rgb(42, 157, 144);
+    border-radius: 5px;
+    font-size: 16px;
+    color: rgb(42, 157, 144);
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.magic-type-selector select:hover {
+    background-color: rgba(42, 157, 144, 0.1);
+}
+
+.magic-type-selector select:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(42, 157, 144, 0.5);
+}
+
+@media (max-width: 768px) {
+    .magic-type-selector {
+        width: 80%;  /* Điều chỉnh độ rộng dropdown */
+        margin: 20px auto;
+    }
+}
     </style>
         <script src="/js/menu.js"></script>
 </head>
@@ -417,7 +444,14 @@
         </div>
     </header>
 
-    <h1 class="main-title">Khóa Ma Phương 5x5</h1>
+    <h1 class="main-title">Khóa Ma Phương</h1>
+
+    <div class="magic-type-selector">
+        <select id="magicTypeSelect" onchange="changeMagicType()">
+            <option value="variant65">Ma Phương 65 Biến Thiên</option>
+            <option value="rightShift">Ma Phương 65</option>
+        </select>
+    </div>
 
     <div id="sidebar-container"></div>
     <div style="position: relative; width: fit-content; margin: 50px auto;">
@@ -482,6 +516,8 @@
             <input type="number" id="rowInput" min="1" max="5">
             <label><i class="fas fa-arrows-alt-h"></i> Cột:</label>
             <input type="number" id="colInput" min="1" max="5">
+            <label><i class="fas fa-hashtag"></i> Số:</label>
+            <input type="number" id="startValue" min="1" max="25" value="1">
             <button onclick="updateValue()"><i class="fas fa-sync-alt"></i> Cập nhật Ma phương</button>
         </div>
 
@@ -507,10 +543,21 @@
     </div>
 
     <script>
+    let currentMagicType = 'variant65';
+
+    function changeMagicType() {
+        currentMagicType = document.getElementById('magicTypeSelect').value;
+        // Xóa bảng hiện tại
+        clearAllCells();
+        // Reset message
+        document.getElementById('message').innerHTML = 'Đã chuyển sang ' + 
+            document.getElementById('magicTypeSelect').options[document.getElementById('magicTypeSelect').selectedIndex].text;
+    }
+
     function updateValue() {
         const row = parseInt(document.getElementById('rowInput').value);
         const col = parseInt(document.getElementById('colInput').value);
-        const value = 1;
+        const value = parseInt(document.getElementById('startValue').value) || 1;
         const messageDiv = document.getElementById('message');
         
         if (row < 1 || row > 5 || col < 1 || col > 5) {
@@ -519,10 +566,16 @@
             return;
         }
         
+        if (value < 1 || value > 25) {
+            messageDiv.innerHTML = 'Lỗi: Số phải từ 1 đến 25';
+            messageDiv.style.color = 'red';
+            return;
+        }
+        
         // Xóa tất cả các ô trước khi điền lại
         clearAllCells();
         
-        // Điền số 1 vào vị trí được chọn
+        // Điền số được chọn vào vị trí được chọn
         const cells = document.querySelectorAll('.magic-square tr');
         const targetCell = cells[row-1].getElementsByTagName('input')[col-1];
         targetCell.value = value;
@@ -537,12 +590,13 @@
         }
         
         // Hiển thị thông báo kết quả
-        messageDiv.innerHTML = `Đã tạo ma phương với số 1 ở vị trí: Hàng ${row}, Cột ${col}`;
+        messageDiv.innerHTML = `Đã tạo ma phương với số ${value} ở vị trí: Hàng ${row}, Cột ${col}`;
         messageDiv.style.color = '#28a745';
         
         // Xóa giá trị trong form
         document.getElementById('rowInput').value = '';
         document.getElementById('colInput').value = '';
+        document.getElementById('startValue').value = '1';
     }
 
     function clearAllCells() {
@@ -551,38 +605,74 @@
     }
 
     function getNextPosition(currentRow, currentCol, currentValue) {
-        // Tính số tiếp theo
         let nextValue = currentValue + 1;
         if (nextValue > 25) nextValue = 1;
         
-        // Tính vị trí tiếp theo (chéo ph��i trên)
-        let nextRow = currentRow - 1;
-        let nextCol = currentCol + 1;
-        
-        // Xử lý khi vượt ra ngoài bảng
-        if (nextRow < 0 && nextCol > 4) {
-            nextRow = 4;
-            nextCol = 0;
-        } else if (nextRow < 0) {
-            nextRow = 4;
-        } else if (nextCol > 4) {
-            nextCol = 0;
-        }
-        
-        const cells = document.querySelectorAll('.magic-square tr');
-        const nextCell = cells[nextRow].getElementsByTagName('input')[nextCol];
-        
-        // Kiểm tra nếu ô đã có số
-        if (nextCell.value !== '') {
-            nextRow = currentRow + 1;
-            nextCol = currentCol;
-            if (nextRow > 4) {
-                nextRow = 0;
+        let nextRow = currentRow;
+        let nextCol = currentCol;
+
+        switch(currentMagicType) {
+            case 'variant65':
+
+                
+                // Di chuyển sang phải và lên trên
+                nextCol = currentCol + 1;
+                nextRow = currentRow - 1;
+                
+                if (nextRow < 0 && nextCol > 4) {
+                nextRow = 4;
+                nextCol = 0;
+            } else if (nextRow < 0) {
+                nextRow = 4;
+            } else if (nextCol > 4) {
+                nextCol = 0;
             }
+            
+                const cellsVariant65 = document.querySelectorAll('.magic-square tr');
+                const nextCellVariant65 = cellsVariant65[nextRow].getElementsByTagName('input')[nextCol];
+                
+                // Nếu ô đã có số, di chuyển xuống 2 hàng từ vị trí ban đầu
+                if (nextCellVariant65.value !== '') {
+                    nextRow = currentRow + 1;
+                nextCol = currentCol;
+                if (nextRow > 4) {
+                    nextRow = 0;
+                }
+            }
+            break;
+
+            case 'rightShift':
+                // Ma phương dịch phải
+                nextValue = currentValue + 1;
+                if (nextValue > 25) nextValue = 1;
+                
+                // Di chuyển chéo lên trên phải
+                nextRow = currentRow - 1;
+                nextCol = currentCol + 1;
+                
+                // Xử lý vượt biên
+                if (nextRow < 0 && nextCol > 4) {
+                    nextRow = 4;  // Nhảy xuống hàng cuối
+                    nextCol = 0;  // Nhảy về cột đầu
+                } else if (nextRow < 0) {
+                    nextRow = 4;  // Chỉ vượt biên trên: nhảy xuống hàng cuối
+                } else if (nextCol > 4) {
+                    nextCol = 0;  // Chỉ vượt biên phải: nhảy về cột đầu
+                }
+                
+                const cellsRight = document.querySelectorAll('.magic-square tr');
+                const nextCellRight = cellsRight[nextRow].getElementsByTagName('input')[nextCol];
+                
+                if (nextCellRight.value !== '') {
+                    // Nếu ô đã có số: di chuyển sang phi 2 ô từ vị trí hiện tại
+                    nextRow = currentRow;
+                    nextCol = (currentCol + 2) % 5;
+                }
+                break;
         }
         
-        // Điền số tiếp theo
-        const targetCell = cells[nextRow].getElementsByTagName('input')[nextCol];
+        const targetCells = document.querySelectorAll('.magic-square tr');
+        const targetCell = targetCells[nextRow].getElementsByTagName('input')[nextCol];
         targetCell.value = nextValue;
         
         return [nextRow, nextCol, nextValue];
@@ -610,7 +700,7 @@
         if (!found) {
             alert('Không tìm thấy chữ cái ' + currentLetter + ' trong bảng');
         } else {
-            alert('Đã cập nhật chữ cái ' + currentLetter + ' thành ' + newLetter);
+            alert('Đ�� cập nhật chữ cái ' + currentLetter + ' thành ' + newLetter);
         }
         
         // Xóa giá trị trong form
