@@ -377,6 +377,21 @@
                 padding: 6px;
             }
         }
+        .main-title::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 3px;
+    background-color: rgb(42, 157, 144);
+    border-radius: 2px;
+}
+.main-title:hover::after {
+    width: 300px;
+    transition: width 0.3s ease;
+}
     </style>
         <script src="/js/menu.js"></script>
 </head>
