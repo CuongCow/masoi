@@ -240,7 +240,9 @@
 
             .magic-square {
                 transform: scale(0.85);
-                margin: 20px auto;  /* Điều chỉnh margin */
+                margin-top: -100px;
+                margin-left: auto;
+                margin-right: auto;
             }
             .magic-square td {
                 width: 70px;
@@ -253,43 +255,62 @@
             }
             
             .row-coordinates {
-                left: 5%;  /* Điều chỉnh vị trí số hàng */
+                left: 14%;
             }
 
             .row-number {
-                padding-left: 20px;  /* Giảm padding cho số hàng */
-                height: 50px;  /* Điều chỉnh chiều cao */
+                padding-left: 0;
+                font-size: 18px;
             }
 
             .col-coordinates {
-                left: 8%;  /* Điều chỉnh vị trí số cột */
+                left: 20%;
+                top: -8.5%;
             }
 
             .col-number {
-                padding-left: 20px;  /* Giảm padding cho số cột */
+                padding-left: 0;
+                font-size: 18px;
             }
 
             .input-form {
-                width: 90%;
                 margin: 15px auto;
-                padding: 15px;
+                padding: 10px 5px;
+                width: auto;
+                max-width: 90%;
+                box-sizing: border-box;
+            }
+
+            .input-form h3 {
+                font-size: 16px;
             }
 
             .input-form label {
-                display: block;  /* Hiển thị nhãn trên một dòng riêng */
-                margin: 10px 0 5px;
+                display: block;
+                width: 100%;
                 text-align: left;
+                margin: 8px 0 4px;
             }
 
             .input-form input {
-                width: 90%;
+                width: 100%;
+                max-width: 100%;
                 margin: 5px 0;
+                box-sizing: border-box;
+                padding: 8px;
+            }
+
+            .input-form input[type="text"]#numberInput {
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
             }
 
             .input-form button {
-                width: 90%;
-                margin: 15px auto;
-                display: block;
+                width: 100%;
+                margin: 10px 0;
+                padding: 10px;
+                box-sizing: border-box;
             }
 
             /* Điều chỉnh khoảng cách giữa các form */
@@ -415,8 +436,8 @@
 
 @media (max-width: 768px) {
     .magic-type-selector {
-        width: 80%;  /* Điều chỉnh độ rộng dropdown */
-        margin: 20px auto;
+        width: 90%;
+        margin: 15px auto;
     }
 }
     </style>
@@ -549,6 +570,43 @@
         currentMagicType = document.getElementById('magicTypeSelect').value;
         // Xóa bảng hiện tại
         clearAllCells();
+        
+        if (currentMagicType === 'rightShift') {
+            // Thiết lập giá trị cho Ma Phương 65
+            const magicSquare65 = [
+                [3, 16, 9, 22, 15],
+                [20, 8, 21, 14, 2],
+                [7, 25, 13, 1, 19],
+                [24, 12, 5, 18, 6],
+                [11, 4, 17, 10, 23]
+            ];
+            
+            const cells = document.querySelectorAll('.magic-square tr');
+            for (let i = 0; i < 5; i++) {
+                const inputs = cells[i].getElementsByTagName('input');
+                for (let j = 0; j < 5; j++) {
+                    inputs[j].value = magicSquare65[i][j];
+                }
+            }
+        } else {
+            // Thiết lập giá trị cho Ma Phương 65 Biến Thiên (giữ nguyên giá trị cũ)
+            const magicSquareVariant = [
+                [10, 12, 19, 21, 3],
+                [11, 18, 25, 2, 9],
+                [17, 24, 1, 8, 15],
+                [23, 5, 7, 14, 16],
+                [4, 6, 13, 20, 22]
+            ];
+            
+            const cells = document.querySelectorAll('.magic-square tr');
+            for (let i = 0; i < 5; i++) {
+                const inputs = cells[i].getElementsByTagName('input');
+                for (let j = 0; j < 5; j++) {
+                    inputs[j].value = magicSquareVariant[i][j];
+                }
+            }
+        }
+        
         // Reset message
         document.getElementById('message').innerHTML = 'Đã chuyển sang ' + 
             document.getElementById('magicTypeSelect').options[document.getElementById('magicTypeSelect').selectedIndex].text;
@@ -664,7 +722,7 @@
                 const nextCellRight = cellsRight[nextRow].getElementsByTagName('input')[nextCol];
                 
                 if (nextCellRight.value !== '') {
-                    // Nếu ô đã có số: di chuyển sang phi 2 ô từ vị trí hiện tại
+                    // Nếu ô đã có số: di chuyển sang phải 2 ô từ vị trí hiện tại
                     nextRow = currentRow;
                     nextCol = (currentCol + 2) % 5;
                 }
@@ -700,7 +758,7 @@
         if (!found) {
             alert('Không tìm thấy chữ cái ' + currentLetter + ' trong bảng');
         } else {
-            alert('Đ�� cập nhật chữ cái ' + currentLetter + ' thành ' + newLetter);
+            alert('Đã cập nhật chữ cái ' + currentLetter + ' thành ' + newLetter);
         }
         
         // Xóa giá trị trong form
