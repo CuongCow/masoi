@@ -34,7 +34,7 @@
         }
 
         th, td {
-            border: 1px solid rgba(0,0,0,0.1);
+            border: 1px solid rgba(0, 0, 0, 0.2);
             padding: 20px;
             text-align: center;
             min-width: 60px;
@@ -500,6 +500,8 @@
         .empty-cell {
             background-color: #ffebee !important;
             color: #d32f2f !important;
+            border: 2px solid #d32f2f !important;
+            border-radius: 4px;
         }
 
         .button-group {
@@ -515,7 +517,6 @@
 
         .clear-button:hover {
             background-color: #b71c1c;
-            border: 4px dptted #b71c1c;
         }
 
         /* Thêm style cho bảng nền chung */
@@ -533,25 +534,198 @@
         /* Cập nhật media queries */
         @media screen and (max-width: 768px) {
             .content-box {
-                width: 95%;
-                padding: 20px;
-                margin: 15px auto;
+                padding: 10px;
+                margin: 10px auto;
             }
 
-            .input-container {
-                padding: 15px 0;
+            table {
+                font-size: 0.8em;
+                margin: 10px auto;
+            }
+
+            th, td {
+                padding: 5px 3px;
+                font-size: 0.8em;
+            }
+
+            .main-title {
+                font-size: 1.8em;
+                margin: 10px 0;
+            }
+
+            .input-title {
+                font-size: 1.8em;
+                margin-bottom: 10px;
+            }
+
+            .input-group label {
+                font-size: 1.4em;
+            }
+            .input-group.centered label {
+            font-size: 1em;
+        }
+
+            .custom-input {
+                font-size: 1.2em;
+                padding: 8px 12px;
+            }
+            .selected-letter {
+            font-size: 2.5em;
+        }
+
+            .custom-button {
+                font-size: 1.2em;
+                padding: 8px 15px;
             }
         }
 
         @media screen and (max-width: 480px) {
-            .content-box {
-                width: 98%;
-                padding: 15px;
-                margin: 10px auto;
+            table {
+                font-size: 0.7em;
             }
 
-            .input-container {
-                padding: 10px 0;
+            th, td {
+                padding: 4px 2px;
+                font-size: 0.7em;
+            }
+
+            .main-title {
+                font-size: 1.5em;
+            }
+
+            .input-title {
+                font-size: 1.5em;
+            }
+
+            .input-group label {
+                font-size: 1.2em;
+            }
+
+            .custom-input {
+                font-size: 1em;
+                padding: 6px 10px;
+            }
+
+            .custom-button {
+                font-size: 1em;
+                padding: 6px 12px;
+            }
+        }
+
+        @media screen and (max-width: 320px) {
+            table {
+                font-size: 0.6em;
+            }
+
+            th, td {
+                padding: 3px 1px;
+                font-size: 0.6em;
+            }
+
+            .main-title {
+                font-size: 1.2em;
+            }
+
+            .input-title {
+                font-size: 1.2em;
+            }
+
+            .input-group label {
+                font-size: 1em;
+            }
+
+            .custom-input {
+                font-size: 0.9em;
+                padding: 5px 8px;
+            }
+
+            .custom-button {
+                font-size: 0.9em;
+                padding: 5px 10px;
+            }
+        }
+
+        .result-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .result-display {
+            width: 100%;
+            min-height: 50px;
+            max-height: none; /* Bỏ giới hạn chiều cao */
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+
+        .result-char {
+            display: inline-block;
+            padding: 0px 13px;
+            margin: 5px;
+            font-size: 1.1em;
+            background-color: #2a9d8f;
+            border: 1px solid #1478db;
+            border-radius: 12px;
+        }
+
+        .copy-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 20px 20px;
+            margin-top: 10px;
+            background-color: #2a9d8f;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .copy-button:hover {
+            background-color: #248277;
+        }
+
+        .copy-button i {
+            margin-right: 5px;
+        }
+
+        /* Media queries */
+        @media screen and (max-width: 768px) {
+            .result-display {
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+
+            .result-char {
+                padding: 1px 3px;
+                margin: 1px;
+            }
+
+            .copy-button {
+                padding: 6px 15px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .result-display {
+                padding: 8px;
+                margin-bottom: 8px;
+            }
+
+            .copy-button {
+                padding: 5px 12px;
+                font-size: 0.9em;
             }
         }
     </style>
@@ -753,25 +927,26 @@
                 <input type="range" min="0" max="25" value="0" class="letter-slider" id="letterSlider">
             </div>
 
-            <div class="input-container">
-                <div class="input-title">
-                    <i class="fas fa-search"></i>
-                    Nhập bảng mã
-                </div>
-                <div class="input-group centered">
-                    <label for="coordinates">
-                        <i class="fas fa-map-marked-alt"></i>Từng tọa độ được nhận biết bằng dấu: , -, _, dấu cách:
-                    </label>
-                    <input type="text" id="coordinates" class="custom-input" 
-                           placeholder="Nhập bảng mã" oninput="findLetter()">
-                </div>
-                <div class="result-container">
-                    <div id="result" class="result-display"></div>
-                    <button id="copyButton" onclick="copyResult()" class="copy-button" style="display: none;">
-                        <i class="fas fa-copy"></i> Sao chép
-                    </button>
-                </div>
-            </div>
+<!-- Cập nhật cấu trúc HTML cho phần kết quả -->
+<div class="input-container">
+    <div class="input-title">
+        <i class="fas fa-search"></i>
+        Nhập bảng mã
+    </div>
+    <div class="input-group centered">
+        <label for="coordinates">
+            <i class="fas fa-map-marked-alt"></i>Phân biệt tọa độ bằng dấu: , -, _, dấu cách
+        </label>
+        <input type="text" id="coordinates" class="custom-input" 
+               placeholder="Nhập bảng mã" oninput="findLetter()">
+               <button id="copyButton" onclick="copyResult()" class="copy-button" style="display: none;">
+                <i class="fas fa-copy"></i> Sao chép
+            </button>
+    </div>
+    <div class="result-container">
+        <div id="result" class="result-display"></div>
+    </div>
+</div>
         </div>
     </div>
 
@@ -980,7 +1155,7 @@
             return;
         }
 
-        // Xóa class empty-cell t��� ô trống cũ nếu có
+        // Xóa class empty-cell từ ô trống cũ nếu có
         if (emptyCellCoord) {
             const oldEmptyCell = getCell(emptyCellCoord);
             if (oldEmptyCell) {
