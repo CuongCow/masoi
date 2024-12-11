@@ -13,11 +13,12 @@
         .main-title {
             text-align: center;
             color: #2c3e50;
-            font-size: 3em;
-            margin-top: 60px;
+            font-size: 4em;
+            margin-top: 30px;
             margin-bottom: 40px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
             font-weight: bold;
+            text-decoration: none;
         }
 
         table {
@@ -25,7 +26,6 @@
             border-spacing: 0;
             margin: 30px auto;
             background-color: white;
-            box-shadow: 0 0 25px rgba(0,0,0,0.1);
             border-radius: 15px;
             overflow: hidden;
             transition: transform 0.3s ease;
@@ -38,7 +38,7 @@
             padding: 20px;
             text-align: center;
             min-width: 60px;
-            font-size: 1.1em;
+            font-size: 1.6em;
         }
 
         .header {
@@ -47,7 +47,7 @@
             color: white;
             text-transform: uppercase;
             letter-spacing: 1px;
-            font-size: 1.2em;
+            font-size: 1.5em;
         }
 
         .sub-cell {
@@ -86,26 +86,14 @@
 
         .input-container {
             text-align: center;
-            margin: 20px auto;
+            margin: 30px auto;
             width: 100%;
-            min-height: 200px;
-            padding: 20px;
+            max-width: 900px;
+            padding: 20px 0;
             border-radius: 20px;
             transition: transform 0.3s ease;
             display: flex;
             flex-direction: column;
-        }
-
-        .input-container:first-child {
-            margin-top: 0;
-        }
-
-        .input-container:last-child {
-            margin-bottom: 0;
-        }
-
-        .input-container:hover {
-            transform: translateY(-5px);
         }
 
         .input-container:not(:last-child) {
@@ -116,7 +104,7 @@
 
         .input-title {
             color: #2c3e50;
-            font-size: 1.2em;
+            font-size: 2.5em;
             font-weight: bold;
             margin-bottom: 15px;
             padding-bottom: 10px;
@@ -135,7 +123,7 @@
         .input-row {
             display: flex;
             justify-content: center;
-            gap: 30px;
+            gap: 40px;
             margin: 10px 0;
             flex: 1;
         }
@@ -149,14 +137,27 @@
         }
 
         .input-group.centered {
-            max-width: 400px;
+            max-width: 700px;
+        }
+
+        .input-group.centered .custom-input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.5em;
+            height: 60px;
+            border-radius: 15px;
+        }
+
+        .input-group.centered label {
+            font-size: 1.3em;
+            margin-bottom: 10px;
         }
 
         .input-group label {
             color: #2a9d8f;
             margin-bottom: 5px;
             font-weight: 500;
-            font-size: 0.95em;
+            font-size: 1.7em;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -171,7 +172,7 @@
             padding: 10px 15px;
             border: 2px solid #e0e0e0;
             border-radius: 12px;
-            font-size: 15px;
+            font-size: 25px;
             transition: all 0.3s ease;
             background-color: #f8f9fa;
         }
@@ -192,7 +193,7 @@
             border-radius: 12px;
             color: white;
             font-weight: 600;
-            font-size: 0.95em;
+            font-size: 1.6em;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
@@ -211,10 +212,10 @@
             flex: 1;
             min-width: 200px;
             padding: 15px;
-            background-color: #f8f9fa;
-            border: 1px solid #e0e0e0;
+            background-color: #f8f9fa00;
+            border: 1px solid #e0e0e000;
             border-radius: 12px;
-            font-size: 1em;
+            font-size: 1.4em;
             line-height: 1.8;
             white-space: pre-wrap;
             word-break: break-word;
@@ -345,6 +346,7 @@
                 margin: 15px auto;
                 border-radius: 15px;
             }
+            
 
             /* Điều chỉnh các container input */
             .input-container {
@@ -372,6 +374,16 @@
                 padding: 1px 3px;
                 margin: 1px;
                 min-width: 20px;
+            }
+
+            .input-group.centered {
+                max-width: 100%;
+            }
+
+            .input-group.centered .custom-input {
+                padding: 12px 15px;
+                font-size: 1.1em;
+                height: 50px;
             }
         }
 
@@ -413,6 +425,7 @@
             table {
                 font-size: 0.7em;
             }
+            
 
             th, td {
                 padding: 4px 2px;
@@ -420,7 +433,127 @@
             }
         }
         
-        
+        .slider-container {
+            margin: 2px 0;
+            text-align: center;
+            padding: 0 30px;
+        }
+
+        .letter-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            background: #e0e0e0;
+            outline: none;
+            margin: 10px 0;
+        }
+
+        .letter-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #2a9d8f;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .letter-slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #2a9d8f;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .letter-slider::-webkit-slider-thumb:hover {
+            background: #248277;
+            transform: scale(1.1);
+        }
+
+        .letter-slider::-moz-range-thumb:hover {
+            background: #248277;
+            transform: scale(1.1);
+        }
+
+        .selected-letter {
+            font-size: 3em;
+            font-weight: bold;
+            color: #d40f0f;
+            margin: 15px 0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .letters-display {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-size: 0.8em;
+            color: #666;
+            padding: 0 10px;
+        }
+
+        .empty-cell {
+            background-color: #ffebee !important;
+            color: #d32f2f !important;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        .clear-button {
+            background-color: #d32f2f;
+        }
+
+        .clear-button:hover {
+            background-color: #b71c1c;
+            border: 4px dptted #b71c1c;
+        }
+
+        /* Thêm style cho bảng nền chung */
+        .content-box {
+            background-color: white;
+            padding: 40px;
+            margin: 30px auto;
+            margin-top: -2%;
+            border-radius: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        /* Cập nhật media queries */
+        @media screen and (max-width: 768px) {
+            .content-box {
+                width: 95%;
+                padding: 20px;
+                margin: 15px auto;
+            }
+
+            .input-container {
+                padding: 15px 0;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .content-box {
+                width: 98%;
+                padding: 15px;
+                margin: 10px auto;
+            }
+
+            .input-container {
+                padding: 10px 0;
+            }
+        }
     </style>
     <script src="/js/menu.js"></script>
 </head>
@@ -447,169 +580,197 @@
     </header>
     <div id="sidebar-container"></div>
 
-    <h1 class="main-title">Khóa Bảng-Hàng-Cột</h1>
+    <!-- Thêm div bao quanh tất cả nội dung -->
+    <div class="main-container">
+        <div class="content-box">
+            <h1 class="main-title">Khóa Bảng Hàng Cột</h1>
+            
+            <!-- Bảng tọa độ -->
+            <table>
+                <tr>
+                    <th colspan="4" class="header">BẢNG</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th class="header">1</th>
+                    <th class="header">2</th>
+                    <th class="header">3</th>
+                </tr>
+                <tr>
+                    <th class="header">HÀNG 1</th>
+                    <td class="letter-cell">
+                        <div class="letter-container">
+                            <div class="sub-cell" contenteditable="true">A</div>
+                            <div class="sub-cell" contenteditable="true">B</div>
+                            <div class="sub-cell" contenteditable="true">C</div>
+                        </div>
+                    </td>
+                    <td class="letter-cell">
+                        <div class="letter-container">
+                            <div class="sub-cell" contenteditable="true">J</div>
+                            <div class="sub-cell" contenteditable="true">K</div>
+                            <div class="sub-cell" contenteditable="true">L</div>
+                        </div>
+                    </td>
+                    <td class="letter-cell">
+                        <div class="letter-container">
+                            <div class="sub-cell" contenteditable="true">S</div>
+                            <div class="sub-cell" contenteditable="true">T</div>
+                            <div class="sub-cell" contenteditable="true">U</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="header">HÀNG 2</th>
+                    <td class="letter-cell">
+                        <div class="letter-container">
+                            <div class="sub-cell" contenteditable="true">D</div>
+                            <div class="sub-cell" contenteditable="true">E</div>
+                            <div class="sub-cell" contenteditable="true">F</div>
+                        </div>
+                    </td>
+                    <td class="letter-cell">
+                        <div class="letter-container">
+                            <div class="sub-cell" contenteditable="true">M</div>
+                            <div class="sub-cell" contenteditable="true">N</div>
+                            <div class="sub-cell" contenteditable="true">O</div>
+                        </div>
+                    </td>
+                    <td class="letter-cell">
+                        <div class="letter-container">
+                            <div class="sub-cell" contenteditable="true">V</div>
+                            <div class="sub-cell" contenteditable="true">W</div>
+                            <div class="sub-cell" contenteditable="true">X</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="header">HÀNG 3</th>
+                    <td class="letter-cell">
+                        <div class="letter-container">
+                            <div class="sub-cell" contenteditable="true">G</div>
+                            <div class="sub-cell" contenteditable="true">H</div>
+                            <div class="sub-cell" contenteditable="true">I</div>
+                        </div>
+                    </td>
+                    <td class="letter-cell">
+                        <div class="letter-container">
+                            <div class="sub-cell" contenteditable="true">P</div>
+                            <div class="sub-cell" contenteditable="true">Q</div>
+                            <div class="sub-cell" contenteditable="true">R</div>
+                        </div>
+                    </td>
+                    <td class="letter-cell">
+                        <div class="letter-container">
+                            <div class="sub-cell" contenteditable="true">Y</div>
+                            <div class="sub-cell" contenteditable="true">Z</div>
+                            <div class="sub-cell" contenteditable="true"> ️</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="header">CỘT</th>
+                    <td class="letter-cell number-cell">
+                        <div class="letter-container">
+                            <div class="sub-cell">1</div>
+                            <div class="sub-cell">2</div>
+                            <div class="sub-cell">3</div>
+                        </div>
+                    </td>
+                    <td class="letter-cell number-cell">
+                        <div class="letter-container">
+                            <div class="sub-cell">1</div>
+                            <div class="sub-cell">2</div>
+                            <div class="sub-cell">3</div>
+                        </div>
+                    </td>
+                    <td class="letter-cell number-cell">
+                        <div class="letter-container">
+                            <div class="sub-cell">1</div>
+                            <div class="sub-cell">2</div>
+                            <div class="sub-cell">3</div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            
+            <!-- Thanh slider -->
 
-    <table>
-        <tr>
-            <th colspan="4" class="header">BẢNG</th>
-        </tr>
-        <tr>
-            <th></th>
-            <th class="header">1</th>
-            <th class="header">2</th>
-            <th class="header">3</th>
-        </tr>
-        <tr>
-            <th class="header">HÀNG 1</th>
-            <td class="letter-cell">
-                <div class="letter-container">
-                    <div class="sub-cell" contenteditable="true">A</div>
-                    <div class="sub-cell" contenteditable="true">B</div>
-                    <div class="sub-cell" contenteditable="true">C</div>
+            <!-- Input containers với thứ tự mới -->
+            <div class="input-container">
+                <div class="input-title">
+                    <i class="fas fa-ban"></i>
+                    Đặt Ô Trống
                 </div>
-            </td>
-            <td class="letter-cell">
-                <div class="letter-container">
-                    <div class="sub-cell" contenteditable="true">J</div>
-                    <div class="sub-cell" contenteditable="true">K</div>
-                    <div class="sub-cell" contenteditable="true">L</div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="emptyCoordinates">
+                            <i class="fas fa-map-marker-alt"></i> Tọa độ ô trống:
+                        </label>
+                        <input type="text" id="emptyCoordinates" class="custom-input" 
+                               placeholder="VD: 123">
+                    </div>
                 </div>
-            </td>
-            <td class="letter-cell">
-                <div class="letter-container">
-                    <div class="sub-cell" contenteditable="true">S</div>
-                    <div class="sub-cell" contenteditable="true">T</div>
-                    <div class="sub-cell" contenteditable="true">U</div>
+                <div class="button-group">
+                    <button onclick="setEmptyCell()" class="custom-button">
+                        <i class="fas fa-ban"></i> Đặt ô trống
+                    </button>
+                    <button onclick="clearEmptyCell()" class="custom-button clear-button">
+                        <i class="fas fa-eraser"></i> Xóa bỏ trống
+                    </button>
                 </div>
-            </td>
-        </tr>
-        <tr>
-            <th class="header">HÀNG 2</th>
-            <td class="letter-cell">
-                <div class="letter-container">
-                    <div class="sub-cell" contenteditable="true">D</div>
-                    <div class="sub-cell" contenteditable="true">E</div>
-                    <div class="sub-cell" contenteditable="true">F</div>
-                </div>
-            </td>
-            <td class="letter-cell">
-                <div class="letter-container">
-                    <div class="sub-cell" contenteditable="true">M</div>
-                    <div class="sub-cell" contenteditable="true">N</div>
-                    <div class="sub-cell" contenteditable="true">O</div>
-                </div>
-            </td>
-            <td class="letter-cell">
-                <div class="letter-container">
-                    <div class="sub-cell" contenteditable="true">V</div>
-                    <div class="sub-cell" contenteditable="true">W</div>
-                    <div class="sub-cell" contenteditable="true">X</div>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <th class="header">HÀNG 3</th>
-            <td class="letter-cell">
-                <div class="letter-container">
-                    <div class="sub-cell" contenteditable="true">G</div>
-                    <div class="sub-cell" contenteditable="true">H</div>
-                    <div class="sub-cell" contenteditable="true">I</div>
-                </div>
-            </td>
-            <td class="letter-cell">
-                <div class="letter-container">
-                    <div class="sub-cell" contenteditable="true">P</div>
-                    <div class="sub-cell" contenteditable="true">Q</div>
-                    <div class="sub-cell" contenteditable="true">R</div>
-                </div>
-            </td>
-            <td class="letter-cell">
-                <div class="letter-container">
-                    <div class="sub-cell" contenteditable="true">Y</div>
-                    <div class="sub-cell" contenteditable="true">Z</div>
-                    <div class="sub-cell" contenteditable="true"> ️</div>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <th class="header">CỘT</th>
-            <td class="letter-cell number-cell">
-                <div class="letter-container">
-                    <div class="sub-cell">1</div>
-                    <div class="sub-cell">2</div>
-                    <div class="sub-cell">3</div>
-                </div>
-            </td>
-            <td class="letter-cell number-cell">
-                <div class="letter-container">
-                    <div class="sub-cell">1</div>
-                    <div class="sub-cell">2</div>
-                    <div class="sub-cell">3</div>
-                </div>
-            </td>
-            <td class="letter-cell number-cell">
-                <div class="letter-container">
-                    <div class="sub-cell">1</div>
-                    <div class="sub-cell">2</div>
-                    <div class="sub-cell">3</div>
-                </div>
-            </td>
-        </tr>
-    </table>
-    
-    <!-- Thêm container chung cho 3 bảng nhập -->
-    <div class="inputs-wrapper">
-        <!-- 1. Nhập Chữ Cái Theo Tọa Độ -->
-        <div class="input-container">
-            <div class="input-title">
-                <i class="fas fa-key"></i>
-                Nhập Chữ Cái Theo Tọa Độ
+                <div id="setEmptyResult" class="result-display"></div>
             </div>
-            <div class="input-row">
-                <div class="input-group">
-                    <label for="letterCoordinates">
-                        <i class="fas fa-map-marker-alt"></i> Tọa độ:
-                    </label>
-                    <input type="text" id="letterCoordinates" class="custom-input" 
-                           placeholder="VD: 123">
-                </div>
-                <div class="input-group">
-                    <label for="newLetter">
-                        <i class="fas fa-font"></i> Chữ cái:
-                    </label>
-                    <input type="text" id="newLetter" class="custom-input" 
-                           placeholder="VD: A" maxlength="1">
-                </div>
-            </div>
-            <button onclick="setLetterByCoordinates()" class="custom-button">
-                <i class="fas fa-sync-alt"></i> Cập nhật
-            </button>
-            <div id="setLetterResult" class="result-display"></div>
-        </div>
 
-        <!-- 2. Tìm Chữ Cái -->
-        <div class="input-container">
-            <div class="input-title">
-                <i class="fas fa-search"></i>
-                Nhập bảng mã
-            </div>
-            <div class="input-group centered">
-                <label for="coordinates">
-                    <i class="fas fa-map-marked-alt"></i>Từng tọa độ được nhận biết bằng dấu: , -, _, dấu cách:
-                </label>
-                <input type="text" id="coordinates" class="custom-input" 
-                       placeholder="Nhập bảng mã">
-            </div>
-            <div class="button-group">
-                <button onclick="findLetter()" class="custom-button">
-                    <i class="fas fa-search"></i> Kết quả
+            <div class="input-container">
+                <div class="input-title">
+                    <i class="fas fa-key"></i>
+                    Nhập Chữ Cái Theo Tọa Độ
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="letterCoordinates">
+                            <i class="fas fa-map-marker-alt"></i> Tọa độ:
+                        </label>
+                        <input type="text" id="letterCoordinates" class="custom-input" 
+                               placeholder="VD: 123">
+                    </div>
+                    <div class="input-group">
+                        <label for="newLetter">
+                            <i class="fas fa-font"></i> Chữ cái:
+                        </label>
+                        <input type="text" id="newLetter" class="custom-input" 
+                               placeholder="VD: A" maxlength="1">
+                    </div>
+                </div>
+                <button onclick="setLetterByCoordinates()" class="custom-button">
+                    <i class="fas fa-sync-alt"></i> Cập nhật
                 </button>
-                <button id="copyButton" onclick="copyResult()" class="copy-button" style="display: none;">
-                    <i class="fas fa-copy"></i> Sao chép
-                </button>
+                <div id="setLetterResult" class="result-display"></div>
             </div>
-            <div class="result-container">
-                <div id="result" class="result-display"></div>
+            <div class="slider-container">
+                <div class="selected-letter" id="selectedLetter">A</div>
+                <input type="range" min="0" max="25" value="0" class="letter-slider" id="letterSlider">
+            </div>
+
+            <div class="input-container">
+                <div class="input-title">
+                    <i class="fas fa-search"></i>
+                    Nhập bảng mã
+                </div>
+                <div class="input-group centered">
+                    <label for="coordinates">
+                        <i class="fas fa-map-marked-alt"></i>Từng tọa độ được nhận biết bằng dấu: , -, _, dấu cách:
+                    </label>
+                    <input type="text" id="coordinates" class="custom-input" 
+                           placeholder="Nhập bảng mã" oninput="findLetter()">
+                </div>
+                <div class="result-container">
+                    <div id="result" class="result-display"></div>
+                    <button id="copyButton" onclick="copyResult()" class="copy-button" style="display: none;">
+                        <i class="fas fa-copy"></i> Sao chép
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -617,15 +778,28 @@
     <script>
     const originalOrder = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ️";
 
+    // Thêm biến global để lưu tọa độ ô trống
+    let emptyCellCoord = null;
+
     function findLetter() {
-        const input = document.getElementById('coordinates').value;
-        const coordinates = input.split(/[\s,\-_]+/);
+        const input = document.getElementById('coordinates').value.trim();
+        const resultDiv = document.getElementById('result');
+        const copyButton = document.getElementById('copyButton');
         
+        // Nếu input trống, xóa kết quả và ẩn nút copy
+        if (!input) {
+            resultDiv.innerHTML = '';
+            copyButton.style.display = 'none';
+            return;
+        }
+        
+        const coordinates = input.split(/[\s,\-_]+/).filter(coord => coord.length > 0);
         let results = [];
         
         for (let coord of coordinates) {
             if (coord.length !== 3 || !/^[123]{3}$/.test(coord)) {
-                alert('Vui lòng nhập các tọa độ hợp lệ (3 số từ 1-3)');
+                resultDiv.innerHTML = 'Vui lòng nhập các tọa độ hợp lệ (3 số từ 1-3)';
+                copyButton.style.display = 'none';
                 return;
             }
 
@@ -645,7 +819,23 @@
             }
         }
         
-        updateResult(results);
+        if (results.length > 0) {
+            let formattedResults = '';
+            let htmlContent = '';
+            
+            results.forEach((char, index) => {
+                htmlContent += `<span class="result-char">${char}</span>`;
+                if ((index + 1) % 10 === 0 && index !== results.length - 1) {
+                    htmlContent += '<br>';
+                }
+            });
+            
+            resultDiv.innerHTML = formattedResults + htmlContent;
+            copyButton.style.display = 'flex';
+        } else {
+            resultDiv.innerHTML = 'Không tìm thấy kết quả';
+            copyButton.style.display = 'none';
+        }
     }
 
     function setLetterByCoordinates() {
@@ -662,23 +852,12 @@
             return;
         }
 
-        // Tạo mng 27 ký tự (A-Z và  ️)
+        // Tạo mảng 26 chữ cái
         const fullAlphabet = [];
         let currentChar = newLetter;
-        let count = 0;
-        
-        while (count < 27) {
-            if (currentChar === 'Z') {
-                fullAlphabet.push(currentChar);
-                fullAlphabet.push(' ️');
-                currentChar = 'A';
-                count += 2;
-            } else {
-                fullAlphabet.push(currentChar);
-                currentChar = String.fromCharCode(currentChar.charCodeAt(0) + 1);
-                count++;
-            }
-            
+        for (let i = 0; i < 26; i++) {
+            fullAlphabet.push(currentChar);
+            currentChar = String.fromCharCode(currentChar.charCodeAt(0) + 1);
             if (currentChar > 'Z') {
                 currentChar = 'A';
             }
@@ -697,41 +876,40 @@
         // Cập nhật bảng
         const cells = document.querySelectorAll('.letter-cell .sub-cell');
         let currentIndex = 0;
+        let filledCount = 0;
+        let zIndex = -1; // Vị trí của chữ Z trong mảng xoay vòng
+        
+        // Tìm vị trí của Z trong mảng xoay vòng
+        for (let i = 0; i < rotatedAlphabet.length; i++) {
+            if (rotatedAlphabet[i] === 'Z') {
+                zIndex = i;
+                break;
+            }
+        }
         
         cells.forEach(cell => {
             if (!cell.parentElement.parentElement.classList.contains('number-cell')) {
-                cell.textContent = rotatedAlphabet[currentIndex % 27];
+                if (emptyCellCoord && cell === getCell(emptyCellCoord)) {
+                    // Ô được chỉ định là ô trống
+                    cell.textContent = '';
+                    cell.classList.add('empty-cell');
+                } else if (!emptyCellCoord && zIndex !== -1 && currentIndex === (zIndex + 1) % 27) {
+                    // Ô sau Z khi không có ô trống được chỉ định
+                    cell.textContent = '';
+                    cell.classList.remove('empty-cell');
+                } else {
+                    // Điền chữ cái và đếm số ô đã điền
+                    cell.textContent = rotatedAlphabet[filledCount % 26];
+                    cell.classList.remove('empty-cell');
+                    filledCount++;
+                }
                 currentIndex++;
             }
         });
 
+        findLetter();
         document.getElementById('setLetterResult').innerHTML = 
             `Bảng đã được cập nhật với chữ cái: ${newLetter} tại vị trí ${coordinates}`;
-    }
-
-    function updateResult(results) {
-        const resultDiv = document.getElementById('result');
-        const copyButton = document.getElementById('copyButton');
-        
-        if (results.length > 0) {
-            let formattedResults = 'Kết quả: ';
-            let htmlContent = '';
-            
-            // Tạo HTML cho từng ký tự
-            results.forEach((char, index) => {
-                htmlContent += `<span class="result-char">${char}</span>`;
-                // Xuống hàng sau mỗi 10 ký tự
-                if ((index + 1) % 10 === 0 && index !== results.length - 1) {
-                    htmlContent += '<br>';
-                }
-            });
-            
-            resultDiv.innerHTML = formattedResults + htmlContent;
-            copyButton.style.display = 'flex';
-        } else {
-            resultDiv.innerHTML = 'Không tìm thấy kết quả';
-            copyButton.style.display = 'none';
-        }
     }
 
     function copyResult() {
@@ -767,6 +945,94 @@
             });
         });
     });
+
+    function handleSliderChange() {
+        const slider = document.getElementById('letterSlider');
+        const selectedLetter = document.getElementById('selectedLetter');
+        const letterInput = document.getElementById('newLetter');
+        const coordInput = document.getElementById('letterCoordinates');
+        
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const letter = letters[slider.value];
+        
+        selectedLetter.textContent = letter;
+        letterInput.value = letter;
+        
+        if (!coordInput.value) {
+            coordInput.value = '111';
+        }
+        
+        setLetterByCoordinates();
+    }
+
+    // Thêm event listener cho slider
+    document.addEventListener('DOMContentLoaded', function() {
+        const slider = document.getElementById('letterSlider');
+        slider.addEventListener('input', handleSliderChange);
+    });
+
+    function setEmptyCell() {
+        const coordinates = document.getElementById('emptyCoordinates').value;
+        const resultDiv = document.getElementById('setEmptyResult');
+
+        if (coordinates.length !== 3 || !/^[123]{3}$/.test(coordinates)) {
+            alert('Vui lòng nhập tọa độ hợp lệ (3 số từ 1-3)');
+            return;
+        }
+
+        // Xóa class empty-cell t��� ô trống cũ nếu có
+        if (emptyCellCoord) {
+            const oldEmptyCell = getCell(emptyCellCoord);
+            if (oldEmptyCell) {
+                oldEmptyCell.classList.remove('empty-cell');
+            }
+        }
+
+        emptyCellCoord = coordinates;
+        
+        // Cập nhật lại toàn bộ bảng
+        const letterInput = document.getElementById('newLetter');
+        const coordInput = document.getElementById('letterCoordinates');
+        
+        if (!letterInput.value) {
+            letterInput.value = 'A';
+        }
+        if (!coordInput.value) {
+            coordInput.value = '111';
+        }
+        
+        setLetterByCoordinates();
+        resultDiv.innerHTML = `Đã đặt ô trống tại vị trí ${coordinates}`;
+    }
+
+    function clearEmptyCell() {
+        if (emptyCellCoord) {
+            const cell = getCell(emptyCellCoord);
+            if (cell) {
+                cell.classList.remove('empty-cell');
+            }
+            emptyCellCoord = null;
+            setLetterByCoordinates();
+            
+            document.getElementById('setEmptyResult').innerHTML = 'Đã xóa ô trống';
+            document.getElementById('emptyCoordinates').value = '';
+        }
+    }
+
+    function getCell(coordinates) {
+        const [bang, hang, cot] = coordinates.split('').map(Number);
+        const rows = document.querySelectorAll('tr');
+        const targetRow = rows[hang + 1];
+        if (targetRow) {
+            const cells = targetRow.querySelectorAll('.letter-cell');
+            const targetCell = cells[bang - 1];
+            if (targetCell) {
+                const subCells = targetCell.querySelectorAll('.sub-cell');
+                return subCells[cot - 1];
+            }
+        }
+        return null;
+    }
     </script>
 
     <!-- Footer Section -->
