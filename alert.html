@@ -1,216 +1,322 @@
-<div class="alert-overlay">
-    <div class="alert alert-warning" role="alert">
-        <div class="alert-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                <line x1="12" y1="9" x2="12" y2="13"></line>
-                <line x1="12" y1="17" x2="12.01" y2="17"></line>
-            </svg>
-        </div>
-        <h4 class="alert-heading">Cảnh Báo!</h4>
-        <div class="alert-content">
-            <p>Các tool mật thư có thể có sai sót, không đúng chắc chắn 100%</p>
-            <hr>
-            <p class="mb-0">Bạn hãy kiểm tra thật kỹ trước khi nộp bài hoặc giao đề</p>
-        </div>
-        <button onclick="closeAlert()" class="btn-understand">
-            <span>Tôi hiểu rồi</span>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-        </button>
-    </div>
-</div>
-
-<style>
-.alert-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    transition: opacity 0.3s ease;
-    opacity: 1;
-}
-
-.alert {
-    position: relative;
-    width: 90%;
-    max-width: 600px;
-    background: #fff;
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    transform: translateY(0);
-    animation: slideIn 0.4s ease;
-}
-
-.alert-icon {
-    width: 48px;
-    height: 48px;
-    margin: 0 auto 1rem;
-    color: #e74c3c;
-    animation: pulse 2s infinite;
-}
-
-.alert-icon svg {
-    width: 100%;
-    height: 100%;
-}
-
-.alert-heading {
-    color: #2c3e50;
-    font-size: 1.5rem;
-    text-align: center;
-    margin-bottom: 1rem;
-    font-weight: 600;
-}
-
-.alert-content {
-    color: #34495e;
-    text-align: center;
-    font-size: 1rem;
-    line-height: 1.6;
-}
-
-hr {
-    border: none;
-    border-top: 2px solid #eee;
-    margin: 1rem 0;
-}
-
-.btn-understand {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin: 1.5rem auto 0;
-    padding: 0.8rem 1.5rem;
-    background: #2ecc71;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.btn-understand svg {
-    width: 20px;
-    height: 20px;
-    transition: transform 0.3s ease;
-}
-
-.btn-understand:hover {
-    background: #27ae60;
-    transform: translateY(-2px);
-}
-
-.btn-understand:hover svg {
-    transform: scale(1.1);
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-    .alert {
-        width: 95%;
-        padding: 1.5rem;
-    }
-
-    .alert-heading {
-        font-size: 1.3rem;
-    }
-
-    .alert-content {
-        font-size: 0.9rem;
-    }
-
-    .btn-understand {
-        width: 100%;
-        padding: 0.7rem 1rem;
-    }
-}
-
-/* Thêm class mới cho animation đóng */
-.alert-overlay.closing {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-.alert-overlay.closing .alert {
-    transform: translateY(20px);
-    opacity: 0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-/* Thêm styles mới cho trạng thái ẩn */
-.alert-overlay.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-
-/* Thêm class mới */
-.alert-overlay.fade-out {
-    background: rgba(0, 0, 0, 0) !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-}
-</style>
-
-<script>
-function closeAlert() {
-    const overlay = document.querySelector('.alert-overlay');
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
     
-    // Thêm class hidden
-    overlay.classList.add('hidden');
-    
-    // Xóa phần tử sau khi animation hoàn tất
-    setTimeout(() => {
-        if (overlay) {
-            overlay.remove(); // Sử dụng remove() để xóa hoàn toàn
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mật Thư Đếm Chữ</title>
+    <link rel="icon" href="/logo/logoweb-dammekynang.png" type="image/png">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: rgb(42, 157, 144);
+            --accent-color: #e74c3c;
+            --background-color: #f5f6fa;
         }
-        // Đảm bảo xóa mọi style còn sót lại trên body
-        document.body.style.overflow = '';
-        document.body.style.pointerEvents = 'auto';
-    }, 300);
-}
 
-// Thêm event listener khi trang load
-document.addEventListener('DOMContentLoaded', function() {
-    // Ngăn chặn scroll và tương tác với body khi có alert
-    const overlay = document.querySelector('.alert-overlay');
-    if (overlay) {
-        document.body.style.overflow = 'hidden';
-    }
-});
-</script>
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            margin-top: 5%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: rgb(42, 157, 144);
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: rgb(42, 157, 144);
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+
+        button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+            width: 100%;
+            margin: 10px 0;
+            
+        }
+
+        button:hover {
+            background-color: rgb(14, 202, 180);
+            transform: translateY(-2px);
+        }
+
+        #ketQua {
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 20px 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+                margin-top: 17%;
+            }
+
+            button {
+                padding: 10px 20px;
+            }
+
+            #ketQua {
+                font-size: 24px;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+    <script src="/js/menu.js"></script>
+</head>
+<body>
+        <!-- Header Section -->
+        <header>
+            <div class="title-container">
+                <div class="menu-icon" id="menuIcon" onclick="toggleSidebar()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="logo">
+                    <a href="/index.html" style="text-decoration: none; color: inherit;">
+                        Đam mê Kỹ năng
+                    </a>
+                </div>
+            </div>
+            <div class="header-right">
+                <a href="/login.html" class="login-btn" id="loginBtn">Đăng nhập</a>
+                <span id="userDisplay" style="color: white; font-weight: bold; margin-right: 15px;"></span>
+                <a href="#" onclick="logout()" class="login-btn" id="logoutBtn" style="display: none;">Đăng xuất</a>
+            </div>
+        </header>
+    
+    <div id="sidebar-container"></div>
+    <div class="container">
+        <div id="alertContainer"></div>
+        
+        <div class="header animate">
+            <h1><i class="fas fa-key"></i> Mật Thư Đếm Chữ</h1>
+        </div>
+        
+        <div class="section animate">
+            <h2><i class="fas fa-edit"></i> Nhập văn bản thơ</h2>
+            <textarea id="vanBan" placeholder="Nhập văn bản của bạn ở đây..."></textarea>
+            <button onclick="chiaQuocNguDienTin()">
+                <i class="fas fa-random"></i>Quốc Ngữ Điện Tín
+            </button>
+            Đảm bảo loại bỏ các dấu: . ? ! ...khi đổi
+        </div>
+        
+        <div class="section animate">
+            <h2><i class="fas fa-code"></i> Nhập bảng mã</h2>
+            <input type="text" id="bangMa" placeholder="Nhập mã số (VD: 111,213,311)" oninput="giaiMa()">
+            <div id="ketQua"></div>
+        </div>
+    </div>
+
+    <script>
+        function chiaQuocNguDienTin() {
+            const vanBan = document.getElementById('vanBan');
+            let text = vanBan.value;
+            
+            // Xử lý từng dòng riêng biệt
+            let cacDong = text.split('\n');
+            
+            cacDong = cacDong.map(dong => {
+                // Xử lý từng từ trong dòng
+                return dong.split(/\s+/).map(tu => {
+                    let tuMoi = tu;
+                    
+                    // Bước 1: Chuyển đổi dấu mũ và phụ âm đặc biệt
+                    const bangDauMu = {
+                        'â': 'aa',
+                        'ă': 'aw',
+                        'ê': 'ee',
+                        'ô': 'oo',
+                        'ơ': 'ow',
+                        'ư': 'uw',
+                        'đ': 'dd',
+                        'Â': 'AA',
+                        'Ă': 'AW',
+                        'Ê': 'EE',
+                        'Ô': 'OO',
+                        'Ơ': 'OW',
+                        'Ư': 'UW',
+                        'Đ': 'DD',
+                        'iê': 'iee',
+                        'yê': 'yee',
+                        'uô': 'uoo',
+                        'ươ': 'uow'
+                    };
+
+                    // Áp dụng chuyển đổi dấu mũ
+                    for (let [key, value] of Object.entries(bangDauMu)) {
+                        const regex = new RegExp(key, 'g');
+                        tuMoi = tuMoi.replace(regex, value);
+                    }
+
+                    // Bước 2: Xác định dấu thanh
+                    let dau = '';
+                    const chuCoiGoc = tu.normalize('NFD');
+                    
+                    if (chuCoiGoc.includes('\u0300')) { // dấu huyền
+                        dau = 'f';
+                    } else if (chuCoiGoc.includes('\u0301')) { // dấu sắc
+                        dau = 's';
+                    } else if (chuCoiGoc.includes('\u0309')) { // dấu hỏi
+                        dau = 'r';
+                    } else if (chuCoiGoc.includes('\u0303')) { // dấu ngã
+                        dau = 'x';
+                    } else if (chuCoiGoc.includes('\u0323')) { // dấu nặng
+                        dau = 'j';
+                    }
+
+                    // Bước 3: Xóa dấu thanh cũ
+                    tuMoi = tuMoi.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+                    // Bước 4: Thêm dấu thanh mới vào cuối từ
+                    return dau ? tuMoi + dau : tuMoi;
+                }).join(' ');
+            });
+
+            // Nối các dòng lại với nhau, giữ nguyên xuống dòng
+            vanBan.value = cacDong.join('\n');
+        }
+
+        function giaiMa() {
+            const vanBan = document.getElementById('vanBan').value;
+            const bangMa = document.getElementById('bangMa').value;
+            
+            // Tách văn bản thành các dòng
+            const cacDong = vanBan.split('\n').filter(dong => dong.trim() !== '');
+            
+            // Tách bảng mã thành các mã số
+            const cacMaSo = bangMa.split(/[\s,._-]+/).filter(ma => ma.trim() !== '');
+            
+            let ketQua = '';
+            
+            for(let ma of cacMaSo) {
+                if(ma.length === 3) {
+                    const dong = parseInt(ma[0]) - 1;
+                    const tieng = parseInt(ma[1]) - 1;
+                    const chu = parseInt(ma[2]) - 1;
+                    
+                    if(dong < cacDong.length) {
+                        const cacTieng = cacDong[dong].trim().split(/\s+/);
+                        if(tieng < cacTieng.length) {
+                            const tuDuocChon = cacTieng[tieng];
+                            if(chu < tuDuocChon.length) {
+                                ketQua += tuDuocChon[chu];
+                            }
+                        }
+                    }
+                }
+            }
+            
+            document.getElementById('ketQua').textContent = ketQua.toUpperCase();
+        }
+
+
+    </script>
+    <script src="/toolmatthu/alertHandler.js"></script>
+    <footer>
+        &copy; 2024 Đam Mê Kỹ Năng
+    </footer>
+    <!-- Thêm modal vào body -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="login-modal" id="loginModal">
+        <h3>Thông báo đăng nhập</h3>
+        <p>Bạn cần đăng nhập để dùng các công cụ tool. Vì một số lý do cộng đồng nên rất cần thiết để quản lý người dùng.</p>
+        <div class="modal-buttons">
+            <a href="/login.html" class="modal-btn modal-login">Đăng nhập</a>
+            <a href="/register.html" class="modal-btn modal-register">Đăng ký</a>
+        </div>
+    </div>
+    
+    
+</body>
+</html>
