@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        
         .magic-square {
             border-collapse: collapse;
             margin: 20px auto;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-top: -60px;
+            background: none;
+            box-shadow: none;
         }
         
         .magic-square td {
@@ -50,7 +52,7 @@
         }
         
         .magic-square input:focus {
-            background-color: rgba(42, 157, 144, 0.2);
+            background-color: rgba(22, 207, 186, 0.2);
         }
         
         .coordinates {
@@ -74,26 +76,26 @@
         .row-coordinates {
             position: absolute;
             left: 3%;
-            top: -5.5%;
+            top: 2%;
             height: 100%;
             display: flex;
             flex-direction: column;
         }
         
         .row-number {
-            height: 59px;
+            height: 60px;
             font-size: 22px;
             font-weight: bold;
             text-align: right;
-            padding-left: 165px;
-            width: 30px;
+            padding-left: 95px;
+            width: 50px;
             color: rgba(42, 157, 144, 0.63);
         }
         
         .col-coordinates {
             position: absolute;
-            top: -13%;
-            left: 6%;
+            top: -3.8%;
+            left: -3%;
             width: 100%;
             display: grid;
             grid-template-columns: repeat(5, 64px);
@@ -103,7 +105,7 @@
             text-align: center;
             font-size: 22px;
             font-weight: bold;
-            padding-left: 180px;
+            padding-left: 170px;
             color: rgba(42, 157, 144, 0.63);
         }
         
@@ -111,16 +113,18 @@
             margin-top: 20px;
             text-align: center;
             padding: 20px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgb(42, 157, 144);
-            transition: transform 0.2s, box-shadow 0.2s;
+            background: none;
+            border: none;
+            box-shadow: none;
         }
         
-        .input-form:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        .input-form .coordinate-inputs {
+            margin-bottom: 15px;
+        }
+        
+        .input-form .button-container {
+            margin-top: 15px;
+            text-align: center;
         }
         
         .input-form h3 {
@@ -133,7 +137,7 @@
         .input-form label {
             font-size: 16px;
             margin-right: 5px;
-            color: #495057;
+            color: #057af0;
             display: inline-block;
             margin-bottom: 10px;
         }
@@ -183,14 +187,29 @@
         
         .cell-letter {
             position: absolute;
-            bottom: 5px;
-            right: 5px;
+            bottom: -8px;
+            right: 1px;
             font-size: 28px;
             font-weight: bold;
+            padding: 7px;
             text-transform: uppercase;
             color: rgb(42, 157, 144);
+            background-color: transparent;
+            -moz-appearance: textfield;
+            cursor: text;
+            transition: background-color 0.3s;
+        }
+
+        .cell-letter:hover {
+            background-color: rgba(42, 157, 144, 0.1);
         }
         
+        .cell-letter:focus {
+            background-color: rgba(22, 207, 186, 0.2);
+            outline: none;
+        }
+
+       
         .main-title {
             text-align: center;
             color: rgb(42, 157, 144);
@@ -358,27 +377,13 @@
         @media (max-width: 375px) {
             .main-title {
                 font-size: 1.5rem;
-                margin: 30px 10px;
+                margin: 80px 10px;
+                padding: 0 10px;
             }
 
             .magic-square {
                 transform: scale(0.75);
-            }
-
-            .row-coordinates {
-                left: 2%;
-            }
-            
-            .col-coordinates {
-                left: 5%;
-            }
-
-            .row-number {
-                padding-left: 10px;
-            }
-
-            .col-number {
-                padding-left: 10px;
+                margin-top: -80px;
             }
 
             .input-form h3 {
@@ -391,53 +396,77 @@
                 padding: 6px;
             }
         }
-        .main-title::after {
-    content: '';
-    position: absolute;
-    bottom: -30%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: 3px;
-    background-color: rgb(42, 157, 144);
-    border-radius: 2px;
-}
-.main-title:hover::after {
-    width: 300px;
-    transition: width 0.3s ease;
-}
-.magic-type-selector {
-    text-align: center;
-    margin: 80px auto;
-    margin-top: -5%;
-    width: 300px;
+
+/* Thêm style cho bảng chung */
+.common-table {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.magic-type-selector select {
+.slider-form {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.slider-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     width: 100%;
-    padding: 10px;
-    border: 2px solid rgb(42, 157, 144);
-    border-radius: 5px;
-    font-size: 16px;
-    color: rgb(42, 157, 144);
-    background-color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    max-width: 400px;
 }
 
-.magic-type-selector select:hover {
-    background-color: rgba(42, 157, 144, 0.1);
-}
-
-.magic-type-selector select:focus {
+#letterSlider {
+    flex: 1;
+    height: 8px;
+    -webkit-appearance: none;
+    background: rgb(42, 157, 144);
+    border-radius: 4px;
     outline: none;
-    box-shadow: 0 0 5px rgba(42, 157, 144, 0.5);
+}
+
+#letterSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: rgb(42, 157, 144);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background .3s ease-in-out;
+}
+
+#letterSlider::-webkit-slider-thumb:hover {
+    background: rgb(34, 139, 126);
+}
+
+#selectedLetter {
+    font-size: 18px;
+    font-weight: bold;
+    color: rgb(42, 157, 144);
+    width: 30px;
+    text-align: center;
 }
 
 @media (max-width: 768px) {
-    .magic-type-selector {
-        width: 90%;
-        margin: 15px auto;
+    .slider-wrapper {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    #letterSlider {
+        width: 100%;
     }
 }
     </style>
@@ -464,158 +493,107 @@
             <a href="#" onclick="logout()" class="login-btn" id="logoutBtn" style="display: none;">Đăng xuất</a>
         </div>
     </header>
-
-    <h1 class="main-title">Khóa Ma Phương</h1>
-
-    <div class="magic-type-selector">
-        <select id="magicTypeSelect" onchange="changeMagicType()">
-            <option value="variant65">Ma Phương 65 Biến Thiên</option>
-            <option value="rightShift">Ma Phương 65</option>
-        </select>
-    </div>
-
+    <div class="common-table">
     <div id="sidebar-container"></div>
-    <div style="position: relative; width: fit-content; margin: 50px auto;">
-        <div class="col-coordinates">
-            <div class="col-number">1</div>
-            <div class="col-number">2</div>
-            <div class="col-number">3</div>
-            <div class="col-number">4</div>
-            <div class="col-number">5</div>
-        </div>
-        
-        <div class="row-coordinates">
-            <div class="row-number">1</div>
-            <div class="row-number">2</div>
-            <div class="row-number">3</div>
-            <div class="row-number">4</div>
-            <div class="row-number">5</div>
-        </div>
+    <h1 class="main-title">Khóa Ma Phương 5x5</h1>
 
-        <table class="magic-square">
-            <tr>
-                <td><input type="number" value="10"><span class="cell-letter" contenteditable="true">A</span></td>
-                <td><input type="number" value="12"><span class="cell-letter" contenteditable="true">B</span></td>
-                <td><input type="number" value="19"><span class="cell-letter" contenteditable="true">C</span></td>
-                <td><input type="number" value="21"><span class="cell-letter" contenteditable="true">D</span></td>
-                <td><input type="number" value="3"><span class="cell-letter" contenteditable="true">E</span></td>
-            </tr>
-            <tr>
-                <td><input type="number" value="11"><span class="cell-letter" contenteditable="true">F</span></td>
-                <td><input type="number" value="18"><span class="cell-letter" contenteditable="true">G</span></td>
-                <td><input type="number" value="25"><span class="cell-letter" contenteditable="true">H</span></td>
-                <td><input type="number" value="2"><span class="cell-letter" contenteditable="true">I</span></td>
-                <td><input type="number" value="9"><span class="cell-letter" contenteditable="true">J</span></td>
-            </tr>
-            <tr>
-                <td><input type="number" value="17"><span class="cell-letter" contenteditable="true">K</span></td>
-                <td><input type="number" value="24"><span class="cell-letter" contenteditable="true">L</span></td>
-                <td><input type="number" value="1"><span class="cell-letter" contenteditable="true">M</span></td>
-                <td><input type="number" value="8"><span class="cell-letter" contenteditable="true">N</span></td>
-                <td><input type="number" value="15"><span class="cell-letter" contenteditable="true">O</span></td>
-            </tr>
-            <tr>
-                <td><input type="number" value="23"><span class="cell-letter" contenteditable="true">P</span></td>
-                <td><input type="number" value="5"><span class="cell-letter" contenteditable="true">Q</span></td>
-                <td><input type="number" value="7"><span class="cell-letter" contenteditable="true">R</span></td>
-                <td><input type="number" value="14"><span class="cell-letter" contenteditable="true">S</span></td>
-                <td><input type="number" value="16"><span class="cell-letter" contenteditable="true">T</span></td>
-            </tr>
-            <tr>
-                <td><input type="number" value="4"><span class="cell-letter" contenteditable="true">U</span></td>
-                <td><input type="number" value="6"><span class="cell-letter" contenteditable="true">V</span></td>
-                <td><input type="number" value="13"><span class="cell-letter" contenteditable="true">W</span></td>
-                <td><input type="number" value="20"><span class="cell-letter" contenteditable="true">X</span></td>
-                <td><input type="number" value="22"><span class="cell-letter" contenteditable="true">Y</span></td>
-            </tr>
-        </table>
-        <div id="message" style="text-align: center; margin-top: 20px; font-size: 16px;"></div>
+        <div style="position: relative; width: fit-content; margin: 50px auto;">
+            <div class="col-coordinates">
+                <div class="col-number">1</div>
+                <div class="col-number">2</div>
+                <div class="col-number">3</div>
+                <div class="col-number">4</div>
+                <div class="col-number">5</div>
+            </div>
+            
+            <div class="row-coordinates">
+                <div class="row-number">1</div>
+                <div class="row-number">2</div>
+                <div class="row-number">3</div>
+                <div class="row-number">4</div>
+                <div class="row-number">5</div>
+            </div>
 
+            <table class="magic-square">
+                <tr>
+                    <td><input type="number" value="10"><span class="cell-letter" contenteditable="true">A</span></td>
+                    <td><input type="number" value="12"><span class="cell-letter" contenteditable="true">B</span></td>
+                    <td><input type="number" value="19"><span class="cell-letter" contenteditable="true">C</span></td>
+                    <td><input type="number" value="21"><span class="cell-letter" contenteditable="true">D</span></td>
+                    <td><input type="number" value="3"><span class="cell-letter" contenteditable="true">E</span></td>
+                </tr>
+                <tr>
+                    <td><input type="number" value="11"><span class="cell-letter" contenteditable="true">F</span></td>
+                    <td><input type="number" value="18"><span class="cell-letter" contenteditable="true">G</span></td>
+                    <td><input type="number" value="25"><span class="cell-letter" contenteditable="true">H</span></td>
+                    <td><input type="number" value="2"><span class="cell-letter" contenteditable="true">I</span></td>
+                    <td><input type="number" value="9"><span class="cell-letter" contenteditable="true">J</span></td>
+                </tr>
+                <tr>
+                    <td><input type="number" value="17"><span class="cell-letter" contenteditable="true">K</span></td>
+                    <td><input type="number" value="24"><span class="cell-letter" contenteditable="true">L</span></td>
+                    <td><input type="number" value="1"><span class="cell-letter" contenteditable="true">M</span></td>
+                    <td><input type="number" value="8"><span class="cell-letter" contenteditable="true">N</span></td>
+                    <td><input type="number" value="15"><span class="cell-letter" contenteditable="true">O</span></td>
+                </tr>
+                <tr>
+                    <td><input type="number" value="23"><span class="cell-letter" contenteditable="true">P</span></td>
+                    <td><input type="number" value="5"><span class="cell-letter" contenteditable="true">Q</span></td>
+                    <td><input type="number" value="7"><span class="cell-letter" contenteditable="true">R</span></td>
+                    <td><input type="number" value="14"><span class="cell-letter" contenteditable="true">S</span></td>
+                    <td><input type="number" value="16"><span class="cell-letter" contenteditable="true">T</span></td>
+                </tr>
+                <tr>
+                    <td><input type="number" value="4"><span class="cell-letter" contenteditable="true">U</span></td>
+                    <td><input type="number" value="6"><span class="cell-letter" contenteditable="true">V</span></td>
+                    <td><input type="number" value="13"><span class="cell-letter" contenteditable="true">W</span></td>
+                    <td><input type="number" value="20"><span class="cell-letter" contenteditable="true">X</span></td>
+                    <td><input type="number" value="22"><span class="cell-letter" contenteditable="true">Y</span></td>
+                </tr>
+            </table>
+            <div id="message" style="text-align: center; margin-top: 20px; font-size: 16px;"></div>
         <div class="input-form">
             <h3><i class="fas fa-map-marker-alt"></i> Nhập tọa độ</h3>
             <label><i class="fas fa-arrows-alt-v"></i> Hàng:</label>
             <input type="number" id="rowInput" min="1" max="5">
             <label><i class="fas fa-arrows-alt-h"></i> Cột:</label>
             <input type="number" id="colInput" min="1" max="5">
-            <label><i class="fas fa-hashtag"></i> Số:</label>
-            <input type="number" id="startValue" min="1" max="25" value="1">
             <button onclick="updateValue()"><i class="fas fa-sync-alt"></i> Cập nhật Ma phương</button>
         </div>
-
         <div class="input-form">
             <h3><i class="fas fa-key"></i> Nhập khóa chữ cái theo tọa độ</h3>
-            <label><i class="fas fa-font"></i> Chữ cái:</label>
-            <input type="text" id="letterKeyInput" maxlength="1">
-            <label><i class="fas fa-arrows-alt-v"></i> Hàng:</label>
-            <input type="number" id="rowKeyInput" min="1" max="5">
-            <label><i class="fas fa-arrows-alt-h"></i> Cột:</label>
-            <input type="number" id="colKeyInput" min="1" max="5">
-            <button onclick="updateLetterByCoordinates()"><i class="fas fa-edit"></i> Cập nhật chữ cái</button>
+            <div class="coordinate-inputs">
+                <label><i class="fas fa-font"></i> Chữ cái:</label>
+                <input type="text" id="letterKeyInput" maxlength="1" style="text-transform: uppercase;">
+                <label><i class="fas fa-arrows-alt-v"></i> Hàng:</label>
+                <input type="number" id="rowKeyInput" min="1" max="5">
+                <label><i class="fas fa-arrows-alt-h"></i> Cột:</label>
+                <input type="number" id="colKeyInput" min="1" max="5">
+            </div>
+            <div class="button-container">
+                <button onclick="updateLetterByCoordinates()"><i class="fas fa-edit"></i> Cập nhật chữ cái</button>
+            </div>
+        </div>
+        <div class="slider-container">
+            <div class="slider-wrapper">
+                <span id="selectedLetter">A</span>
+                <input type="range" id="letterSlider" min="0" max="24" value="0">
+            </div>
         </div>
         <div class="input-form">
             <h3><i class="fas fa-lock"></i> Nhập bản mã</h3>
-            <input type="text" id="numberInput" placeholder="Ví dụ: 1 2,3-4_5" style="width: 500px;">
-            <button onclick="getLetterByNumber()"><i class="fas fa-search"></i> Kết quả</button>
-            <div id="result" style="text-align: center; margin-top: 20px; font-size: 16px;"></div>
+            <input type="text" id="numberInput" placeholder="Ví dụ: 1 2,3-4_5" style="width: 500px;" oninput="getLetterByNumber()">
+            <div id="result" style="text-align: center; margin-top: 20px; font-size: 26px;"></div>
             <button id="copyButton" style="display: none;" onclick="copyResult()"><i class="fas fa-copy"></i> Sao chép kết quả</button>
             <span id="copyMessage" style="display: none;"><i class="fas fa-check"></i> Đã sao chép kết quả!</span>
         </div>
-
     </div>
 
     <script>
-    let currentMagicType = 'variant65';
-
-    function changeMagicType() {
-        currentMagicType = document.getElementById('magicTypeSelect').value;
-        // Xóa bảng hiện tại
-        clearAllCells();
-        
-        if (currentMagicType === 'rightShift') {
-            // Thiết lập giá trị cho Ma Phương 65
-            const magicSquare65 = [
-                [3, 16, 9, 22, 15],
-                [20, 8, 21, 14, 2],
-                [7, 25, 13, 1, 19],
-                [24, 12, 5, 18, 6],
-                [11, 4, 17, 10, 23]
-            ];
-            
-            const cells = document.querySelectorAll('.magic-square tr');
-            for (let i = 0; i < 5; i++) {
-                const inputs = cells[i].getElementsByTagName('input');
-                for (let j = 0; j < 5; j++) {
-                    inputs[j].value = magicSquare65[i][j];
-                }
-            }
-        } else {
-            // Thiết lập giá trị cho Ma Phương 65 Biến Thiên (giữ nguyên giá trị cũ)
-            const magicSquareVariant = [
-                [10, 12, 19, 21, 3],
-                [11, 18, 25, 2, 9],
-                [17, 24, 1, 8, 15],
-                [23, 5, 7, 14, 16],
-                [4, 6, 13, 20, 22]
-            ];
-            
-            const cells = document.querySelectorAll('.magic-square tr');
-            for (let i = 0; i < 5; i++) {
-                const inputs = cells[i].getElementsByTagName('input');
-                for (let j = 0; j < 5; j++) {
-                    inputs[j].value = magicSquareVariant[i][j];
-                }
-            }
-        }
-        
-        // Reset message
-        document.getElementById('message').innerHTML = 'Đã chuyển sang ' + 
-            document.getElementById('magicTypeSelect').options[document.getElementById('magicTypeSelect').selectedIndex].text;
-    }
-
     function updateValue() {
         const row = parseInt(document.getElementById('rowInput').value);
         const col = parseInt(document.getElementById('colInput').value);
-        const value = parseInt(document.getElementById('startValue').value) || 1;
+        const value = 1;
         const messageDiv = document.getElementById('message');
         
         if (row < 1 || row > 5 || col < 1 || col > 5) {
@@ -624,16 +602,10 @@
             return;
         }
         
-        if (value < 1 || value > 25) {
-            messageDiv.innerHTML = 'Lỗi: Số phải từ 1 đến 25';
-            messageDiv.style.color = 'red';
-            return;
-        }
-        
         // Xóa tất cả các ô trước khi điền lại
         clearAllCells();
         
-        // Điền số được chọn vào vị trí được chọn
+        // Điền số 1 vào vị trí được chọn
         const cells = document.querySelectorAll('.magic-square tr');
         const targetCell = cells[row-1].getElementsByTagName('input')[col-1];
         targetCell.value = value;
@@ -648,13 +620,14 @@
         }
         
         // Hiển thị thông báo kết quả
-        messageDiv.innerHTML = `Đã tạo ma phương với số ${value} ở vị trí: Hàng ${row}, Cột ${col}`;
+        messageDiv.innerHTML = `Đã tạo ma phương với số 1 ở vị trí: Hàng ${row}, Cột ${col}`;
         messageDiv.style.color = '#28a745';
         
         // Xóa giá trị trong form
         document.getElementById('rowInput').value = '';
         document.getElementById('colInput').value = '';
-        document.getElementById('startValue').value = '1';
+
+        getLetterByNumber();
     }
 
     function clearAllCells() {
@@ -663,74 +636,25 @@
     }
 
     function getNextPosition(currentRow, currentCol, currentValue) {
+        // Tính số tiếp theo
         let nextValue = currentValue + 1;
         if (nextValue > 25) nextValue = 1;
         
-        let nextRow = currentRow;
-        let nextCol = currentCol;
-
-        switch(currentMagicType) {
-            case 'variant65':
-
-                
-                // Di chuyển sang phải và lên trên
-                nextCol = currentCol + 1;
-                nextRow = currentRow - 1;
-                
-                if (nextRow < 0 && nextCol > 4) {
-                nextRow = 4;
-                nextCol = 0;
-            } else if (nextRow < 0) {
-                nextRow = 4;
-            } else if (nextCol > 4) {
-                nextCol = 0;
-            }
-            
-                const cellsVariant65 = document.querySelectorAll('.magic-square tr');
-                const nextCellVariant65 = cellsVariant65[nextRow].getElementsByTagName('input')[nextCol];
-                
-                // Nếu ô đã có số, di chuyển xuống 2 hàng từ vị trí ban đầu
-                if (nextCellVariant65.value !== '') {
-                    nextRow = currentRow + 1;
-                nextCol = currentCol;
-                if (nextRow > 4) {
-                    nextRow = 0;
-                }
-            }
-            break;
-
-            case 'rightShift':
-                // Ma phương dịch phải
-                nextValue = currentValue + 1;
-                if (nextValue > 25) nextValue = 1;
-                
-                // Di chuyển chéo lên trên phải
-                nextRow = currentRow - 1;
-                nextCol = currentCol + 1;
-                
-                // Xử lý vượt biên
-                if (nextRow < 0 && nextCol > 4) {
-                    nextRow = 4;  // Nhảy xuống hàng cuối
-                    nextCol = 0;  // Nhảy về cột đầu
-                } else if (nextRow < 0) {
-                    nextRow = 4;  // Chỉ vượt biên trên: nhảy xuống hàng cuối
-                } else if (nextCol > 4) {
-                    nextCol = 0;  // Chỉ vượt biên phải: nhảy về cột đầu
-                }
-                
-                const cellsRight = document.querySelectorAll('.magic-square tr');
-                const nextCellRight = cellsRight[nextRow].getElementsByTagName('input')[nextCol];
-                
-                if (nextCellRight.value !== '') {
-                    // Nếu ô đã có số: di chuyển sang phải 2 ô từ vị trí hiện tại
-                    nextRow = currentRow;
-                    nextCol = (currentCol + 2) % 5;
-                }
-                break;
+        // Tính vị trí tiếp theo (chéo phải trên)
+        let nextRow = (currentRow - 1 + 5) % 5;  // Đảm bảo luôn dương
+        let nextCol = (currentCol + 1) % 5;      // Xử lý wrap-around
+        
+        const cells = document.querySelectorAll('.magic-square tr');
+        const nextCell = cells[nextRow].getElementsByTagName('input')[nextCol];
+        
+        // Nếu ô đã có số, di chuyển xuống dưới ô hiện tại
+        if (nextCell.value !== '') {
+            nextRow = (currentRow + 1) % 5;
+            nextCol = currentCol;
         }
         
-        const targetCells = document.querySelectorAll('.magic-square tr');
-        const targetCell = targetCells[nextRow].getElementsByTagName('input')[nextCol];
+        // Điền số tiếp theo
+        const targetCell = cells[nextRow].getElementsByTagName('input')[nextCol];
         targetCell.value = nextValue;
         
         return [nextRow, nextCol, nextValue];
@@ -813,55 +737,75 @@
         document.getElementById('letterKeyInput').value = '';
         document.getElementById('rowKeyInput').value = '';
         document.getElementById('colKeyInput').value = '';
+
+        getLetterByNumber();
     }
 
     function getLetterByNumber() {
-        const numberInput = document.getElementById('numberInput').value;
+        const numberInput = document.getElementById('numberInput').value.trim();
         const resultDiv = document.getElementById('result');
         const copyButton = document.getElementById('copyButton');
         
-        // Tách chuỗi thành mảng số sử dụng nhiều dấu phân cách
-        const numbers = numberInput.split(/[\s,\-_]+/).map(num => parseInt(num.trim())).filter(num => !isNaN(num));
-        
-        if (numbers.length === 0) {
-            resultDiv.innerHTML = 'Lỗi: Vui lòng nhập ít nhất một số từ 1 đến 25';
-            resultDiv.style.color = 'red';
+        if (!numberInput) {
+            resultDiv.innerHTML = '';
             copyButton.style.display = 'none';
             return;
         }
         
-        const cells = document.querySelectorAll('.magic-square tr');
-        let result = '';
+        // Tách chuỗi thành mảng số sử dụng nhiều dấu phân cách
+        const numbers = numberInput.split(/[\s,\-_]+/)
+            .map(num => parseInt(num.trim()))
+            .filter(num => !isNaN(num));
         
-        numbers.forEach(number => {
-            if (number < 1 || number > 25) {
-                result += '?';
-                return;
-            }
-            
-            let found = false;
-            cells.forEach(row => {
+        if (numbers.length === 0) {
+            resultDiv.innerHTML = '';
+            copyButton.style.display = 'none';
+            return;
+        }
+        
+        let result = '';
+        const letterMap = new Map();
+        
+        try {
+            // Thu thập tất cả các giá trị và chữ cái từ bảng
+            const rows = document.querySelectorAll('.magic-square tr');
+            rows.forEach((row, i) => {
                 const inputs = row.getElementsByTagName('input');
-                const spans = row.getElementsByTagName('span');
-                for (let i = 0; i < inputs.length; i++) {
-                    if (parseInt(inputs[i].value) === number) {
-                        result += spans[i].textContent;
-                        found = true;
-                        break;
-                    }
+                const letters = row.getElementsByTagName('span');
+                for (let j = 0; j < 5; j++) {
+                    const value = parseInt(inputs[j].value);
+                    const letter = letters[j].textContent.trim();
+                    letterMap.set(value, letter);
                 }
             });
             
-            if (!found) {
-                result += '?';
-            }
-        });
-        
-        resultDiv.innerHTML = result;
-        resultDiv.style.color = '#28a745';
-        
-        // Hiển thị nút sao chép nếu có kết quả
-        copyButton.style.display = result ? 'block' : 'none';
+            let charCount = 0;
+            numbers.forEach(number => {
+                if (charCount >= 20) {
+                    result += '<br>';
+                    charCount = 0;
+                }
+                
+                if (number < 1 || number > 25) {
+                    result += '?';
+                } else {
+                    const letter = letterMap.get(number);
+                    result += letter || '?';
+                }
+                charCount++;
+            });
+            
+            resultDiv.innerHTML = result;
+            resultDiv.style.color = '#28a745';
+            resultDiv.style.lineHeight = '1.5';
+            resultDiv.style.fontSize = '26px';
+            copyButton.style.display = result ? 'block' : 'none';
+            
+        } catch (error) {
+            console.error('Error in getLetterByNumber:', error);
+            resultDiv.innerHTML = '';
+            copyButton.style.display = 'none';
+        }
     }
 
     function copyResult() {
@@ -877,6 +821,35 @@
             alert('Không thể sao chép kết quả!');
         });
     }
+
+    // Sửa lại event listener cho slider
+    document.addEventListener('DOMContentLoaded', function() {
+        const slider = document.getElementById('letterSlider');
+        
+        slider.addEventListener('input', function() {
+            const value = parseInt(this.value);
+            const letter = String.fromCharCode(65 + value);
+            document.getElementById('selectedLetter').textContent = letter;
+            
+            // Cập nhật bảng ma phương
+            const cells = document.querySelectorAll('.magic-square tr');
+            let currentLetter = value;
+            
+            for (let i = 0; i < 5; i++) {
+                for (let j = 0; j < 5; j++) {
+                    const targetCell = cells[i].getElementsByTagName('span')[j];
+                    targetCell.textContent = String.fromCharCode(65 + currentLetter);
+                    
+                    currentLetter++;
+                    if (currentLetter > 24) {
+                        currentLetter = 0;
+                    }
+                }
+            }
+
+            getLetterByNumber();
+        });
+    });
     </script>
         <!-- Footer Section -->
         <footer>
