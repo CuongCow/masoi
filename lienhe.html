@@ -102,6 +102,42 @@
         font-size: 14px;
     }
 
+    .avatar-video-container {
+        width: 300px;
+        height: 300px;
+        margin: 0 auto 30px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 3px solid rgb(42, 157, 144);
+        box-shadow: 0 0 15px rgba(42, 157, 144, 0.5);
+    }
+
+    .avatar-video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    @media (max-width: 768px) {
+        .avatar-video-container {
+            width: 200px;
+            height: 200px;
+        }
+        .content {
+            margin-top: 25%;
+        }
+        .content h1 {
+            font-size: 40px;
+        }
+        .content p {
+            font-size: 16px;
+        }
+        .icon-black {
+            font-size: 30px;
+        }
+        
+    }
+
     </style>
         <script src="/js/menu.js"></script>
 </head>
@@ -129,6 +165,11 @@
     <div id="sidebar-container"></div>
     <!-- Nội dung chính -->
     <section class="content">
+        <div class="avatar-video-container">
+            <video class="avatar-video" autoplay loop playsinline preload="auto">
+                <source src="/video/avatar.mp4" type="video/mp4">
+            </video>
+        </div>
         <h1>Liên Hệ Với Tôi</h1>
         <p>Theo dõi và liên hệ tôi qua các mạng xã hội:</p>
         
@@ -166,5 +207,32 @@
             <a href="/register.html" class="modal-btn modal-register">Đăng ký</a>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.querySelector('.avatar-video');
+            
+            // Cách 1: Sử dụng Promise để phát video
+            const playVideo = async () => {
+                try {
+                    await video.play();
+                } catch (err) {
+                    console.log("Không thể tự động phát video:", err);
+                }
+            };
+            
+            // Cách 2: Thêm sự kiện loadeddata
+            video.addEventListener('loadeddata', function() {
+                playVideo();
+            });
+            
+            // Cách 3: Thử phát ngay khi tải xong
+            playVideo();
+            
+            // Cách 4: Thêm sự kiện click vào document
+            document.addEventListener('click', function() {
+                playVideo();
+            }, { once: true });
+        });
+    </script>
 </body>
 </html>
