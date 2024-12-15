@@ -1785,6 +1785,126 @@
             panel.style.transform = 'none';
         }
     }
+
+    let touchStartTime = 0;
+    let touchTimeout;
+
+    // Thêm event listeners cho touch events
+    document.querySelectorAll('.assistive-touch, .assistive-touch-letter').forEach(button => {
+        button.addEventListener('touchstart', handleTouchStart, {passive: false});
+        button.addEventListener('touchend', handleTouchEnd, {passive: false});
+        button.addEventListener('touchmove', handleTouchMove, {passive: false});
+    });
+
+    function handleTouchStart(e) {
+        touchStartTime = Date.now();
+        const touch = e.touches[0];
+        initialX = touch.clientX - xOffset;
+        initialY = touch.clientY - yOffset;
+        
+        if (e.target === this || e.target.parentElement === this) {
+            isDragging = false; // Bắt đầu với giả định là click
+            activeButton = this;
+        }
+    }
+
+    function handleTouchMove(e) {
+        if (!activeButton) return;
+        
+        const touch = e.touches[0];
+        const moveX = touch.clientX - initialX;
+        const moveY = touch.clientY - initialY;
+        
+        // Nếu di chuyển quá 5px, coi như đang kéo
+        if (Math.abs(moveX - xOffset) > 5 || Math.abs(moveY - yOffset) > 5) {
+            isDragging = true;
+            currentX = moveX;
+            currentY = moveY;
+            xOffset = currentX;
+            yOffset = currentY;
+            setTranslate(currentX, currentY, activeButton);
+            updatePanelPosition(activeButton);
+        }
+        
+        e.preventDefault();
+    }
+
+    function handleTouchEnd(e) {
+        const touchEndTime = Date.now();
+        const touchDuration = touchEndTime - touchStartTime;
+        
+        // Nếu không phải đang kéo và thời gian chạm ngắn (dưới 200ms), coi như click
+        if (!isDragging && touchDuration < 200) {
+            if (activeButton.classList.contains('assistive-touch')) {
+                toggleEmptyPanel();
+            } else if (activeButton.classList.contains('assistive-touch-letter')) {
+                toggleLetterPanel();
+            }
+        }
+        
+        isDragging = false;
+        activeButton = null;
+        e.preventDefault();
+    }
+
+    // Cập nhật các hàm toggle
+    function toggleEmptyPanel() {
+        const panel = document.getElementById('emptyCellPanel');
+        const button = document.querySelector('.assistive-touch');
+        
+        // Đóng panel khác nếu đang mở
+        const otherPanel = document.getElementById('letterInputPanel');
+        if (otherPanel.classList.contains('active')) {
+            otherPanel.classList.remove('active');
+            document.querySelector('.assistive-touch-letter').classList.remove('active');
+        }
+        
+        panel.classList.toggle('active');
+        button.classList.toggle('active');
+        if (panel.classList.contains('active')) {
+            updatePanelPosition(button);
+        }
+    }
+
+    function toggleLetterPanel() {
+        const panel = document.getElementById('letterInputPanel');
+        const button = document.querySelector('.assistive-touch-letter');
+        
+        // Đóng panel khác nếu đang mở
+        const otherPanel = document.getElementById('emptyCellPanel');
+        if (otherPanel.classList.contains('active')) {
+            otherPanel.classList.remove('active');
+            document.querySelector('.assistive-touch').classList.remove('active');
+        }
+        
+        panel.classList.toggle('active');
+        button.classList.toggle('active');
+        if (panel.classList.contains('active')) {
+            updatePanelPosition(button);
+        }
+    }
+
+    // Thêm event listener để đóng panel khi click ra ngoài
+    document.addEventListener('touchstart', function(e) {
+        const emptyCellPanel = document.getElementById('emptyCellPanel');
+        const letterInputPanel = document.getElementById('letterInputPanel');
+        const assistiveTouch = document.querySelector('.assistive-touch');
+        const assistiveTouchLetter = document.querySelector('.assistive-touch-letter');
+        
+        if (!emptyCellPanel.contains(e.target) && 
+            !assistiveTouch.contains(e.target) && 
+            emptyCellPanel.classList.contains('active')) {
+            emptyCellPanel.classList.remove('active');
+            assistiveTouch.classList.remove('active');
+        }
+        
+        if (!letterInputPanel.contains(e.target) && 
+            !assistiveTouchLetter.contains(e.target) && 
+            letterInputPanel.classList.contains('active')) {
+            letterInputPanel.classList.remove('active');
+            assistiveTouchLetter.classList.remove('active');
+        }
+    });
     </script>
 
     <!-- Footer Section -->
