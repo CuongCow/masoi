@@ -214,29 +214,6 @@
             box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
         }
 
-        .result-display {
-            display: none;
-            margin: 0;
-            padding: 0;
-            flex: 1;
-            min-width: 200px;
-            background-color: #c4292400;
-            border: 1px solid #e0e0e000;
-            border-radius: 12px;
-            font-size: 1.8em;
-            line-height: 1.8;
-            white-space: pre-wrap;
-            word-break: break-word;
-            max-height: 20px;
-            overflow-y: auto;
-            letter-spacing: 1px;
-        }
-
-        .result-display:not(:empty) {
-            display: block;
-            margin: 20px 0;
-        }
-
         .result-char {
             display: inline-block;
             color: #502c2c;
@@ -349,12 +326,6 @@
                 max-width: 100%;
             }
 
-            .result-display {
-                font-size: 0.9em;
-                padding: 10px;
-                max-height: 150px;
-            }
-
             .result-char {
                 padding: 1px 3px;
                 margin: 1px;
@@ -398,12 +369,6 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
             font-weight: bold;
         }
-
-            .result-display {
-                font-size: 0.85em;
-                padding: 8px;
-                max-height: 120px;
-            }
         }
 
         @media screen and (max-width: 320px) {
@@ -615,21 +580,6 @@
             width: 100%;
             margin-top: 15px;
         }
-
-        .result-display {
-            width: 100%;
-            min-height: 50px;
-            max-height: none; /* Bỏ giới hạn chiều cao */
-            padding: 15px;
-            margin-bottom: 15px;
-            background-color: #f8f9fa00;
-            border-radius: 10px;
-            overflow-wrap: break-word;
-            word-wrap: break-word;
-            word-break: break-all;
-        }
-
-
         .copy-button {
             /* Căn giữa nút */
             display: block;
@@ -658,10 +608,6 @@
 
         /* Media queries */
         @media screen and (max-width: 768px) {
-            .result-display {
-                padding: 10px;
-                margin-bottom: 10px;
-            }
 
             .result-char {
                 padding: 1px 3px;
@@ -674,10 +620,6 @@
         }
 
         @media screen and (max-width: 480px) {
-            .result-display {
-                padding: 8px;
-                margin-bottom: 8px;
-            }
 
             .copy-button {
                 padding: 5px 12px;
@@ -1174,8 +1116,8 @@
             <!-- Thanh slider -->
 
             <div class="input-container">
-                <div id="setEmptyResult" class="result-display"></div>
-                <div id="setLetterResult" class="result-display"></div>
+                <div id="setEmptyResult" style="text-align: center; margin-top: 20px; font-size: 20px;"></div>
+                <div id="setLetterResult" style="text-align: center; margin-top: 20px; font-size: 20px;"></div>
                 <div class="slider-container">
                     <!-- Thêm wrapper div để chứa letter và slider -->
                     <div class="slider-wrapper">
