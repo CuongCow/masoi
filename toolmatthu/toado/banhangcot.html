@@ -691,9 +691,8 @@
             cursor: move; /* Hiển thị cursor kéo thả */
             touch-action: none; /* Ngăn chặn scroll mặc định trên mobile */
             position: fixed;
-            right: 20px;
-            width: 65px;
-            height: 65px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -706,7 +705,7 @@
             border: 2px solid rgba(255,255,255,0.1);
         }
 
-        /* Vị trí riêng cho từng nút */
+        /* Vị trí cơ bản */
         .assistive-touch {
             top: 45%;
         }
@@ -715,164 +714,30 @@
             top: 55%;
         }
 
-        /* Icon trong nút */
+        /* Icon đơn giản */
         .assistive-touch i,
         .assistive-touch-letter i {
             color: white;
-            font-size: 26px;
-            transition: all 0.3s ease;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-            z-index: 2;
+            font-size: 25px;
         }
 
-        /* Hiệu ứng hover */
-        .assistive-touch:hover,
-        .assistive-touch-letter:hover {
-            transform: scale(1.1) rotate(5deg);
-            background: linear-gradient(145deg, #32b8a8, #2a9d8f);
-            box-shadow: 8px 8px 20px rgba(0,0,0,0.25),
-                        -8px -8px 20px rgba(255,255,255,0.1);
-        }
-
-        /* Hiệu ứng khi active */
-        .assistive-touch.active,
-        .assistive-touch-letter.active {
-            transform: scale(0.95);
-            background: linear-gradient(145deg, #238c7f, #2a9d8f);
-            box-shadow: inset 4px 4px 8px rgba(0,0,0,0.2),
-                        inset -4px -4px 8px rgba(255,255,255,0.1);
-        }
-
-        /* Thêm tooltip */
-        .assistive-touch::before,
-        .assistive-touch-letter::before {
-            content: attr(data-tooltip);
-            position: absolute;
-            right: 80px;
-            background: rgba(0,0,0,0.8);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 14px;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-
-        .assistive-touch:hover::before,
-        .assistive-touch-letter:hover::before {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Hiệu ứng ripple khi click */
-        .assistive-touch::after,
-        .assistive-touch-letter::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.4);
-            transform: scale(0);
-            transition: transform 0.5s ease-out;
-        }
-
-        .assistive-touch:active::after,
-        .assistive-touch-letter:active::after {
-            transform: scale(1.5);
-            opacity: 0;
-        }
-
-        /* Thêm hiệu ứng sóng nước */
-        .assistive-touch .ripple,
-        .assistive-touch-letter .ripple {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            animation: rippleEffect 2s linear infinite;
-            border: 2px solid rgba(42, 157, 143, 0.5);
-        }
-
-        .assistive-touch .ripple:nth-child(2),
-        .assistive-touch-letter .ripple:nth-child(2) {
-            animation-delay: 0.5s;
-            border-color: rgba(42, 157, 143, 0.3);
-        }
-
-        .assistive-touch .ripple:nth-child(3),
-        .assistive-touch-letter .ripple:nth-child(3) {
-            animation-delay: 1s;
-            border-color: rgba(42, 157, 143, 0.1);
-        }
-
-        @keyframes rippleEffect {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1.5);
-                opacity: 0;
-            }
-        }
-
-        .empty-cell-panel {
+        /* Đơn giản hóa panel */
+        .empty-cell-panel,
+        .letter-input-panel {
             position: fixed;
-            right: 70px;
-            top: 50%;
-            transform: translateY(-50%);
-            backdrop-filter: blur(25px);
-            padding: 15px 20px 1px 20px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.24);
-            border: 2px solid rgba(255, 255, 255, 0.548);
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             z-index: 999;
             display: none;
-            width: 300px;
+            width: 280px;
         }
 
-        .empty-cell-panel.active {
-            display: block;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-50%) translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(-50%) translateX(0);
-            }
-        }
-
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .panel-title {
-            font-size: 1.8em;
-            color: #2c3e50;
-            font-weight: bold;
-        }
-
-        .close-panel {
-            cursor: pointer;
-            color: #666;
-            font-size: 1.2em;
-        }
-
-
+        /* Active state đơn giản */
+        .empty-cell-panel.active,
         .letter-input-panel.active {
             display: block;
-            animation: slideInLeft 0.3s ease;
         }
 
         @keyframes slideInLeft {
@@ -962,85 +827,25 @@
                 right: 10px;
             }
 
-            .assistive-touch i,
-            .assistive-touch-letter i {
-                font-size: 18px;
-            }
-
-            .assistive-touch::before,
-            .assistive-touch-letter::before {
-                right: 55px;
-                padding: 5px 8px;
-                font-size: 11px;
-            }
-
-            /* Điều chỉnh khoảng cách giữa các nút */
-            .assistive-touch {
-                top: 45%;
-            }
-
-            .assistive-touch-letter {
-                top: 52%;
-            }
-
-            /* Điều chỉnh hiệu ứng sóng nước */
-            @keyframes rippleEffect {
-                0% {
-                    transform: scale(1);
-                    opacity: 1;
-                }
-                100% {
-                    transform: scale(1.3); /* Giảm độ lan tỏa */
-                    opacity: 0;
-                }
+            .empty-cell-panel,
+            .letter-input-panel {
+                width: 250px;
+                padding: 12px;
             }
         }
 
-        @media screen and (max-width: 320px) {
+        @media screen and (max-width: 480px) {
             .assistive-touch,
             .assistive-touch-letter {
                 width: 40px;
                 height: 40px;
-                right: 8px;
             }
 
             .assistive-touch i,
             .assistive-touch-letter i {
-                font-size: 16px;
-            }
-
-            .assistive-touch::before,
-            .assistive-touch-letter::before {
-                right: 50px;
-                padding: 4px 6px;
-                font-size: 10px;
-            }
-
-            /* Điều chỉnh hiệu ứng hover */
-            .assistive-touch:hover,
-            .assistive-touch-letter:hover {
-                transform: scale(1.05) rotate(3deg); /* Giảm độ scale và xoay */
+                font-size: 18px;
             }
         }
-
-        /* Styles cho panel */
-        .empty-cell-panel,
-        .letter-input-panel {
-            position: fixed;
-            right: 70px;
-            top: 50%;          
-            transform: translateY(-50%);
-            backdrop-filter: blur(25px);
-            padding: 15px 20px 1px 20px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.24);
-            border: 2px solid rgba(255, 255, 255, 0.548);
-            z-index: 999;
-            display: none;
-            width: 300px;
-            transition: all 0.3s ease;
-        }
-
         /* Media queries cho thiết bị di động */
         @media screen and (max-width: 768px) {
             .empty-cell-panel,
@@ -1648,17 +1453,46 @@
     }
 
     function toggleEmptyPanel() {
-        const panel = document.getElementById('emptyCellPanel');
-        const button = document.querySelector('.assistive-touch');
-        panel.classList.toggle('active');
-        button.classList.toggle('active');
+        try {
+            const panel = document.getElementById('emptyCellPanel');
+            const button = document.querySelector('.assistive-touch');
+            if (!panel || !button) return;
+            
+            // Đóng panel khác
+            const otherPanel = document.getElementById('letterInputPanel');
+            if (otherPanel) {
+                otherPanel.classList.remove('active');
+                const otherButton = document.querySelector('.assistive-touch-letter');
+                if (otherButton) otherButton.classList.remove('active');
+            }
+            
+            panel.classList.toggle('active');
+            button.classList.toggle('active');
+            if (panel.classList.contains('active')) {
+                updatePanelPosition(button);
+            }
+        } catch (error) {
+            console.error('Error in toggleEmptyPanel:', error);
+        }
     }
 
     function toggleLetterPanel() {
         const panel = document.getElementById('letterInputPanel');
         const button = document.querySelector('.assistive-touch-letter');
+        
+        // Đóng panel khác nếu đang mở
+        const otherPanel = document.getElementById('emptyCellPanel');
+        if (otherPanel) {
+            otherPanel.classList.remove('active');
+            const otherButton = document.querySelector('.assistive-touch');
+            if (otherButton) otherButton.classList.remove('active');
+        }
+        
         panel.classList.toggle('active');
         button.classList.toggle('active');
+        if (panel.classList.contains('active')) {
+            updatePanelPosition(button);
+        }
     }
 
     // Cập nhật event listener để xử lý việc đóng panel
@@ -1759,30 +1593,33 @@
     }
 
     function updatePanelPosition(button) {
-        let panel;
-        if (button.classList.contains('assistive-touch')) {
-            panel = document.getElementById('emptyCellPanel');
-        } else {
-            panel = document.getElementById('letterInputPanel');
-        }
-
-        if (panel && panel.classList.contains('active')) {
-            const buttonRect = button.getBoundingClientRect();
+        const panel = button.classList.contains('assistive-touch') 
+            ? document.getElementById('emptyCellPanel')
+            : document.getElementById('letterInputPanel');
+        
+        if (!panel) return; // Thêm kiểm tra tồn tại của panel
+        
+        if (panel.classList.contains('active')) {
+            const rect = button.getBoundingClientRect();
             const panelWidth = panel.offsetWidth;
             
-            // Kiểm tra xem có đủ không gian bên phải không
-            if (buttonRect.right + panelWidth + 10 <= window.innerWidth) {
-                // Hiển thị bên phải
-                panel.style.left = `${buttonRect.right + 10}px`;
+            // Đảm bảo panel không vượt quá màn hình
+            if (rect.right + panelWidth + 10 <= window.innerWidth) {
+                panel.style.left = `${rect.right + 10}px`;
                 panel.style.right = 'auto';
             } else {
-                // Hiển thị bên trái
-                panel.style.right = `${window.innerWidth - buttonRect.left + 10}px`;
                 panel.style.left = 'auto';
+                panel.style.right = `10px`;
             }
             
-            panel.style.top = `${buttonRect.top}px`;
-            panel.style.transform = 'none';
+            // Đảm bảo panel không vượt quá top/bottom của màn hình
+            let topPosition = rect.top;
+            if (topPosition + panel.offsetHeight > window.innerHeight) {
+                topPosition = window.innerHeight - panel.offsetHeight - 10;
+            }
+            if (topPosition < 0) topPosition = 10;
+            
+            panel.style.top = `${topPosition}px`;
         }
     }
 
@@ -1812,99 +1649,52 @@
         if (!activeButton) return;
         
         const touch = e.touches[0];
+        if (!touch) return; // Thêm kiểm tra tồn tại của touch
+        
         const moveX = touch.clientX - initialX;
         const moveY = touch.clientY - initialY;
         
-        // Nếu di chuyển quá 5px, coi như đang kéo
         if (Math.abs(moveX - xOffset) > 5 || Math.abs(moveY - yOffset) > 5) {
             isDragging = true;
             currentX = moveX;
             currentY = moveY;
-            xOffset = currentX;
-            yOffset = currentY;
-            setTranslate(currentX, currentY, activeButton);
-            updatePanelPosition(activeButton);
+            
+            // Giới hạn trong viewport
+            const maxX = window.innerWidth - activeButton.offsetWidth;
+            const maxY = window.innerHeight - activeButton.offsetHeight;
+            
+            xOffset = Math.min(Math.max(0, moveX), maxX);
+            yOffset = Math.min(Math.max(0, moveY), maxY);
+            
+            // Sử dụng requestAnimationFrame để tối ưu hiệu năng
+            requestAnimationFrame(() => {
+                activeButton.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+                if (activeButton.classList.contains('active')) {
+                    updatePanelPosition(activeButton);
+                }
+            });
         }
-        
         e.preventDefault();
     }
 
     function handleTouchEnd(e) {
-        const touchEndTime = Date.now();
-        const touchDuration = touchEndTime - touchStartTime;
-        
-        // Nếu không phải đang kéo và thời gian chạm ngắn (dưới 200ms), coi như click
-        if (!isDragging && touchDuration < 200) {
+        if (!isDragging && activeButton) {
             if (activeButton.classList.contains('assistive-touch')) {
                 toggleEmptyPanel();
             } else if (activeButton.classList.contains('assistive-touch-letter')) {
                 toggleLetterPanel();
             }
         }
-        
         isDragging = false;
         activeButton = null;
         e.preventDefault();
     }
 
-    // Cập nhật các hàm toggle
-    function toggleEmptyPanel() {
-        const panel = document.getElementById('emptyCellPanel');
-        const button = document.querySelector('.assistive-touch');
-        
-        // Đóng panel khác nếu đang mở
-        const otherPanel = document.getElementById('letterInputPanel');
-        if (otherPanel.classList.contains('active')) {
-            otherPanel.classList.remove('active');
-            document.querySelector('.assistive-touch-letter').classList.remove('active');
-        }
-        
-        panel.classList.toggle('active');
-        button.classList.toggle('active');
-        if (panel.classList.contains('active')) {
-            updatePanelPosition(button);
-        }
-    }
-
-    function toggleLetterPanel() {
-        const panel = document.getElementById('letterInputPanel');
-        const button = document.querySelector('.assistive-touch-letter');
-        
-        // Đóng panel khác nếu đang mở
-        const otherPanel = document.getElementById('emptyCellPanel');
-        if (otherPanel.classList.contains('active')) {
-            otherPanel.classList.remove('active');
-            document.querySelector('.assistive-touch').classList.remove('active');
-        }
-        
-        panel.classList.toggle('active');
-        button.classList.toggle('active');
-        if (panel.classList.contains('active')) {
-            updatePanelPosition(button);
-        }
-    }
-
-    // Thêm event listener để đóng panel khi click ra ngoài
-    document.addEventListener('touchstart', function(e) {
-        const emptyCellPanel = document.getElementById('emptyCellPanel');
-        const letterInputPanel = document.getElementById('letterInputPanel');
-        const assistiveTouch = document.querySelector('.assistive-touch');
-        const assistiveTouchLetter = document.querySelector('.assistive-touch-letter');
-        
-        if (!emptyCellPanel.contains(e.target) && 
-            !assistiveTouch.contains(e.target) && 
-            emptyCellPanel.classList.contains('active')) {
-            emptyCellPanel.classList.remove('active');
-            assistiveTouch.classList.remove('active');
-        }
-        
-        if (!letterInputPanel.contains(e.target) && 
-            !assistiveTouchLetter.contains(e.target) && 
-            letterInputPanel.classList.contains('active')) {
-            letterInputPanel.classList.remove('active');
-            assistiveTouchLetter.classList.remove('active');
-        }
-    });
+    // Thêm vào đầu file
+    window.onerror = function(msg, url, lineNo, columnNo, error) {
+        console.log('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + lineNo + '\nColumn: ' + columnNo + '\nError object: ' + JSON.stringify(error));
+        return false;
+    };
     </script>
 
     <!-- Footer Section -->
