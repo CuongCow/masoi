@@ -152,6 +152,7 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+
             .main-container {
             margin-top: 80px !important;
         }
@@ -207,6 +208,61 @@
                 width: 100%;
                 margin: 10px 0;
             }
+            /* Thêm vào phần CSS của bạn */
+    .tooltip {
+        position: fixed; /* Thay vì absolute để tránh vấn đề về vị trí trên mobile */
+        top: 50% !important; /* Đặt ở giữa màn hình */
+        left: 50% !important;
+        transform: translate(-50%, -50%);
+        width: 90%; /* Chiếm 90% chiều rộng màn hình */
+        max-width: 320px; /* Giới hạn chiều rộng tối đa */
+        max-height: 80vh; /* Giới hạn chiều cao tối đa */
+        overflow-y: auto; /* Cho phép cuộn nếu nội dung dài */
+        padding: 15px;
+        margin: 0;
+        z-index: 1000;
+    }
+
+    .tooltip-content {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .tooltip-content h4 {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+
+    .tooltip-content p {
+        font-size: 13px;
+        line-height: 1.4;
+        margin-bottom: 8px;
+    }
+
+    .tooltip-content ul {
+        padding-left: 15px;
+    }
+
+    .tooltip-content li {
+        font-size: 13px;
+        margin-bottom: 5px;
+    }
+
+    /* Thêm overlay khi tooltip hiển thị */
+    .tooltip-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    .tooltip-overlay.active {
+        display: block;
+    }
         }
 
         /* Container cho từng section */
