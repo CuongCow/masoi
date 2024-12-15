@@ -141,20 +141,26 @@
         }
 
         .input-group.centered .custom-input {
-            width: 100%;
+            width: 110%;
             padding: 15px 20px;
             font-size: 1.5em;
-            height: 60px;
+            height: 70px;
             border-radius: 15px;
+            
+            /* Thêm các thuộc tính căn giữa */
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            transform: translateX(-5%); /* Bù trừ cho width 110% */
         }
 
         .input-group.centered label {
-            font-size: 1.3em;
+            font-size: 1.3em; 
             margin-bottom: 10px;
         }
 
         .input-group label {
-            color: #2a9d8f;
+            color: #2c3e50;
             margin-bottom: 5px;
             font-weight: 500;
             font-size: 1.7em;
@@ -164,7 +170,7 @@
         }
 
         .input-group label i {
-            color: #2a9d8f;
+            color: #2c3e50;
         }
 
         .custom-input {
@@ -185,13 +191,13 @@
         }
 
         .custom-button {
-            min-width: 160px;
+            min-width: 100px;
             padding: 10px 20px;
             margin: 15px auto;
             background-color: #2a9d8f;
             border: none;
             border-radius: 12px;
-            color: white;
+            color: rgb(255, 255, 255);
             font-weight: 600;
             font-size: 1.6em;
             cursor: pointer;
@@ -203,47 +209,52 @@
         }
 
         .custom-button:hover {
-            background-color: #2a9d8f;
+            background-color: #1ce0c9;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
         }
 
         .result-display {
+            display: none;
+            margin: 0;
+            padding: 0;
             flex: 1;
             min-width: 200px;
-            padding: 15px;
-            background-color: #f8f9fa00;
+            background-color: #c4292400;
             border: 1px solid #e0e0e000;
             border-radius: 12px;
-            font-size: 1.4em;
+            font-size: 1.8em;
             line-height: 1.8;
             white-space: pre-wrap;
             word-break: break-word;
-            max-height: 200px;
+            max-height: 20px;
             overflow-y: auto;
             letter-spacing: 1px;
         }
 
+        .result-display:not(:empty) {
+            display: block;
+            margin: 20px 0;
+        }
+
         .result-char {
             display: inline-block;
-            padding: 2px 4px;
-            margin: 2px;
-            background-color: #2a9d8f;
-            color: white;
+            color: #502c2c;
             border-radius: 4px;
             min-width: 25px;
             text-align: center;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .result-display:not(:empty) {
-            animation: fadeIn 0.5s ease-out;
-        }
-
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
         .letter-cell {
             padding: 0 !important;
             min-width: 180px;
@@ -274,32 +285,6 @@
             margin-top: 15px;
             width: 100%;
         }
-
-        .copy-button {
-            padding: 8px 15px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 0.9em;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-            min-width: 120px;
-            justify-content: center;
-        }
-
-        .copy-button:hover {
-            background-color: #45a049;
-            transform: translateY(-2px);
-        }
-
-        .copy-button i {
-            font-size: 1em;
-        }
-
         /* Thêm styles cho wrapper */
         .inputs-wrapper {
             background-color: white;
@@ -432,12 +417,7 @@
                 font-size: 0.75em;
             }
         }
-        
-        .slider-container {
-            margin: 2px 0;
-            text-align: center;
-            padding: 0 30px;
-        }
+
 
         .letter-slider {
             -webkit-appearance: none;
@@ -478,23 +458,6 @@
         .letter-slider::-moz-range-thumb:hover {
             background: #248277;
             transform: scale(1.1);
-        }
-
-        .selected-letter {
-            font-size: 3em;
-            font-weight: bold;
-            color: #d40f0f;
-            margin: 15px 0;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .letters-display {
-            display: flex;
-            justify-content: space-between;
-            margin: 10px 0;
-            font-size: 0.8em;
-            color: #666;
-            padding: 0 10px;
         }
 
         .empty-cell {
@@ -666,34 +629,27 @@
             word-break: break-all;
         }
 
-        .result-char {
-            display: inline-block;
-            padding: 0px 13px;
-            margin: 5px;
-            font-size: 1.1em;
-            background-color: #2a9d8f;
-            border: 1px solid #1478db;
-            border-radius: 12px;
-        }
 
         .copy-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 20px 20px;
-            margin-top: 10px;
+            /* Căn giữa nút */
+            display: block;
+            margin: 0 auto;
+            
+            /* Tùy chỉnh giao diện nút */
+            padding: 10px 20px;
             background-color: #2a9d8f;
             color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 1em;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            
+            /* Thêm hiệu ứng hover */
+            transition: background-color 0.3s;
         }
 
         .copy-button:hover {
-            background-color: #248277;
+            background-color: #1ec9b5;
+            transform: scale(1.1);
         }
 
         .copy-button i {
@@ -726,6 +682,485 @@
             .copy-button {
                 padding: 5px 12px;
                 font-size: 0.9em;
+            }
+        }
+
+        /* Thiết kế chung cho cả 2 nút */
+        .assistive-touch,
+        .assistive-touch-letter {
+            cursor: move; /* Hiển thị cursor kéo thả */
+            touch-action: none; /* Ngăn chặn scroll mặc định trên mobile */
+            position: fixed;
+            right: 20px;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: linear-gradient(145deg, #2a9d8f, #238c7f);
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2),
+                        -5px -5px 15px rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        /* Vị trí riêng cho từng nút */
+        .assistive-touch {
+            top: 45%;
+        }
+
+        .assistive-touch-letter {
+            top: 55%;
+        }
+
+        /* Icon trong nút */
+        .assistive-touch i,
+        .assistive-touch-letter i {
+            color: white;
+            font-size: 26px;
+            transition: all 0.3s ease;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            z-index: 2;
+        }
+
+        /* Hiệu ứng hover */
+        .assistive-touch:hover,
+        .assistive-touch-letter:hover {
+            transform: scale(1.1) rotate(5deg);
+            background: linear-gradient(145deg, #32b8a8, #2a9d8f);
+            box-shadow: 8px 8px 20px rgba(0,0,0,0.25),
+                        -8px -8px 20px rgba(255,255,255,0.1);
+        }
+
+        /* Hiệu ứng khi active */
+        .assistive-touch.active,
+        .assistive-touch-letter.active {
+            transform: scale(0.95);
+            background: linear-gradient(145deg, #238c7f, #2a9d8f);
+            box-shadow: inset 4px 4px 8px rgba(0,0,0,0.2),
+                        inset -4px -4px 8px rgba(255,255,255,0.1);
+        }
+
+        /* Thêm tooltip */
+        .assistive-touch::before,
+        .assistive-touch-letter::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            right: 80px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .assistive-touch:hover::before,
+        .assistive-touch-letter:hover::before {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Hiệu ứng ripple khi click */
+        .assistive-touch::after,
+        .assistive-touch-letter::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.4);
+            transform: scale(0);
+            transition: transform 0.5s ease-out;
+        }
+
+        .assistive-touch:active::after,
+        .assistive-touch-letter:active::after {
+            transform: scale(1.5);
+            opacity: 0;
+        }
+
+        /* Thêm hiệu ứng sóng nước */
+        .assistive-touch .ripple,
+        .assistive-touch-letter .ripple {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            animation: rippleEffect 2s linear infinite;
+            border: 2px solid rgba(42, 157, 143, 0.5);
+        }
+
+        .assistive-touch .ripple:nth-child(2),
+        .assistive-touch-letter .ripple:nth-child(2) {
+            animation-delay: 0.5s;
+            border-color: rgba(42, 157, 143, 0.3);
+        }
+
+        .assistive-touch .ripple:nth-child(3),
+        .assistive-touch-letter .ripple:nth-child(3) {
+            animation-delay: 1s;
+            border-color: rgba(42, 157, 143, 0.1);
+        }
+
+        @keyframes rippleEffect {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .empty-cell-panel {
+            position: fixed;
+            right: 70px;
+            top: 50%;
+            transform: translateY(-50%);
+            backdrop-filter: blur(25px);
+            padding: 15px 20px 1px 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.24);
+            border: 2px solid rgba(255, 255, 255, 0.548);
+            z-index: 999;
+            display: none;
+            width: 300px;
+        }
+
+        .empty-cell-panel.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50%) translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(-50%) translateX(0);
+            }
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .panel-title {
+            font-size: 1.8em;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+
+        .close-panel {
+            cursor: pointer;
+            color: #666;
+            font-size: 1.2em;
+        }
+
+
+        .letter-input-panel.active {
+            display: block;
+            animation: slideInLeft 0.3s ease;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateY(-50%) translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(-50%) translateX(0);
+            }
+        }
+
+        .slider-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Khoảng cách giữa chữ và thanh kéo */
+            padding: 5px 30px;
+        }
+
+        .selected-letter {
+            font-size: 3em;
+            font-weight: bold;
+            color: #d40f0f;
+            min-width: 5px; /* Đảm bảo kích thước cố định cho chữ */
+            text-align: center;
+        }
+        /* Media queries cho thiết bị di động */
+        @media screen and (max-width: 768px) {
+            .assistive-touch,
+            .assistive-touch-letter {
+                width: 50px;
+                height: 50px;
+                right: 15px;
+            }
+
+            .assistive-touch i,
+            .assistive-touch-letter i {
+                font-size: 20px;
+            }
+
+            .assistive-touch::before,
+            .assistive-touch-letter::before {
+                right: 60px;
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+
+            /* Điều chỉnh vị trí */
+            .assistive-touch {
+                top: 40%;
+            }
+
+            .assistive-touch-letter {
+                top: 50%;
+            }
+            .slider-wrapper {
+            padding: 5px 20px;
+        }
+
+        .selected-letter {
+            font-size: 2.1em;
+            min-width: 2px; /* Đảm bảo kích thước cố định cho chữ */
+        }
+
+        .letter-slider {
+            flex: 1; /* Thanh kéo sẽ chiếm phần còn lại của không gian */
+            height: 5px;
+        }
+        .letter-slider::-webkit-slider-thumb {
+            width: 20px;
+            height: 20px;
+        }
+
+        .letter-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+        }
+
+        }
+
+        @media screen and (max-width: 480px) {
+            .assistive-touch,
+            .assistive-touch-letter {
+                width: 45px;
+                height: 45px;
+                right: 10px;
+            }
+
+            .assistive-touch i,
+            .assistive-touch-letter i {
+                font-size: 18px;
+            }
+
+            .assistive-touch::before,
+            .assistive-touch-letter::before {
+                right: 55px;
+                padding: 5px 8px;
+                font-size: 11px;
+            }
+
+            /* Điều chỉnh khoảng cách giữa các nút */
+            .assistive-touch {
+                top: 45%;
+            }
+
+            .assistive-touch-letter {
+                top: 52%;
+            }
+
+            /* Điều chỉnh hiệu ứng sóng nước */
+            @keyframes rippleEffect {
+                0% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(1.3); /* Giảm độ lan tỏa */
+                    opacity: 0;
+                }
+            }
+        }
+
+        @media screen and (max-width: 320px) {
+            .assistive-touch,
+            .assistive-touch-letter {
+                width: 40px;
+                height: 40px;
+                right: 8px;
+            }
+
+            .assistive-touch i,
+            .assistive-touch-letter i {
+                font-size: 16px;
+            }
+
+            .assistive-touch::before,
+            .assistive-touch-letter::before {
+                right: 50px;
+                padding: 4px 6px;
+                font-size: 10px;
+            }
+
+            /* Điều chỉnh hiệu ứng hover */
+            .assistive-touch:hover,
+            .assistive-touch-letter:hover {
+                transform: scale(1.05) rotate(3deg); /* Giảm độ scale và xoay */
+            }
+        }
+
+        /* Styles cho panel */
+        .empty-cell-panel,
+        .letter-input-panel {
+            position: fixed;
+            right: 70px;
+            top: 50%;          
+            transform: translateY(-50%);
+            backdrop-filter: blur(25px);
+            padding: 15px 20px 1px 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.24);
+            border: 2px solid rgba(255, 255, 255, 0.548);
+            z-index: 999;
+            display: none;
+            width: 300px;
+            transition: all 0.3s ease;
+        }
+
+        /* Media queries cho thiết bị di động */
+        @media screen and (max-width: 768px) {
+            .empty-cell-panel,
+            .letter-input-panel {
+                width: 250px;
+                right: 60px;
+                padding: 12px 15px 1px 15px;
+            }
+
+            .panel-title {
+                font-size: 1.5em;
+            }
+
+            .input-group label {
+                font-size: 1.2em;
+            }
+
+            .custom-input {
+                padding: 8px 12px;
+                font-size: 1.1em;
+            }
+
+            .custom-button {
+                padding: 8px 15px;
+                font-size: 1.2em;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .empty-cell-panel,
+            .letter-input-panel {
+                width: 200px;
+                right: 50px;
+                padding: 10px 12px 1px 12px;
+            }
+
+            .panel-title {
+                font-size: 1.3em;
+                margin-bottom: 10px;
+            }
+
+            .input-group label {
+                font-size: 1em;
+            }
+
+            .custom-input {
+                padding: 6px 10px;
+                font-size: 1em;
+            }
+
+            .custom-button {
+                padding: 6px 12px;
+                font-size: 1em;
+            }
+
+            /* Điều chỉnh khoảng cách giữa các phần tử */
+            .input-group {
+                margin-bottom: 10px;
+            }
+
+            .button-group {
+                gap: 8px;
+                margin: 10px 0;
+            }
+        }
+
+        @media screen and (max-width: 320px) {
+            .empty-cell-panel,
+            .letter-input-panel {
+                width: 180px;
+                right: 45px;
+                padding: 8px 10px 1px 10px;
+            }
+
+            .panel-title {
+                font-size: 1.1em;
+                margin-bottom: 8px;
+            }
+
+            .input-group label {
+                font-size: 0.9em;
+            }
+
+            .custom-input {
+                padding: 5px 8px;
+                font-size: 0.9em;
+            }
+
+            .custom-button {
+                padding: 5px 10px;
+                font-size: 0.9em;
+                min-width: 60px;
+            }
+
+            /* Giảm khoảng cách */
+            .input-group {
+                margin-bottom: 8px;
+            }
+
+            .button-group {
+                gap: 6px;
+                margin: 8px 0;
+            }
+        }
+
+        /* Thêm animation cho panel khi hiển thị */
+        .empty-cell-panel.active,
+        .letter-input-panel.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50%) translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(-50%) translateX(0);
             }
         }
     </style>
@@ -867,86 +1302,99 @@
                     </td>
                 </tr>
             </table>
-            
-            <!-- Thanh slider -->
 
-            <!-- Input containers với thứ tự mới -->
-            <div class="input-container">
-                <div class="input-title">
-                    <i class="fas fa-ban"></i>
-                    Đặt Ô Trống
-                </div>
-                <div class="input-row">
-                    <div class="input-group">
-                        <label for="emptyCoordinates">
-                            <i class="fas fa-map-marker-alt"></i> Tọa độ ô trống:
-                        </label>
-                        <input type="text" id="emptyCoordinates" class="custom-input" 
-                               placeholder="VD: 123">
-                    </div>
-                </div>
-                <div class="button-group">
-                    <button onclick="setEmptyCell()" class="custom-button">
-                        <i class="fas fa-ban"></i> Đặt ô trống
-                    </button>
-                    <button onclick="clearEmptyCell()" class="custom-button clear-button">
-                        <i class="fas fa-eraser"></i> Xóa bỏ trống
-                    </button>
-                </div>
-                <div id="setEmptyResult" class="result-display"></div>
+                <!-- Thêm ngay sau div.content-box -->
+    <div class="assistive-touch" onclick="toggleEmptyPanel()" data-tooltip="Đặt ô trống">
+        <div class="ripple"></div>
+        <div class="ripple"></div>
+        <div class="ripple"></div>
+        <i class="fas fa-ban"></i>
+    </div>
+
+    <div class="empty-cell-panel" id="emptyCellPanel">
+        <div class="panel-header">
+            <span class="panel-title">Đặt Ô Trống</span>
+            <i class="fas fa-times close-panel" onclick="toggleEmptyPanel()"></i>
+        </div>
+        <div class="input-group">
+            <label for="emptyCoordinates">
+                <i class="fas fa-map-marker-alt"></i> Tọa độ ô trống:
+            </label>
+            <input type="text" id="emptyCoordinates" class="custom-input" 
+                   placeholder="VD: 123">
+        </div>
+        <div class="button-group">
+            <button onclick="setEmptyCell()" class="custom-button">
+                <i class="fas fa-ban"></i>
+            </button>
+            <button onclick="clearEmptyCell()" class="custom-button clear-button">
+                <i class="fas fa-eraser"></i>
+            </button>
+        </div>
+    </div>
+            
+            <!-- Thêm nút AssistiveTouch cho nhập chữ cái -->
+            <div class="assistive-touch-letter" onclick="toggleLetterPanel()" data-tooltip="Nhập tọa độ theo chữ cái">
+                <div class="ripple"></div>
+                <div class="ripple"></div>
+                <div class="ripple"></div>
+                <i class="fas fa-font"></i>
             </div>
 
-            <div class="input-container">
-                <div class="input-title">
-                    <i class="fas fa-key"></i>
-                    Nhập Chữ Cái Theo Tọa Độ
+            <!-- Panel nhập chữ cái -->
+            <div class="letter-input-panel" id="letterInputPanel">
+                <div class="panel-header">
+                    <span class="panel-title">Tọa Độ = Chữ</span>
+                    <i class="fas fa-times close-panel" onclick="toggleLetterPanel()"></i>
                 </div>
-                <div class="input-row">
-                    <div class="input-group">
-                        <label for="letterCoordinates">
-                            <i class="fas fa-map-marker-alt"></i> Tọa độ:
-                        </label>
-                        <input type="text" id="letterCoordinates" class="custom-input" 
-                               placeholder="VD: 123">
-                    </div>
-                    <div class="input-group">
-                        <label for="newLetter">
-                            <i class="fas fa-font"></i> Chữ cái:
-                        </label>
-                        <input type="text" id="newLetter" class="custom-input" 
-                               placeholder="VD: A" maxlength="1">
-                    </div>
+                <div class="input-group">
+                    <label for="letterCoordinates">
+                        <i class="fas fa-map-marker-alt"></i> Tọa độ:
+                    </label>
+                    <input type="text" id="letterCoordinates" class="custom-input" 
+                           placeholder="VD: 123">
+                </div>
+                <div class="input-group">
+                    <label for="newLetter">
+                        <i class="fas fa-font"></i> Chữ cái:
+                    </label>
+                    <input type="text" id="newLetter" class="custom-input" 
+                           placeholder="VD: A" maxlength="1">
                 </div>
                 <button onclick="setLetterByCoordinates()" class="custom-button">
                     <i class="fas fa-sync-alt"></i> Cập nhật
                 </button>
-                <div id="setLetterResult" class="result-display"></div>
-            </div>
-            <div class="slider-container">
-                <div class="selected-letter" id="selectedLetter">A</div>
-                <input type="range" min="0" max="25" value="0" class="letter-slider" id="letterSlider">
             </div>
 
-<!-- Cập nhật cấu trúc HTML cho phần kết quả -->
-<div class="input-container">
-    <div class="input-title">
-        <i class="fas fa-search"></i>
-        Nhập bảng mã
-    </div>
-    <div class="input-group centered">
-        <label for="coordinates">
-            <i class="fas fa-map-marked-alt"></i>Phân biệt tọa độ bằng dấu: , -, _, dấu cách
-        </label>
-        <input type="text" id="coordinates" class="custom-input" 
-               placeholder="Nhập bảng mã" oninput="findLetter()">
-               <button id="copyButton" onclick="copyResult()" class="copy-button" style="display: none;">
-                <i class="fas fa-copy"></i> Sao chép
-            </button>
-    </div>
-    <div class="result-container">
-        <div id="result" class="result-display"></div>
-    </div>
-</div>
+            <!-- Thanh slider -->
+
+            <div class="input-container">
+                <div id="setEmptyResult" class="result-display"></div>
+                <div id="setLetterResult" class="result-display"></div>
+                <div class="slider-container">
+                    <!-- Thêm wrapper div để chứa letter và slider -->
+                    <div class="slider-wrapper">
+                        <div class="selected-letter" id="selectedLetter">A</div>
+                        <input type="range" min="0" max="25" value="0" class="letter-slider" id="letterSlider">
+                    </div>
+                </div>
+                <div class="input-title">
+                    <i class="fas fa-search"></i>
+                    Nhập bảng mã
+                </div>
+                <div class="input-group centered">
+                    <input type="text" id="coordinates" class="custom-input" 
+                           placeholder="Nhập bảng mã" oninput="findLetter()">
+                </div>
+                <div class="result-container">
+                    <div id="result" class="result-display"></div>
+                </div>
+                <div class="container">
+                    <button id="copyButton" onclick="copyResult()" class="copy-button"  style="display: none;">
+                        <i class="fas fa-copy"></i> Sao chép
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -968,7 +1416,7 @@
             return;
         }
         
-        const coordinates = input.split(/[\s,\-_]+/).filter(coord => coord.length > 0);
+        const coordinates = input.split(/[\s,\-_\.\/\:;]+/).filter(coord => coord.length > 0);
         let results = [];
         
         for (let coord of coordinates) {
@@ -1040,6 +1488,7 @@
 
         // Tìm vị trí dựa trên tọa độ
         const [bang, hang, cot] = coordinates.split('').map(Number);
+        // Điều chỉnh công thức tính startIndex
         const startIndex = ((hang - 1) * 9) + ((bang - 1) * 3) + (cot - 1);
 
         // Tạo mảng xoay vòng
@@ -1052,15 +1501,6 @@
         const cells = document.querySelectorAll('.letter-cell .sub-cell');
         let currentIndex = 0;
         let filledCount = 0;
-        let zIndex = -1; // Vị trí của chữ Z trong mảng xoay vòng
-        
-        // Tìm vị trí của Z trong mảng xoay vòng
-        for (let i = 0; i < rotatedAlphabet.length; i++) {
-            if (rotatedAlphabet[i] === 'Z') {
-                zIndex = i;
-                break;
-            }
-        }
         
         cells.forEach(cell => {
             if (!cell.parentElement.parentElement.classList.contains('number-cell')) {
@@ -1068,15 +1508,13 @@
                     // Ô được chỉ định là ô trống
                     cell.textContent = '';
                     cell.classList.add('empty-cell');
-                } else if (!emptyCellCoord && zIndex !== -1 && currentIndex === (zIndex + 1) % 27) {
-                    // Ô sau Z khi không có ô trống được chỉ định
-                    cell.textContent = '';
-                    cell.classList.remove('empty-cell');
                 } else {
-                    // Điền chữ cái và đếm số ô đã điền
-                    cell.textContent = rotatedAlphabet[filledCount % 26];
-                    cell.classList.remove('empty-cell');
-                    filledCount++;
+                    // Điều chỉnh cách điền chữ cái
+                    if (filledCount < rotatedAlphabet.length) {
+                        cell.textContent = rotatedAlphabet[filledCount];
+                        cell.classList.remove('empty-cell');
+                        filledCount++;
+                    }
                 }
                 currentIndex++;
             }
@@ -1084,7 +1522,7 @@
 
         findLetter();
         document.getElementById('setLetterResult').innerHTML = 
-            `Bảng đã được cập nhật với chữ cái: ${newLetter} tại vị trí ${coordinates}`;
+            `${newLetter} tại tọa độ ${coordinates}`;
     }
 
     function copyResult() {
@@ -1207,6 +1645,145 @@
             }
         }
         return null;
+    }
+
+    function toggleEmptyPanel() {
+        const panel = document.getElementById('emptyCellPanel');
+        const button = document.querySelector('.assistive-touch');
+        panel.classList.toggle('active');
+        button.classList.toggle('active');
+    }
+
+    function toggleLetterPanel() {
+        const panel = document.getElementById('letterInputPanel');
+        const button = document.querySelector('.assistive-touch-letter');
+        panel.classList.toggle('active');
+        button.classList.toggle('active');
+    }
+
+    // Cập nhật event listener để xử lý việc đóng panel
+    document.addEventListener('click', function(event) {
+        const letterPanel = document.getElementById('letterInputPanel');
+        const letterButton = document.querySelector('.assistive-touch-letter');
+        const emptyPanel = document.getElementById('emptyCellPanel');
+        const emptyButton = document.querySelector('.assistive-touch');
+        
+        if (!letterPanel.contains(event.target) && 
+            !letterButton.contains(event.target) && 
+            letterPanel.classList.contains('active')) {
+            letterPanel.classList.remove('active');
+            letterButton.classList.remove('active');
+        }
+        
+        if (!emptyPanel.contains(event.target) && 
+            !emptyButton.contains(event.target) && 
+            emptyPanel.classList.contains('active')) {
+            emptyPanel.classList.remove('active');
+            emptyButton.classList.remove('active');
+        }
+    });
+
+    // Biến để theo dõi trạng thái kéo thả
+    let isDragging = false;
+    let currentX;
+    let currentY;
+    let initialX;
+    let initialY;
+    let xOffset = 0;
+    let yOffset = 0;
+    let activeButton = null;
+
+    // Thêm event listeners cho cả 2 nút
+    document.querySelectorAll('.assistive-touch, .assistive-touch-letter').forEach(button => {
+        button.addEventListener('mousedown', dragStart);
+        button.addEventListener('touchstart', dragStart, {passive: false});
+    });
+
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('touchmove', drag, {passive: false});
+    document.addEventListener('mouseup', dragEnd);
+    document.addEventListener('touchend', dragEnd);
+
+    function dragStart(e) {
+        if (e.type === 'mousedown') {
+            initialX = e.clientX - xOffset;
+            initialY = e.clientY - yOffset;
+        } else {
+            initialX = e.touches[0].clientX - xOffset;
+            initialY = e.touches[0].clientY - yOffset;
+        }
+
+        if (e.target === this || e.target.parentElement === this) {
+            isDragging = true;
+            activeButton = this;
+        }
+        
+        e.preventDefault();
+    }
+
+    function drag(e) {
+        if (isDragging) {
+            e.preventDefault();
+
+            if (e.type === 'mousemove') {
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+            } else {
+                currentX = e.touches[0].clientX - initialX;
+                currentY = e.touches[0].clientY - initialY;
+            }
+
+            xOffset = currentX;
+            yOffset = currentY;
+
+            setTranslate(currentX, currentY, activeButton);
+            updatePanelPosition(activeButton);
+        }
+    }
+
+    function dragEnd(e) {
+        initialX = currentX;
+        initialY = currentY;
+        isDragging = false;
+    }
+
+    function setTranslate(xPos, yPos, el) {
+        // Giới hạn vị trí trong viewport
+        const maxX = window.innerWidth - el.offsetWidth;
+        const maxY = window.innerHeight - el.offsetHeight;
+        
+        xPos = Math.min(Math.max(0, xPos), maxX);
+        yPos = Math.min(Math.max(0, yPos), maxY);
+        
+        el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
+    }
+
+    function updatePanelPosition(button) {
+        let panel;
+        if (button.classList.contains('assistive-touch')) {
+            panel = document.getElementById('emptyCellPanel');
+        } else {
+            panel = document.getElementById('letterInputPanel');
+        }
+
+        if (panel && panel.classList.contains('active')) {
+            const buttonRect = button.getBoundingClientRect();
+            const panelWidth = panel.offsetWidth;
+            
+            // Kiểm tra xem có đủ không gian bên phải không
+            if (buttonRect.right + panelWidth + 10 <= window.innerWidth) {
+                // Hiển thị bên phải
+                panel.style.left = `${buttonRect.right + 10}px`;
+                panel.style.right = 'auto';
+            } else {
+                // Hiển thị bên trái
+                panel.style.right = `${window.innerWidth - buttonRect.left + 10}px`;
+                panel.style.left = 'auto';
+            }
+            
+            panel.style.top = `${buttonRect.top}px`;
+            panel.style.transform = 'none';
+        }
     }
     </script>
 
