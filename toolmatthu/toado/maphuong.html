@@ -88,40 +88,6 @@
             color: rgb(42, 157, 144);
         }
 
-        /* Tọa độ */
-        .row-coordinates {
-            position: absolute;
-            left: 3%;
-            top: -5.5%;
-            height: 100%;
-        }
-
-        .row-number {
-            height: 59px;
-            font-size: 22px;
-            font-weight: bold;
-            text-align: right;
-            padding-left: 165px;
-            color: rgba(42, 157, 144, 0);
-        }
-
-        .col-coordinates {
-            position: absolute;
-            top: -13%;
-            left: 6%;
-            width: 100%;
-            display: grid;
-            grid-template-columns: repeat(5, 64px);
-        }
-
-        .col-number {
-            text-align: center;
-            font-size: 22px;
-            font-weight: bold;
-            padding-left: 180px;
-            color: rgba(42, 157, 144, 0);
-        }
-
         /* Form sections */
         .input-section {
             margin: 45px 0;
@@ -171,21 +137,29 @@
         /* Result area */
         #result {
             margin: 15px 0;
-            font-size: 16px;
-            color: rgb(42, 157, 144);
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+            color: rgb(75, 182, 43);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            letter-spacing: 1px;
         }
 
         #copyMessage {
-            color: #28a745;
+            color: #07f03e;
             margin-left: 10px;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
+            .main-container {
+            margin-top: 80px !important;
+        }
             .input-group {
-                flex-direction: column;
-                align-items: stretch;
-            }
+        flex-direction: row;
+        width: 80%;
+        margin: 0 auto;
+    }
             
             .input-field {
                 width: 100%;
@@ -198,17 +172,22 @@
             .input-section button {
                 width: 100%;
             }
-        }
+            .conversion-buttons {
+                flex-direction: row;
+                align-items: center;
+            }
 
-        /* Media queries */
-        @media (max-width: 768px) {
+            .conversion-btn {
+                width: 80%;
+                min-width: 1px;
+            }
             .main-container {
                 padding: 10px;
                 margin: 10px;
             }
 
             .main-title {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
 
             .magic-type-selector {
@@ -291,7 +270,7 @@
 
         /* Style cho action button */
         .action-button {
-            background: rgb(42, 157, 144);
+            background: rgb(6, 248, 220);
             color: white;
             border: none;
             padding: 10px 20px;
@@ -320,7 +299,7 @@
             display: flex;
             align-items: center;
             gap: 20px;
-            padding: 15px 0;
+            padding: 1px 0;
         }
 
         #selectedLetter {
@@ -349,10 +328,141 @@
         }
 
 
-        #result {
+        .conversion-buttons .action-button {
+            background-color: rgb(42, 157, 144);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .conversion-buttons .action-button.active {
+            background-color: #1a6158;
+        }
+
+        .conversion-buttons .action-button:hover {
+            background-color: rgba(42, 157, 144, 0.9);
+        }
+
+        .conversion-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .conversion-btn {
+            background: #fff;
+            border: 2px solid rgb(42, 157, 144);
+            border-radius: 8px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 140px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(42, 157, 144, 0.2);
+        }
+
+        .conversion-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px #18cf74;
+        }
+
+        .conversion-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 5px rgba(42, 157, 144, 0.2);
+        }
+
+        .conversion-btn.active {
+            background: #18cf74;
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+
+        .conversion-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: #18cf7467;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .conversion-btn:hover::before {
+            width: 200%;
+            height: 200%;
+        }
+
+        .conversion-text {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+
+        .from, .to {
+            min-width: 35px;
+            transition: transform 0.3s ease;
+        }
+
+        .conversion-btn:hover .from {
+            transform: translateX(-3px);
+        }
+
+        .conversion-btn:hover .to {
+            transform: translateX(3px);
+        }
+
+        .arrow {
+            color: inherit;
             font-size: 18px;
-            color: rgb(42, 157, 144);
-            margin: 10px 0;
+            transition: transform 0.3s ease;
+        }
+
+        .conversion-btn:hover .arrow {
+            transform: scale(1.2);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(42, 157, 144, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(42, 157, 144, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(42, 157, 144, 0);
+            }
+        }
+
+        /* Responsive design cho mobile */
+        @media (max-width: 480px) {
+            .conversion-buttons {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .conversion-btn {
+                width: 80%;
+                min-width: 4px;
+            }
+            .input-group {
+                flex-direction: row;
+                align-items: center;
+            }
         }
     </style>
         <script src="/js/menu.js"></script>
@@ -392,22 +502,6 @@
 
         <!-- Bảng ma phương -->
         <div class="magic-square-container">
-            <div class="col-coordinates">
-                    <div class="col-number">1</div>
-                    <div class="col-number">2</div>
-                    <div class="col-number">3</div>
-                    <div class="col-number">4</div>
-                    <div class="col-number">5</div>
-                </div>
-                
-                <div class="row-coordinates">
-                    <div class="row-number">1</div>
-                    <div class="row-number">2</div>
-                    <div class="row-number">3</div>
-                    <div class="row-number">4</div>
-                    <div class="row-number">5</div>
-                </div>
-
                 <table class="magic-square">
                     <tr>
                         <td><input type="number" value="10"><span class="cell-letter" contenteditable="true">A</span></td>
@@ -454,43 +548,26 @@
                         <div class="input-group">
                             <div class="input-field">
                                 <label><i class="fas fa-arrows-alt-v"></i> Hàng:</label>
-                                <input type="number" id="rowInput" min="1" max="5">
+                                <input type="number" id="coordinateRow" min="1" max="5">
                             </div>
                             <div class="input-field">
                                 <label><i class="fas fa-arrows-alt-h"></i> Cột:</label>
-                                <input type="number" id="colInput" min="1" max="5">
+                                <input type="number" id="coordinateCol" min="1" max="5">
                             </div>
                             <div class="input-field">
                                 <label><i class="fas fa-hashtag"></i> Số:</label>
-                                <input type="number" id="startValue" min="1" max="25" value="1">
+                                <input type="number" id="numberValue" min="1" max="25">
                             </div>
-                            <button class="action-button" onclick="updateValue()">
-                                <i class="fas fa-sync-alt"></i> Cập nhật Ma phương
+                            <div class="input-field">
+                                <label><i class="fas fa-font"></i> Chữ cái:</label>
+                                <input type="text" id="letterValue" maxlength="1">
+                            </div>
+                            <button class="action-button" onclick="updateCoordinates()">
+                                <i class="fas fa-sync-alt"></i> Cập nhật
                             </button>
                         </div>
                     </div>
 
-                    <div class="input-section">
-                        <h3 class="section-title">
-                            <i class="fas fa-key"></i> Nhập khóa chữ cái theo tọa độ
-                        </h3>
-                        <div class="input-group">
-                            <div class="input-field">
-                                <label><i class="fas fa-font"></i> Chữ cái:</label>
-                                <input type="text" id="letterKeyInput" maxlength="1">
-                            </div>
-                            <div class="input-field">
-                                <label><i class="fas fa-arrows-alt-v"></i> Hàng:</label>
-                                <input type="number" id="rowKeyInput" min="1" max="5">
-                            </div>
-                            <div class="input-field">
-                                <label><i class="fas fa-arrows-alt-h"></i> Cột:</label>
-                                <input type="number" id="colKeyInput" min="1" max="5">
-                            </div>
-                            <button class="action-button" onclick="updateLetterByCoordinates()">
-                                <i class="fas fa-edit"></i> Cập nhật chữ cái
-                            </button>
-                        </div>
                     </div>
                         <div class="slider-section">
                             <span id="selectedLetter">A</span>
@@ -501,22 +578,32 @@
                         <h3 class="section-title">
                             <i class="fas fa-lock"></i> Nhập bản mã
                         </h3>
-                        <div class="input-group">
-                            <div class="input-field" style="flex-grow: 1;">
-                                <input type="text" id="numberInput" placeholder="Ví dụ: 1 2,3-4_5" style="width: 100%;">
-                            </div>
-                            <button class="action-button" onclick="getLetterByNumber()">
-                                <i class="fas fa-search"></i> Kết quả
+                        <div class="conversion-buttons" style="text-align: center; margin: 10px 0;">
+                            <button id="numberToLetter" class="conversion-btn" onclick="setConversionType('numberToLetter')">
+                                <div class="conversion-text">
+                                    <span class="from">Số</span>
+                                    <span class="arrow">→</span>
+                                    <span class="to">Chữ</span>
+                                </div>
+                            </button>
+                            <button id="letterToNumber" class="conversion-btn" onclick="setConversionType('letterToNumber')">
+                                <div class="conversion-text">
+                                    <span class="from">Chữ</span>
+                                    <span class="arrow">→</span>
+                                    <span class="to">Số</span>
+                                </div>
                             </button>
                         </div>
+                        <div class="input-group">
+                            <div class="input-field" style="flex-grow: 1;">
+                                <input type="text" id="numberInput" placeholder="Ví dụ: 1 2,3-4_5 - chaof-cacs-banj" style="width: 100%;" oninput="processInput()">
+                            </div>
+                        </div>
                         <div class="result-section">
-                            <div id="result"></div>
+                            <div id="result" style="font-size: 30px; font-weight: bold;"></div>
                             <button id="copyButton" class="action-button" style="display: none;" onclick="copyResult()">
-                                <i class="fas fa-copy"></i> Sao chép kết quả
+                                <i class="fas fa-copy"></i> <span id="copyText">Sao chép</span>
                             </button>
-                            <span id="copyMessage" style="display: none;">
-                                <i class="fas fa-check"></i> Đã sao chép kết quả!
-                            </span>
                         </div>
                     </div>
 
@@ -570,52 +657,97 @@
         // Reset message
         document.getElementById('message').innerHTML = 'Đã chuyển sang ' + 
             document.getElementById('magicTypeSelect').options[document.getElementById('magicTypeSelect').selectedIndex].text;
+        
+        // Thêm dòng này để cập nhật kết quả
+        processInput();
     }
 
 
-    function updateValue() {
-        const row = parseInt(document.getElementById('rowInput').value);
-        const col = parseInt(document.getElementById('colInput').value);
-        const value = parseInt(document.getElementById('startValue').value) || 1;
+    function updateCoordinates() {
+        const row = parseInt(document.getElementById('coordinateRow').value);
+        const col = parseInt(document.getElementById('coordinateCol').value);
+        const number = document.getElementById('numberValue').value;
+        const letter = document.getElementById('letterValue').value.toUpperCase();
         const messageDiv = document.getElementById('message');
-        
+
+        // Kiểm tra tọa độ hợp lệ
         if (row < 1 || row > 5 || col < 1 || col > 5) {
             messageDiv.innerHTML = 'Lỗi: Hàng và cột phải từ 1 đến 5';
             messageDiv.style.color = 'red';
             return;
         }
-        
-        if (value < 1 || value > 25) {
-            messageDiv.innerHTML = 'Lỗi: Số phải từ 1 đến 25';
-            messageDiv.style.color = 'red';
-            return;
+
+        let updated = false;
+
+        // Cập nhật số nếu có nhập
+        if (number) {
+            if (number < 1 || number > 25) {
+                messageDiv.innerHTML = 'Lỗi: Số phải từ 1 đến 25';
+                messageDiv.style.color = 'red';
+                return;
+            }
+            
+            clearAllCells();
+            const cells = document.querySelectorAll('.magic-square tr');
+            const targetCell = cells[row-1].getElementsByTagName('input')[col-1];
+            targetCell.value = number;
+            
+            let currentRow = row-1;
+            let currentCol = col-1;
+            let currentValue = parseInt(number);
+            
+            for (let i = 0; i < 24; i++) {
+                [currentRow, currentCol, currentValue] = getNextPosition(currentRow, currentCol, currentValue);
+            }
+            updated = true;
         }
-        
-        // Xóa tất cả các ô trước khi điền lại
-        clearAllCells();
-        
-        // Điền số được chọn vào vị trí được chọn
-        const cells = document.querySelectorAll('.magic-square tr');
-        const targetCell = cells[row-1].getElementsByTagName('input')[col-1];
-        targetCell.value = value;
-        
-        // Điền các số còn lại
-        let currentRow = row-1;
-        let currentCol = col-1;
-        let currentValue = value;
-        
-        for (let i = 0; i < 24; i++) {
-            [currentRow, currentCol, currentValue] = getNextPosition(currentRow, currentCol, currentValue);
+
+        // Cập nhật chữ cái nếu có nhập
+        if (letter) {
+            const cells = document.querySelectorAll('.magic-square tr');
+            let currentRow = row - 1;
+            let currentCol = col - 1;
+            let currentLetter = letter.charCodeAt(0);
+            
+            for (let i = 0; i < 5; i++) {
+                for (let j = 0; j < 5; j++) {
+                    const targetCell = cells[currentRow].getElementsByTagName('span')[currentCol];
+                    targetCell.textContent = String.fromCharCode(currentLetter);
+                    
+                    currentLetter++;
+                    if (currentLetter > 'Y'.charCodeAt(0)) {
+                        currentLetter = 'A'.charCodeAt(0);
+                    }
+                    
+                    currentCol++;
+                    if (currentCol > 4) {
+                        currentCol = 0;
+                        currentRow++;
+                        if (currentRow > 4) {
+                            currentRow = 0;
+                        }
+                    }
+                }
+            }
+            updated = true;
         }
-        
-        // Hiển thị thông báo kết quả
-        messageDiv.innerHTML = `Đã tạo ma phương với số ${value} ở vị trí: Hàng ${row}, Cột ${col}`;
-        messageDiv.style.color = '#28a745';
-        
-        // Xóa giá trị trong form
-        document.getElementById('rowInput').value = '';
-        document.getElementById('colInput').value = '';
-        document.getElementById('startValue').value = '1';
+
+        if (updated) {
+            messageDiv.innerHTML = `Đã cập nhật tại vị trí: Hàng ${row}, Cột ${col}`;
+            messageDiv.style.color = '#28a745';
+            
+            // Xóa giá trị trong form
+            document.getElementById('coordinateRow').value = '';
+            document.getElementById('coordinateCol').value = '';
+            document.getElementById('numberValue').value = '';
+            document.getElementById('letterValue').value = '';
+
+            // Thêm dòng này để cập nhật kết quả
+            processInput();
+        } else {
+            messageDiv.innerHTML = 'Vui lòng nhập số hoặc chữ cái để cập nhật';
+            messageDiv.style.color = 'orange';
+        }
     }
 
     function clearAllCells() {
@@ -782,12 +914,17 @@
         const resultDiv = document.getElementById('result');
         const copyButton = document.getElementById('copyButton');
         
+        if (!numberInput.trim()) {
+            resultDiv.innerHTML = '';
+            copyButton.style.display = 'none';
+            return;
+        }
+        
         // Tách chuỗi thành mảng số sử dụng nhiều dấu phân cách
         const numbers = numberInput.split(/[\s,\-_]+/).map(num => parseInt(num.trim())).filter(num => !isNaN(num));
         
         if (numbers.length === 0) {
-            resultDiv.innerHTML = 'Lỗi: Vui lòng nhập ít nhất một số từ 1 đến 25';
-            resultDiv.style.color = 'red';
+            resultDiv.innerHTML = '';
             copyButton.style.display = 'none';
             return;
         }
@@ -820,7 +957,7 @@
         });
         
         resultDiv.innerHTML = result;
-        resultDiv.style.color = '#28a745';
+        resultDiv.style.color = '#18cf74';
         
         // Hiển thị nút sao chép nếu có kết quả
         copyButton.style.display = result ? 'block' : 'none';
@@ -828,11 +965,13 @@
 
     function copyResult() {
         const resultText = document.getElementById('result').innerText;
+        const copyButton = document.getElementById('copyButton');
+        const copyText = document.getElementById('copyText');
+        
         navigator.clipboard.writeText(resultText).then(() => {
-            const copyMessage = document.getElementById('copyMessage');
-            copyMessage.style.display = 'inline';
+            copyText.textContent = 'Đã sao chép!';
             setTimeout(() => {
-                copyMessage.style.display = 'none';
+                copyText.textContent = 'Sao chép';
             }, 2000);
         }).catch(err => {
             console.error('Lỗi khi sao chép: ', err);
@@ -866,7 +1005,84 @@
             }
 
             getLetterByNumber();
+
+            // Thêm dòng này để cập nhật kết quả
+            processInput();
         });
+    });
+
+    let conversionType = 'numberToLetter'; // Giá trị mặc định
+
+    function setConversionType(type) {
+        conversionType = type;
+        // Cập nhật trạng thái active của nút
+        document.getElementById('numberToLetter').classList.toggle('active', type === 'numberToLetter');
+        document.getElementById('letterToNumber').classList.toggle('active', type === 'letterToNumber');
+        // Xử lý lại input hiện tại
+        processInput();
+    }
+
+    function processInput() {
+        if (conversionType === 'numberToLetter') {
+            getLetterByNumber();
+        } else {
+            getNumberByLetter();
+        }
+    }
+
+    function getNumberByLetter() {
+        const letterInput = document.getElementById('numberInput').value.toUpperCase();
+        const resultDiv = document.getElementById('result');
+        const copyButton = document.getElementById('copyButton');
+        
+        if (!letterInput.trim()) {
+            resultDiv.innerHTML = '';
+            copyButton.style.display = 'none';
+            return;
+        }
+        
+        let result = '';
+        let lastCharWasNumber = false;
+        
+        // Duyệt qua từng ký tự trong input
+        for (let letter of letterInput) {
+            // Bỏ qua khoảng trắng
+            if (letter === ' ') continue;
+            
+            let found = false;
+            const cells = document.querySelectorAll('.magic-square tr');
+            
+            cells.forEach(row => {
+                const spans = row.getElementsByTagName('span');
+                const inputs = row.getElementsByTagName('input');
+                for (let i = 0; i < spans.length; i++) {
+                    if (spans[i].textContent === letter) {
+                        // Thêm dấu cách trước số nếu ký tự trước đó là số
+                        if (lastCharWasNumber) {
+                            result += ',';
+                        }
+                        result += inputs[i].value;
+                        found = true;
+                        lastCharWasNumber = true;
+                        break;
+                    }
+                }
+            });
+            
+            if (!found) {
+                // Nếu là ký tự đặc biệt, thêm vào kết quả
+                result += letter;
+                lastCharWasNumber = false;
+            }
+        };
+        
+        resultDiv.innerHTML = result;
+        copyButton.style.display = result ? 'block' : 'none';
+    }
+
+    // Khi trang web load, đặt trạng thái mặc định cho nút Số = Chữ
+    document.addEventListener('DOMContentLoaded', function() {
+        setConversionType('numberToLetter');
     });
     </script>
         <!-- Footer Section -->
@@ -877,7 +1093,7 @@
         <div class="modal-overlay" id="modalOverlay"></div>
         <div class="login-modal" id="loginModal">
             <h3>Thông báo đăng nhập</h3>
-            <p>Bạn cần đăng nhập để dùng các công cụ tool. Vì một số lý do cộng đồng nên rất cần thiết để quản lý người dùng.</p>
+            <p>Bạn cần đăng nhập để dùng các công cụ tool. Vì một số lý do cộng đồng nên rất cần thiết đ��� quản lý người dùng.</p>
             <div class="modal-buttons">
                 <a href="/login.html" class="modal-btn modal-login">Đăng nhập</a>
                 <a href="/register.html" class="modal-btn modal-register">Đăng ký</a>
