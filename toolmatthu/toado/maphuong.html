@@ -207,61 +207,6 @@
                 width: 100%;
                 margin: 10px 0;
             }
-            /* Thêm vào phần CSS của bạn */
-    .tooltip {
-        position: fixed; /* Thay vì absolute để tránh vấn đề về vị trí trên mobile */
-        top: 50% !important; /* Đặt ở giữa màn hình */
-        left: 50% !important;
-        transform: translate(-50%, -50%);
-        width: 90%; /* Chiếm 90% chiều rộng màn hình */
-        max-width: 320px; /* Giới hạn chiều rộng tối đa */
-        max-height: 80vh; /* Giới hạn chiều cao tối đa */
-        overflow-y: auto; /* Cho phép cuộn nếu nội dung dài */
-        padding: 15px;
-        margin: 0;
-        z-index: 1000;
-    }
-
-    .tooltip-content {
-        font-size: 14px;
-        padding: 10px;
-    }
-
-    .tooltip-content h4 {
-        font-size: 16px;
-        margin-bottom: 8px;
-    }
-
-    .tooltip-content p {
-        font-size: 13px;
-        line-height: 1.4;
-        margin-bottom: 8px;
-    }
-
-    .tooltip-content ul {
-        padding-left: 15px;
-    }
-
-    .tooltip-content li {
-        font-size: 13px;
-        margin-bottom: 5px;
-    }
-
-    /* Thêm overlay khi tooltip hiển thị */
-    .tooltip-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 999;
-    }
-
-    .tooltip-overlay.active {
-        display: block;
-    }
         }
 
         /* Container cho từng section */
@@ -527,18 +472,21 @@
             margin-left: 5px;
             cursor: pointer;
         }
+                    /* Thêm vào phần CSS của bạn */
+    .tooltip {
+        position: fixed;
+        display: none;
+        background: white;
+        border: 1px solid #2a9d8f;
+        border-radius: 8px;
+        padding: 15px;
+        max-width: 300px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
 
-        /* Style cho tooltip */
-        .tooltip {
-            display: none;
-            position: absolute;
-            background: white;
-            border: 1px solid rgb(42, 157, 144);
-            border-radius: 8px;
-            padding: 15px;
-            max-width: 400px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            z-index: 1000;
+        .info-icon:hover {
+            color: #248277;
         }
 
         .tooltip-content {
@@ -548,19 +496,68 @@
         }
 
         .tooltip-content h4 {
-            color: rgb(42, 157, 144);
+            color: #2a9d8f;
             margin-bottom: 10px;
-        }
-
-        .tooltip-content hr {
-            border: none;
-            border-top: 1px solid #eee;
-            margin: 15px 0;
         }
 
         .tooltip-content ul {
             margin: 10px 0;
             padding-left: 20px;
+        }
+
+        .tooltip-content li {
+            margin-bottom: 5px;
+        }
+
+        /* Responsive styles */
+        @media screen and (max-width: 768px) {
+            .tooltip {
+                position: fixed;
+                left: 50% !important;
+                transform: translateX(-50%);
+                width: 90%;
+                max-width: none;
+                bottom: 20px;
+                top: auto !important;
+                font-size: 14px;
+                background: rgba(255, 255, 255, 0.98);
+                border: 2px solid #2a9d8f;
+                box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+            }
+
+            .tooltip-content {
+                max-height: 60vh;
+                overflow-y: auto;
+                padding-right: 10px;
+            }
+
+            .tooltip-content::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            .tooltip-content::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 3px;
+            }
+
+            .tooltip-content::-webkit-scrollbar-thumb {
+                background: #2a9d8f;
+                border-radius: 3px;
+            }
+        }
+
+        /* Thêm animation cho mobile */
+        @media screen and (max-width: 768px) {
+            .tooltip {
+                transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+                transform: translateX(-50%) translateY(100%);
+                opacity: 0;
+            }
+
+            .tooltip.show {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
         }
     </style>
         <script src="/js/menu.js"></script>
@@ -594,10 +591,10 @@
         <!-- Select option -->
         <div class="magic-type-selector">
             <select id="magicTypeSelect" onchange="changeMagicType()">
-                <option value="variant65">Ma Phương bậc 5 (Biến Thiên) <i class="fas fa-question-circle info-icon"></i></option>
-                <option value="rightShift">Ma Phương bậc 5 (Khóa 65)<i class="fas fa-question-circle info-icon"></i></option>
+                <option value="variant65">Ma Phương bậc 5 (Biến Thiên)</option>
+                <option value="rightShift">Ma Phương bậc 5 (Khóa 65)</option>
             </select>
-            <i class="fas fa-question-circle info-icon" id="infoIcon"></i>
+            <i class="fas fa-question-circle info-icon" id="magicInfoIcon"></i>
         </div>
 
         <!-- Thêm tooltip container -->
@@ -667,8 +664,35 @@
 
                     <div class="input-section">
                         <h3 class="section-title">
-                            <i class="fas fa-map-marker-alt"></i> Nhập tọa độ
+                            <i class="fas fa-map-marker-alt"></i> 
+                            Magic
+                            <i class="fas fa-question-circle info-icon" id="coordInfoIcon"></i>
                         </h3>
+                        
+                        <!-- Thêm tooltip container -->
+                        <div id="coordTooltip" class="tooltip">
+                            <div class="tooltip-content">
+                                <h4>Hướng dẫn nhập tọa độ:</h4>
+                                <p>1. Nhập tọa độ:</p>
+                                <ul>
+                                    <li>Ô nhập Hàng tương ứng với số 1-5</li>
+                                    <li>Ô nhập Cột tương ứng với số 1-5</li>
+                                </ul>
+                                <p>2. Đối với ô nhập số</p>
+                                <ul>
+                                    <li>Nhập từ số 1 đến 24, vì từ A đến Y là 25 chữ cái</li>
+                                    <li>Nhập tọa độ và ô số sẽ được điền số tương ứng vào tọa độ đó. Sau khi điền thuật toán sẽ tự động điền số vào các ô còn lại tương ứng với ma phương bạn đã chọn trước đó</li>
+                                </ul>
+                                <p>3. Đối với ô nhập chữ cái</p>
+                                <ul>
+                                    <li>Nhập từ A đến Y</li>
+                                    <li>Nhập tọa độ và ô chữ cái sẽ được điền số tương ứng vào tọa độ đó. Sau khi điền thuật toán điền xoay vòng (A đến Y) sẽ tự động điền số vào các ô còn lại</li>
+                                </ul>
+                                <hr>
+                                <p>Lưu ý: Thuật toán có thể sai sót, vui lòng kiểm tra lại bảng tọa độ khi cập nhật</p>
+                            </div>
+                        </div>
+                        
                         <div class="input-group">
                             <div class="input-field">
                                 <label><i class="fas fa-arrows-alt-v"></i> Hàng:</label>
@@ -691,6 +715,7 @@
                             </button>
                         </div>
                     </div>
+                    
 
                     </div>
                         <div class="slider-section">
@@ -700,8 +725,32 @@
 
                     <div class="input-section">
                         <h3 class="section-title">
-                            <i class="fas fa-lock"></i> Nhập bản mã
+                            <i class="fas fa-lock"></i> 
+                            Nhập bảng mã
+                            <i class="fas fa-question-circle info-icon" id="codeInfoIcon"></i>
                         </h3>
+
+                        <!-- Thêm tooltip container -->
+                        <div id="codeTooltip" class="tooltip">
+                            <div class="tooltip-content">
+                                <h4>Hướng dẫn nhập bảng mã:</h4>
+                                <p>1. Số → Chữ</p>
+                                <ul>
+                                    <li>Ngăn cách các số để thuật toán cho ra kết quả chính xác bằng dấu cách, dấu phẩy hoặc dấu gạch ngang</li>
+                                    <li>Ví dụ: "1 2 3" hoặc "1,2,3" hoặc "1-2-3"</li>
+                                </ul>
+                                <p>2. Chữ → Số</p>
+                                <ul>
+                                    <li>Nhập bằng Quốc ngữ điện tín</li>
+                                    <li>Nhập liên kề nhau, kết quả sẽ ngăn cách bằng dấu phẩy</li>
+                                    <li>Chữ cách chữ với nhau bằng ký tự đặc biệt bạn có thể tùy chọn</li>
+                                </ul>
+                                <p>3. Kết quả sẽ tự động hiển thị và có thể sao chép</p>
+                                <hr>
+                                <p>Kết quả sẽ chính xác 100% với bảng mã ở trên</p>
+                            </div>
+                        </div>
+
                         <div class="conversion-buttons" style="text-align: center; margin: 10px 0;">
                             <button id="numberToLetter" class="conversion-btn" onclick="setConversionType('numberToLetter')">
                                 <div class="conversion-text">
@@ -1213,16 +1262,28 @@
         const infoIcon = document.getElementById('infoIcon');
         const tooltip = document.getElementById('tooltip');
         
-        infoIcon.addEventListener('mouseenter', function(e) {
-            tooltip.style.display = 'block';
-            // Định vị tooltip
-            const iconRect = infoIcon.getBoundingClientRect();
-            tooltip.style.top = (iconRect.bottom + 10) + 'px';
-            tooltip.style.left = (iconRect.left - tooltip.offsetWidth/2 + iconRect.width/2) + 'px';
-        });
-
-        infoIcon.addEventListener('mouseleave', function() {
-            tooltip.style.display = 'none';
+        infoIcon.addEventListener('click', function(e) {
+            e.stopPropagation(); // Ngăn sự kiện click lan ra document
+            
+            // Toggle hiển thị tooltip
+            const isVisible = tooltip.style.display === 'block';
+            tooltip.style.display = isVisible ? 'none' : 'block';
+            
+            if (!isVisible) {
+                // Định vị tooltip khi hiển thị
+                const iconRect = infoIcon.getBoundingClientRect();
+                tooltip.style.top = (iconRect.bottom + 10) + 'px';
+                tooltip.style.left = (iconRect.left - tooltip.offsetWidth/2 + iconRect.width/2) + 'px';
+                
+                // Đảm bảo tooltip không vượt ra ngoài màn hình
+                const tooltipRect = tooltip.getBoundingClientRect();
+                if (tooltipRect.right > window.innerWidth) {
+                    tooltip.style.left = (window.innerWidth - tooltipRect.width - 10) + 'px';
+                }
+                if (tooltipRect.left < 0) {
+                    tooltip.style.left = '10px';
+                }
+            }
         });
 
         // Đóng tooltip khi click ra ngoài
@@ -1232,6 +1293,119 @@
             }
         });
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const coordInfoIcon = document.getElementById('coordInfoIcon');
+        const coordTooltip = document.getElementById('coordTooltip');
+        const codeInfoIcon = document.getElementById('codeInfoIcon');
+        const codeTooltip = document.getElementById('codeTooltip');
+    // Thêm xử lý cho tooltip ma phương
+    const magicInfoIcon = document.getElementById('magicInfoIcon');
+    const magicTooltip = document.getElementById('tooltip');
+
+    magicInfoIcon.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const isVisible = magicTooltip.style.display === 'block';
+        
+        if (isVisible) {
+            hideTooltip(magicTooltip);
+        } else {
+            showTooltip(magicTooltip, magicInfoIcon);
+        }
+    });
+
+        function showTooltip(tooltip, icon) {
+            // Ẩn tất cả các tooltip khác
+            [coordTooltip, codeTooltip].forEach(t => {
+                if (t !== tooltip) {
+                    t.style.display = 'none';
+                    t.classList.remove('show');
+                }
+            });
+
+            const isMobile = window.innerWidth <= 768;
+            
+            if (isMobile) {
+                // Xử lý cho mobile
+                tooltip.style.display = 'block';
+                // Thêm class show sau một frame để animation hoạt động
+                requestAnimationFrame(() => {
+                    tooltip.classList.add('show');
+                });
+            } else {
+                // Xử lý cho desktop
+                tooltip.style.display = 'block';
+                positionTooltip(tooltip, icon);
+            }
+        }
+
+        function hideTooltip(tooltip) {
+            const isMobile = window.innerWidth <= 768;
+            
+            if (isMobile) {
+                tooltip.classList.remove('show');
+                // Đợi animation kết thúc rồi mới ẩn hoàn toàn
+                setTimeout(() => {
+                    if (!tooltip.classList.contains('show')) {
+                        tooltip.style.display = 'none';
+                    }
+                }, 300);
+            } else {
+                tooltip.style.display = 'none';
+            }
+        }
+
+        function positionTooltip(tooltip, icon) {
+            if (window.innerWidth <= 768) return; // Không xử lý position trên mobile
+
+            const iconRect = icon.getBoundingClientRect();
+            const tooltipHeight = tooltip.offsetHeight;
+            const windowHeight = window.innerHeight;
+            const scrollY = window.scrollY;
+            
+            tooltip.style.left = `${iconRect.right + 10}px`;
+            
+            if (iconRect.right + tooltip.offsetWidth + 10 > window.innerWidth) {
+                tooltip.style.left = `${window.innerWidth - tooltip.offsetWidth - 10}px`;
+            }
+
+            if (iconRect.bottom + tooltipHeight > windowHeight + scrollY) {
+                tooltip.style.top = `${iconRect.top - tooltipHeight}px`;
+            } else {
+                tooltip.style.top = `${iconRect.top}px`;
+            }
+        }
+
+        // Event listeners
+        [
+            {icon: coordInfoIcon, tooltip: coordTooltip},
+            {icon: codeInfoIcon, tooltip: codeTooltip}
+        ].forEach(({icon, tooltip}) => {
+            icon.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const isVisible = tooltip.style.display === 'block';
+                
+                if (isVisible) {
+                    hideTooltip(tooltip);
+                } else {
+                    showTooltip(tooltip, icon);
+                }
+            });
+        });
+
+    // Cập nhật hàm đóng tooltip khi click ra ngoài
+    document.addEventListener('click', function(e) {
+        [coordTooltip, codeTooltip, magicTooltip].forEach(tooltip => {
+            if (!tooltip.contains(e.target) && 
+                e.target !== coordInfoIcon && 
+                e.target !== codeInfoIcon &&
+                e.target !== magicInfoIcon) {
+                hideTooltip(tooltip);
+            }
+        });
+    });
+});
+
     </script>
         <!-- Footer Section -->
         <footer>
