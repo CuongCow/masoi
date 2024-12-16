@@ -483,6 +483,8 @@
         max-width: 300px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         z-index: 1000;
+        max-height: calc(100vh - 40px); /* Giới hạn chiều cao tối đa */
+        overflow-y: auto; /* Cho phép cuộn khi cần */
     }
 
         .info-icon:hover {
@@ -523,6 +525,7 @@
                 background: rgba(255, 255, 255, 0.98);
                 border: 2px solid #2a9d8f;
                 box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+                max-height: 60vh; /* Giới hạn chiều cao trên mobile */
             }
 
             .tooltip-content {
@@ -558,6 +561,20 @@
                 transform: translateX(-50%) translateY(0);
                 opacity: 1;
             }
+        }
+
+        .tooltip::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .tooltip::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .tooltip::-webkit-scrollbar-thumb {
+            background: #2a9d8f;
+            border-radius: 3px;
         }
     </style>
         <script src="/js/menu.js"></script>
@@ -1369,10 +1386,27 @@
                 tooltip.style.left = `${window.innerWidth - tooltip.offsetWidth - 10}px`;
             }
 
-            if (iconRect.bottom + tooltipHeight > windowHeight + scrollY) {
+            const bottomSpace = windowHeight - iconRect.top; // Khoảng trống phía dưới icon
+            const topSpace = iconRect.top; // Khoảng trống phía trên icon
+
+            if (tooltipHeight > bottomSpace && topSpace > bottomSpace) {
+                // Nếu không đủ không gian phía dưới và có nhiều không gian hơn ở trên
                 tooltip.style.top = `${iconRect.top - tooltipHeight}px`;
+            } else if (tooltipHeight > bottomSpace) {
+                // Nếu tooltip quá cao, đặt ở vị trí cho phép cuộn
+                const maxHeight = windowHeight - 40; // Để lại margin 20px trên và dưới
+                tooltip.style.top = '20px';
+                tooltip.style.height = `${maxHeight}px`;
+                tooltip.style.overflowY = 'auto';
             } else {
+                // Trường hợp bình thường, hiển thị ngang hàng với icon
                 tooltip.style.top = `${iconRect.top}px`;
+            }
+
+            // Đảm bảo tooltip không vượt quá top của trang
+            const tooltipTop = parseInt(tooltip.style.top);
+            if (tooltipTop < 0) {
+                tooltip.style.top = '20px';
             }
         }
 
