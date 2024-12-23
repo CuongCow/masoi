@@ -72,113 +72,118 @@ header .title-container {
     margin-right: 0;
 }
 
-/* Sidebar Styles */
+/* Sidebar Styles - Updated */
 .sidebar {
-    width: 230px;
-    background-color: rgba(255, 255, 255, 0.658);
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
+    width: 250px;
+    background-color: #ffffff;
+    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.08);
     position: fixed;
     top: 70px;
-    left: -230px;
     height: calc(100vh - 70px);
     overflow-y: auto;
-    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    transition: left 0.3s ease-in-out;
-    padding: 20px 0;
+    transition: all 0.3s ease;
+    padding: 15px 0;
     z-index: 1000;
+    left: 0; /* Mặc định hiển thị trên desktop */
 }
-.sidebar.active {
-    left: 0;
-}
+
+/* Menu Items Styling */
 .sidebar a, .dropdown-btn {
-    text-decoration: none;
-    color: #000000;
-    font-size: 1rem;
-    padding: 15px 20px;
+    padding: 12px 20px;
+    color: #333;
+    font-size: 0.95rem;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 12px;
     transition: all 0.3s ease;
-    cursor: pointer;
-}
-.sidebar a:hover, .dropdown-btn:hover {
-    background-color: #ffffffc9;
-    color: #2a9d8f;
-    border-left: 4px solid #2a9d8f;
+    border-left: 3px solid transparent;
+    text-decoration: none;
+    position: relative;
 }
 
-/* Smooth Dropdown Content */
-.dropdown-content {
-    display: flex;
-    flex-direction: column;
-    max-height: 0;
-    overflow: hidden;
-    padding-left: 20px;
-    transition: max-height 0.4s ease, opacity 0.4s ease;
-    opacity: 0;
+.sidebar a i, .dropdown-btn i {
+    font-size: 1.2rem;
+    min-width: 25px;
+    text-align: center;
 }
-.dropdown-content a {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    color: #000000;
-}
-.dropdown-content a:hover {
-    background-color: #eef2f7ce;
+
+.sidebar a:hover, .dropdown-btn:hover {
+    background-color: #f8f9fa;
     color: #2a9d8f;
     border-left: 3px solid #2a9d8f;
+    padding-left: 25px;
 }
+
+/* Dropdown Styling */
+.dropdown-content {
+    background-color: rgba(248, 249, 250, 0.7);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .dropdown.active .dropdown-content {
-    max-height: 500px;
-    opacity: 1;
+    max-height: 1000px;
 }
-/* Ban đầu submenu bị ẩn */
+
+.dropdown-content a {
+    padding: 10px 20px 10px 57px;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* Submenu Styling */
 .submenu {
-display: none;
-flex-direction: column;
-padding-left: 20px;
-background-color: #f9f9f98f;
-border-left: 2px solid #2a9d8f;
-box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f1f3f5;
+    padding-left: 0;
+    border-left: none;
+    box-shadow: none;
 }
 
-/* Kiểu dáng các mục trong submenu */
 .submenu a {
-padding: 8px 15px;
-font-size: 0.9rem;
-color: #333;
-text-decoration: none;
-transition: background-color 0.3s ease, color 0.3s ease;
+    padding: 8px 20px 8px 72px;
+    font-size: 0.85rem;
 }
 
-/* Hiệu ứng hover cho submenu */
-.submenu a:hover {
-background-color: #eef2f7;
-color: #2a9d8f;
-border-left: 3px solid #2a9d8f;
+/* Active State Styling */
+.sidebar a.active, .dropdown-btn.active {
+    background-color: rgba(42, 157, 143, 0.1);
+    color: #2a9d8f;
+    border-left: 3px solid #2a9d8f;
+    font-weight: 500;
 }
 
-/* Khi submenu được kích hoạt (thêm class 'active') */
-.dropdown-sub.active .submenu {
-display: flex;
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        left: -250px;
+        background-color: #ffffff;
+        box-shadow: 3px 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar.active {
+        left: 0;
+    }
 }
 
-
-/* Hiệu ứng mục bên trong submenu */
-.submenu a {
-padding: 8px 15px;
-font-size: 0.9rem;
-color: #333;
-text-decoration: none;
-transition: background-color 0.3s ease, color 0.3s ease;
+/* Scrollbar Styling */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
 }
 
-.submenu a:hover {
-background-color: #eef2f7;
-color: #2a9d8f;
-border-left: 3px solid #2a9d8f;
+.sidebar::-webkit-scrollbar-track {
+    background: #f1f1f1;
 }
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
 #userDisplay {
 font-size: 0.95rem;
 color: white;
@@ -526,4 +531,9 @@ dotlottie-player {
 .lock-icon {
     margin-left: 5px;
     font-size: 14px;
+}
+
+/* Làm mềm các transition */
+.sidebar a, .dropdown-btn, .dropdown-content {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
