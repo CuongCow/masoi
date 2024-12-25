@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Số bằng Chữ EN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" href="/logo/logoweb-dammekynang.png" type="image/png">
     <link rel="stylesheet" href="/styles.css">
     <style>
-        .container {
+       .container {
             max-width: 1000px;
             width: 95%;
             margin: 20px auto;
@@ -82,7 +83,6 @@
         font-size: 14px;
     }
 }
-
         h1 {
             text-align: center;
             color: #333;
@@ -113,11 +113,6 @@
             font-weight: bold;
             color: #007bff;
             margin: 0 10px;
-        }
-        input[type="range"] {
-            width: 100%;
-            margin: 0 15px;
-            height: 8px; /* Chiều cao của thanh trượt */
         }
                 /* Chỉnh nút kéo cho trình duyệt WebKit (Chrome, Safari) */
                 input[type="range"]::-webkit-slider-thumb {
@@ -158,6 +153,15 @@
             font-weight: bold;
             color: #000000;
         }
+        
+
+        input[type="range"] {
+            width: 100%;
+            margin: 0 15px;
+            height: 8px; /* Chiều cao của thanh trượt */
+        }
+
+
 
         @media (max-width: 768px) {
     .sidebar {
@@ -178,58 +182,265 @@
 
 
     </style>
-    <script src="/js/menu.js"></script>
 </head>
 <body>
-   <!-- Header Section -->
-   <header>
-    <div class="title-container">
-        <div class="menu-icon" id="menuIcon" onclick="toggleSidebar()">
-            <span></span>
-            <span></span>
-            <span></span>
+    <!-- Header Section -->
+    <header>
+        <div class="title-container">
+            <div class="menu-icon" id="menuIcon" onclick="toggleSidebar()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="logo">
+                <a href="/index.html" style="text-decoration: none; color: inherit;">
+                    Đam mê Kỹ năng
+                </a>
+            </div>
         </div>
-        <div class="logo">
-            <a href="/index.html" style="text-decoration: none; color: inherit;">
-                Đam mê Kỹ năng
-            </a>
+        <div class="header-right">
+            <a href="/login.html" class="login-btn" id="loginBtn">Đăng nhập</a>
+            <span id="userDisplay" style="color: white; font-weight: bold; margin-right: 15px;"></span>
+            <a href="#" onclick="logout()" class="login-btn" id="logoutBtn" style="display: none;">Đăng xuất</a>
         </div>
+    </header>
+    <script>
+        // Kiểm tra trạng thái đăng nhập khi trang được tải
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = localStorage.getItem('currentUser');
+            const loginBtn = document.getElementById('loginBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const userDisplay = document.getElementById('userDisplay');
+            
+            if (currentUser) {
+                // Người dùng đã đăng nhập
+                loginBtn.style.display = 'none';
+                logoutBtn.style.display = 'inline-block';
+                userDisplay.textContent = `${currentUser}`; // Chỉ hiển thị tên người dùng
+            } else {
+                // Chưa đăng nhập
+                loginBtn.style.display = 'inline-block';
+                logoutBtn.style.display = 'none';
+                userDisplay.textContent = '';
+            }
+        });
+
+        function logout() {
+            if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                localStorage.removeItem('currentUser');
+                window.location.reload();
+            }
+        }
+        </script>
+
+    <!-- Sidebar Section -->
+    <div class="sidebar" id="sidebar">
+        <a href="/index.html"><span class="icon">🏠</span>Trang chủ</a>
+        <div class="dropdown">
+            <div class="dropdown-btn">
+                <span class="icon">📨</span>Tool Mật Thư<span>▼</span>
+            </div>
+            <div class="dropdown-content">
+                <div class="dropdown-sub">
+                    <a href="#" class="has-submenu">Thay thế</a>
+                    <div class="submenu">
+                        <a href="/toolmatthu/thaythe/chubangchuen.html">Chữ = Chữ EN</a>
+                        <a href="/toolmatthu/thaythe/sobangchuen.html">Số = Chữ EN</a>
+                        <a href="/toolmatthu/thaythe/chubangchuvn.html">Chữ = Chữ VN</a>
+                        <a href="/toolmatthu/thaythe/sobangchuvn.html">Số = Chữ VN</a>
+                        <a href="/toolmatthu/thaythe/khanhhoa.html">Khánh Hòa</a>
+                    </div>
+                </div>
+                <div class="dropdown-sub">
+                    <a href="#" class="has-submenu">Tọa độ</a>
+                    <div class="submenu">
+                        <a href="/toolmatthu/toado/10custom.html">10x10 Custom</a>
+                        <a href="/toolmatthu/toado/banhangcot.html">Bảng - Hàng - Cột</a>
+                        <a href="/toolmatthu/toado/maphuong.html">Ma Phương</a>
+                        <a href="/toolmatthu/toado/phuonghuong.html">Phương hướng</a>           
+                  </div>
+                </div>
+                <div class="dropdown-sub">
+                    <a href="#" class="has-submenu">Dời chỗ</a>
+                    <div class="submenu">
+                        <a href="/toolmatthu/doicho/camranh.html">CAM RANH</a>
+                        <a href="/toolmatthu/doicho/docnguoc.html">Đọc Ngược</a>
+                    </div>
+                </div>
+                <a href="#">Ẩn dấu</a>
+                <a href="#">Nâng cao</a>
+            </div>
+        </div>
+        
+        <div class="dropdown">
+            <div class="dropdown-btn">
+                <span class="icon">🐺</span>Ma Sói<span>▼</span>
+            </div>
+            <div class="dropdown-content">
+                <a href="/masoi/quantro.html">🤵 Quản Trò</a>
+                <a href="/masoi/huongdan.html">📜 Hướng dẫn</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <div class="dropdown-btn">
+                <span class="icon">📖</span>Tài liệu<span>▼</span>
+            </div>
+            <div class="dropdown-content">
+                <a href="/tailieu/banxoaymatthu.html">Bản xoay MT</a>
+                <a href="/tailieu/matthu.html">Mật thư</a>
+                <a href="/tailieu/muavadanvu.html">Múa, dân vũ</a>
+                <a href="/tailieu/nutday.html">Nút dây</a>
+                <a href="/tailieu/sinhhoatvongtron.html">SH vòng tròn</a>
+                <a href="/tailieu/thucongtrai.html">TC trại</a>
+                <a href="/tailieu/trochoilon.html">Trò chơi lớn</a>
+                <a href="/tailieu/trochoinho.html">Trò chơi nhỏ</a>
+            </div>
+        </div>
+        <a href="/lienhe.html"><span class="icon">📮</span> Liên hệ tôi</a>
+        <a href="/dieukhoan.html"><span class="icon">📄</span> Điều khoản</a>
     </div>
-    <div class="header-right">
-        <a href="/login.html" class="login-btn" id="loginBtn">Đăng nhập</a>
-        <span id="userDisplay" style="color: white; font-weight: bold; margin-right: 15px;"></span>
-        <a href="#" onclick="logout()" class="login-btn" id="logoutBtn" style="display: none;">Đăng xuất</a>
-    </div>
-</header>
-<div id="sidebar-container"></div>
 
     <div class="container">
         <h1>Thay thế Số bằng Chữ</h1>
-        <h2>Tiếng Việt</h2>
+        <h2>Tiếng Anh</h2>
         <div class="mode-toggle">
             <button onclick="toggleMode(true)" class="mode-btn active">Số = Chữ</button>
             <button onclick="toggleMode(false)" class="mode-btn">Chữ = Số</button>
         </div>
+    
 
-        <label>Chọn số nguồn (1-29):</label>
+        <label>Chọn số nguồn (1-26):</label>
         <div class="slider-container">
             <span id="sourceCharDisplay">1</span>
-            <input type="range" id="sourceSlider" min="1" max="29" value="1" oninput="updateSourceNumber()">
+            <input type="range" id="sourceSlider" min="1" max="26" value="1" oninput="updateSourceNumber()">
         </div>
 
         <label>Chọn ký tự đích:</label>
         <div class="slider-container">
             <span id="targetCharDisplay">A</span>
-            <input type="range" id="targetSlider" min="0" max="28" value="0" oninput="updateTargetChar()">
+            <input type="range" id="targetSlider" min="0" max="25" value="0" oninput="updateTargetChar()">
         </div>
 
         <label for="textInput">Nhập nội dung (số cách nhau bằng dấu cách):</label>
-        <input type="text" id="textInput" placeholder="Nhập số từ 1 đến 29 hoặc ký tự từ A đến Y..." oninput="encryptText()">
+        <input type="text" id="textInput" placeholder="Nhập số từ 1 đến 26 hoặc ký tự từ A đến Z..." oninput="encryptText()">
 
         <p><strong>Kết quả:</strong> <span id="result"></span></p>
     </div>
+    <!-- Footer Section -->
+    <footer>
+        &copy; 2024 Đam Mê Kỹ Năng
+    </footer>
     <script>
-        const vietnameseAlphabet = 'AĂÂBCDĐEÊGHIKLMNOÔƠPQRSTUƯVXY';
+        // Toggle Sidebar and Menu Icon Animation
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const menuIcon = document.getElementById('menuIcon');
+            sidebar.classList.toggle('active');
+            menuIcon.classList.toggle('active');
+        }
+
+        // Dropdown functionality
+        const dropdownButtons = document.querySelectorAll('.dropdown-btn');
+        dropdownButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const parent = btn.parentElement;
+                parent.classList.toggle('active');
+            });
+        });
+        document.addEventListener('click', (event) => {
+    const sidebar = document.getElementById('sidebar');
+    const menuIcon = document.getElementById('menuIcon');
+
+    // Check if the click is outside the sidebar and the menu button
+    if (!sidebar.contains(event.target) && !menuIcon.contains(event.target)) {
+        sidebar.classList.remove('active');
+        menuIcon.classList.remove('active');
+    }
+    // Lấy tất cả các phần tử có class 'has-submenu'
+const submenuTriggers = document.querySelectorAll('.has-submenu');
+
+submenuTriggers.forEach(trigger => {
+    trigger.addEventListener('click', function (e) {
+        e.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
+
+        // Lấy phần tử cha (dropdown-sub) và toggle class 'active'
+        const parent = this.parentElement;
+        parent.classList.toggle('active');
+
+        // Đóng các submenu khác nếu cần
+        submenuTriggers.forEach(item => {
+            if (item !== this) {
+                item.parentElement.classList.remove('active');
+            }
+        });
+    });
+});
+
+});
+
+</script>
+<!-- Thêm modal vào body -->
+<div class="modal-overlay" id="modalOverlay"></div>
+<div class="login-modal" id="loginModal">
+    <h3>Thông báo đăng nhập</h3>
+    <p>Bạn cần đăng nhập để dùng các công cụ tool. Vì một số lý do cộng đồng nên rất cần thiết để quản lý người dùng.</p>
+    <div class="modal-buttons">
+        <a href="/login.html" class="modal-btn modal-login">Đăng nhập</a>
+        <a href="/register.html" class="modal-btn modal-register">Đăng ký</a>
+    </div>
+</div>
+<script>
+    // Thêm hàm kiểm tra đăng nhập và hiển thị modal
+    function showLoginModal() {
+        document.getElementById('modalOverlay').style.display = 'block';
+        document.getElementById('loginModal').style.display = 'block';
+    }
+
+    // Cập nhật các event listener cho menu items
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentUser = localStorage.getItem('currentUser');
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const userDisplay = document.getElementById('userDisplay');
+        
+        // Thêm event listeners cho các menu items cần bảo vệ
+        const protectedMenuItems = document.querySelectorAll('.dropdown-content a[href*="thaythe"], .dropdown-content a[href*="doicho"], .dropdown-content a[href*="toado"]');
+        
+        protectedMenuItems.forEach(item => {
+            if (!currentUser) {
+                // Thêm icon khóa và class locked
+                item.classList.add('locked-item');
+                item.innerHTML += ' <span class="lock-icon">🔒</span>';
+                
+                // Thay thế href bằng javascript:void(0)
+                item.setAttribute('href', 'javascript:void(0)');
+                
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showLoginModal();
+                });
+            }
+        });
+
+        // Đóng modal khi click bên ngoài
+        document.getElementById('modalOverlay').addEventListener('click', function() {
+            this.style.display = 'none';
+            document.getElementById('loginModal').style.display = 'none';
+        });
+        
+        if (currentUser) {
+            loginBtn.style.display = 'none';
+            logoutBtn.style.display = 'inline-block';
+            userDisplay.textContent = `${currentUser}`;
+        } else {
+            loginBtn.style.display = 'inline-block';
+            logoutBtn.style.display = 'none';
+            userDisplay.textContent = '';
+        }
+    });
+</script>
+    <script>
+        const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         let sourceNumber = 1;
         let targetChar = 'A';
         let isNumberToLetter = true;
@@ -243,67 +454,67 @@
         }
 
         function updateUI() {
+            const inputLabel = document.querySelector('label[for="textInput"]');
+            const title = document.querySelector('h1');
+            const input = document.getElementById('textInput');
+            
             if (isNumberToLetter) {
-                document.querySelector('label[for="textInput"]').innerText = "Nhập nội dung (số cách nhau bằng dấu cách):";
-                document.querySelector('h1').innerText = "Thay thế Số bằng Chữ";
+                inputLabel.innerText = "Nhập nội dung (số cách nhau bằng dấu cách):";
+                title.innerText = "Thay thế Số bằng Chữ";
+                input.placeholder = "Ví dụ: 1 2 3 4 5...";
             } else {
-                document.querySelector('label[for="textInput"]').innerText = "Nhập nội dung (chữ cách nhau bằng dấu cách):";
-                document.querySelector('h1').innerText = "Thay thế Chữ bằng Số";
+                inputLabel.innerText = "Nhập nội dung (chữ cách nhau bằng dấu cách):";
+                title.innerText = "Thay thế Chữ bằng Số";
+                input.placeholder = "Ví dụ: A B C D E...";
             }
-            encryptText(); // Update results when mode changes
+            encryptText();
         }
 
         function updateSourceNumber() {
-            const sourceSlider = document.getElementById('sourceSlider');
-            sourceNumber = parseInt(sourceSlider.value);
+            sourceNumber = parseInt(document.getElementById('sourceSlider').value);
             document.getElementById('sourceCharDisplay').innerText = sourceNumber;
             encryptText();
         }
 
         function updateTargetChar() {
             const targetSlider = document.getElementById('targetSlider');
-            targetChar = vietnameseAlphabet[targetSlider.value];
+            targetChar = alphabet[targetSlider.value];
             document.getElementById('targetCharDisplay').innerText = targetChar;
             encryptText();
         }
 
         function encryptText() {
-            const text = document.getElementById('textInput').value.trim();
-            if (text === '') {
+            const text = document.getElementById('textInput').value.trim().toUpperCase();
+            if (!text) {
                 document.getElementById('result').innerText = '';
                 return;
             }
 
-            let result = '';
-            let sourceIdx = sourceNumber - 1;
-            let targetIdx = vietnameseAlphabet.indexOf(targetChar);
-            let shift = (targetIdx - sourceIdx + vietnameseAlphabet.length) % vietnameseAlphabet.length;
+            const sourceIdx = sourceNumber - 1;
+            const targetIdx = targetChar.charCodeAt(0) - 'A'.charCodeAt(0);
+            const shift = (targetIdx - sourceIdx + 26) % 26;
 
-            const items = text.split(' ');
-            items.forEach(item => {
+            const items = text.split(/\s+/);
+            const result = items.map(item => {
                 if (isNumberToLetter) {
-                    const parsedNum = parseInt(item);
-                    if (parsedNum >= 1 && parsedNum <= vietnameseAlphabet.length) {
-                        let convertedChar = vietnameseAlphabet[(parsedNum - 1 + shift) % vietnameseAlphabet.length];
-                        result += convertedChar + ' ';
-                    } else {
-                        result += item + ' ';  // Giữ nguyên ký tự không hợp lệ
+                    const num = parseInt(item);
+                    if (num >= 1 && num <= 26) {
+                        return alphabet[(num - 1 + shift) % 26];
                     }
                 } else {
-                    const charIndex = vietnameseAlphabet.indexOf(item.toUpperCase());
-                    if (charIndex >= 0 && charIndex < vietnameseAlphabet.length) {
-                        let convertedNum = (charIndex - shift + vietnameseAlphabet.length) % vietnameseAlphabet.length + 1;
-                        result += convertedNum + ' ';
-                    } else {
-                        result += item + ' ';  // Giữ nguyên ký tự không hợp lệ
+                    const charCode = item.charCodeAt(0) - 'A'.charCodeAt(0);
+                    if (charCode >= 0 && charCode < 26) {
+                        return ((charCode - shift + 26) % 26 + 1).toString();
                     }
                 }
-            });
+                return item;
+            }).join(' ');
 
-            document.getElementById('result').innerText = result.trim();
+            document.getElementById('result').innerText = result;
         }
-                // Thêm CSS cho nút active
-                document.head.insertAdjacentHTML('beforeend', `
+
+        // Thêm CSS cho nút active
+        document.head.insertAdjacentHTML('beforeend', `
             <style>
                 .mode-toggle .mode-btn.active {
                     background-color: #2a9d8f;
@@ -312,22 +523,10 @@
             </style>
         `);
 
-        // Khởi tạo thanh kéo và cập nhật giá trị ban đầu
+        // Khởi tạo
         updateSourceNumber();
         updateTargetChar();
     </script>
-        <footer>
-            &copy; 2024 Đam Mê Kỹ Năng
-        </footer>
- <!-- Thêm modal vào body -->
-<div class="modal-overlay" id="modalOverlay"></div>
-<div class="login-modal" id="loginModal">
-    <h3>Thông báo đăng nhập</h3>
-    <p>Bạn cần đăng nhập để dùng các công cụ tool. Vì một số lý do cộng đồng nên rất cần thiết để quản lý người dùng.</p>
-    <div class="modal-buttons">
-        <a href="/login.html" class="modal-btn modal-login">Đăng nhập</a>
-        <a href="/register.html" class="modal-btn modal-register">Đăng ký</a>
-    </div>
-</div>
+
 </body>
 </html>
