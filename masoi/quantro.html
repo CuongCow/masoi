@@ -987,17 +987,27 @@
     color: white;
     font-weight: bold;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    min-height: 40px; /* Đảm bảo có không gian cho countdown */
+    min-height: -20; /* Thay đổi từ min-height: 40px */
+    margin: 0; /* Thêm margin 0 */
+    transition: all 0.3s ease; /* Thêm transition mượt mà */
+}
+
+.countdown.visible, .game-status-container.visible {
+    margin-top: 10px; /* Thêm margin khi hiển thị */
+    min-height: 40px; /* Thêm chiều cao khi hiển thị */
+    visibility: visible;
+    opacity: 1;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .game-status-container {
+    .game-status-container.visible {
         margin-top: 15px;
     }
 
-    .countdown {
+    .countdown.visible {
         font-size: 1.5em;
+        min-height: 30px;
     }
 }
 
@@ -1745,16 +1755,15 @@
         }
 
         function startResetCountdown() {
+            const countdownDisplay = document.getElementById('countdownDisplay');
+            if (!countdownDisplay) return;
+            
+            // Thêm class visible khi bắt đầu đếm ngược
+            countdownDisplay.classList.add('visible');
+            
             // Reset counter về 30 giây
             resetCounter = 30;
             
-            // Lấy element hiển thị đếm ngược
-            const countdownDisplay = document.getElementById("countdownDisplay");
-            if (!countdownDisplay) {
-                console.error("Không tìm thấy element countdownDisplay");
-                return;
-            }
-
             // Hiển thị thời gian ban đầu
             countdownDisplay.textContent = `Sau ${resetCounter} giây sẽ reset từ đầu`;
             countdownDisplay.style.display = 'block';
@@ -1796,8 +1805,14 @@
         }
 
         function cancelReset() {
+            const countdownDisplay = document.getElementById('countdownDisplay');
+            if (countdownDisplay) {
+                // Xóa class visible khi hủy
+                countdownDisplay.classList.remove('visible');
+                countdownDisplay.textContent = "";
+            }
+            
             clearInterval(resetTimeout);
-            document.getElementById("countdownDisplay").textContent = "";
             document.getElementById("cancelResetButton").style.display = "none";
             logEvent("Đặt lại đã bị hủy.");
         }
@@ -1849,6 +1864,7 @@
             countdownDisplay.textContent = "5:00";
             countdownDisplay.style.display = 'block';
 
+
             // Hàm cập nhật đếm ngược
             function updateCountdown() {
                 const minutes = Math.floor(dayCounter / 60);
@@ -1878,21 +1894,23 @@
             // Log sự kiện
             logEvent("🌞 Ban ngày bắt đầu - 5 phút thảo luận");
         }
-
+        
         // Thêm biến để theo dõi các role đã được chọn
         let completedNightRoles = new Set();
 
         function startNight() {
+            const countdownDisplay = document.getElementById('countdownDisplay');
+            if (countdownDisplay) {
+                // Xóa class visible khi kết thúc
+                countdownDisplay.classList.remove('visible');
+                countdownDisplay.textContent = "";
+            }
+            
             // Reset danh sách role đã hoàn thành
             completedNightRoles.clear();
             
             // Dừng đếm ngược ban ngày nếu đang chạy
             clearInterval(dayCountdown);
-            const countdownDisplay = document.getElementById('countdownDisplay');
-            if (countdownDisplay) {
-                countdownDisplay.textContent = "";
-                countdownDisplay.classList.remove('countdown-warning');
-            }
 
             // Hiển thị và cập nhật danh sách role ban đêm
             const nightRoleList = document.getElementById('nightRoleList');
@@ -2298,6 +2316,12 @@
         }
 
         function startDayCountdown() {
+            const countdownDisplay = document.getElementById('countdownDisplay');
+            if (!countdownDisplay) return;
+            
+            // Thêm class visible khi bắt đầu đếm ngược
+            countdownDisplay.classList.add('visible');
+            
             dayCounter = 300;
             document.getElementById("dayEndWarning").style.display = "none";
             document.getElementById("dayCountdownDisplay").textContent = `Thời gian ban ngày: ${Math.floor(dayCounter / 60)}:${String(dayCounter % 60).padStart(2, '0')}`;
