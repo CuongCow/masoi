@@ -1,10 +1,15 @@
 {
   "version": 2,
   "builds": [
+    { "src": "*.html", "use": "@vercel/static" },
     { "src": "pages/api/**/*.js", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/api/auth/(.*)", "dest": "/pages/api/auth/$1" }
+    { "src": "/api/auth/(.*)", "dest": "/pages/api/auth/$1" },
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/login", "dest": "/login.html" },
+    { "src": "/register", "dest": "/register.html" },
+    { "src": "/(.*)", "dest": "/$1" }
   ],
   "env": {
     "EDGE_CONFIG_ID": "ecfg_rcpagu6nlfhtmdtqx2rn7fjynh2y",
