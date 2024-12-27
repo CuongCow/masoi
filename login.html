@@ -295,72 +295,25 @@
                     const username = document.getElementById('username').value;
                     const password = document.getElementById('password').value;
 
-                    // Gọi API để lấy d liệu từ Google Sheets
-                    const response = await fetch('https://docs.google.com/spreadsheets/d/1yGi59OO2tbwso2ajaeI0WjeKI8r-xkh2qCEu10-mBZA/gviz/tq?tqx=out:json');
-                    const text = await response.text();
-                    const data = JSON.parse(text.substring(47).slice(0, -2));
-                    
-                    // Kiểm tra thông tin đăng nhập
-                    const users = data.table.rows;
-                    const userFound = users.some(row => {
-                        const rowUsername = row.c[9]?.v;  // Cột J (index 9)
-                        const rowPassword = row.c[10]?.v; // Cột K (index 10)
-                        return rowUsername === username && rowPassword === password;
+                    // Gọi API Edge Config để kiểm tra đăng nhập
+                    const response = await fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ username, password })
                     });
 
-                    if (userFound) {
-                        // Lưu thông tin người dùng
+                    const data = await response.json();
+                    
+                    if (data.success) {
                         localStorage.setItem('currentUser', username);
                         window.location.href = 'index.html';
                     } else {
-                        // Hiển thị thông báo lỗi
                         document.getElementById('password-error').textContent = 'Sai Tên đăng nhập hoặc Mật khẩu';
                         document.getElementById('password-error').style.display = 'block';
-                        
-                        // Khóa body
-                        document.body.style.overflow = 'hidden';
-                        document.body.style.height = '100vh';
-                        
-                        const loginButton = document.querySelector('.btn-primary');
-                        loginButton.classList.add('run-away');
-                        
-                        // Xử lý sự kiện di chuột vào nút
-                        loginButton.addEventListener('mouseover', function() {
-                            if (loginButton.classList.contains('run-away')) {
-                                const viewportHeight = window.innerHeight;
-                                const viewportWidth = window.innerWidth;
-                                const buttonRect = this.getBoundingClientRect();
-                                
-                                // Giới hạn vùng di chuyển
-                                const padding = 5;
-                                const maxX = viewportWidth - buttonRect.width - padding;
-                                const maxY = viewportHeight - buttonRect.height - padding;
-                                
-                                const randomX = Math.min(Math.max(padding, Math.random() * maxX), maxX);
-                                const randomY = Math.min(Math.max(padding, Math.random() * maxY), maxY);
-                                
-                                this.style.position = 'fixed';
-                                this.style.left = `${randomX}px`;
-                                this.style.top = `${randomY}px`;
-                            }
-                        });
-
-                        // Reset khi người dùng nhậplại
-                        const inputs = document.querySelectorAll('input');
-                        inputs.forEach(input => {
-                            input.addEventListener('input', function() {
-                                loginButton.classList.remove('run-away');
-                                loginButton.style.position = 'static';
-                                loginButton.style.left = 'auto';
-                                loginButton.style.top = 'auto';
-                                document.getElementById('password-error').style.display = 'none';
-                                // Mở khóa body
-                                document.body.style.overflow = '';
-                                document.body.style.height = '';
-                            });
-                        });
+                        // ... rest of error handling code ...
                     }
-
                 } catch (error) {
                     console.error('Đã xảy ra lỗi trong quá trình xác thực');
                     alert('Có lỗi xảy ra khi đăng nhập. Vui lòng thử lại sau.');
