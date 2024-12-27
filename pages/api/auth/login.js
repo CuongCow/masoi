@@ -1,8 +1,8 @@
 import { createClient } from '@vercel/edge-config';
 
 const edgeConfig = createClient({
-  id: 'ecfg_rcpagu6nlfhtmdtqx2rn7fjynh2y',
-  token: '17358adf-6f14-4e96-a66f-a30f5565e381'
+  id: process.env.EDGE_CONFIG_ID,
+  token: process.env.EDGE_CONFIG_TOKEN
 });
 
 export default async function handler(req, res) {
@@ -12,8 +12,12 @@ export default async function handler(req, res) {
 
   try {
     const { username, password } = req.body;
-    const users = await edgeConfig.get('users') || [];
     
+    if (!username || !password) {
+      return res.status(400).json({ success: false, message: 'Missing required fields' });
+    }
+
+    const users = await edgeConfig.get('users') || [];
     const user = users.find(u => u.username === username && u.password === password);
     
     if (user) {
