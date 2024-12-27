@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng Nhập - Đam Mê Kỹ Năng</title>
+    <title>Đăng Ký - Đam Mê Kỹ Năng</title>
     <link rel="icon" href="/logo/logoweb-dammekynang.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
         * {
             margin: 0;
@@ -24,32 +23,17 @@
             justify-content: center;
             padding: 20px;
         }
-        body.login-error {
-    overflow: hidden;
-    height: 100vh;
-    position: fixed;
-    width: 100%;
-}
 
         .container {
             position: relative;
-            max-width: 400px;
+            max-width: 800px;
             width: 100%;
-            padding: 60px 30px 40px;
+            padding: 80px 40px 40px;
+            margin: 60px 20px;
             background: rgba(255, 255, 255, 0.98);
             border-radius: 25px;
             box-shadow: 0 20px 40px rgba(42, 157, 144, 0.15);
             backdrop-filter: blur(10px);
-            transform: translateY(30px);
-            opacity: 0;
-            animation: slideUp 0.8s ease forwards;
-        }
-
-        @keyframes slideUp {
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
         }
 
         .logo-container {
@@ -72,6 +56,13 @@
             0% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
             100% { transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         h1 {
@@ -97,18 +88,12 @@
             font-size: 0.95em;
         }
 
-        .form-group i {
-            color: rgb(42, 157, 144);
-            font-size: 1.1em;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus + label i {
-            transform: scale(1.1);
-        }
-
         input[type="text"],
-        input[type="password"] {
+        input[type="number"],
+        input[type="tel"],
+        input[type="url"],
+        input[type="password"],
+        select {
             width: 100%;
             padding: 12px 15px;
             border: 2px solid #e0e0e0;
@@ -118,7 +103,8 @@
             transition: all 0.3s ease;
         }
 
-        input:focus {
+        input:focus,
+        select:focus {
             border-color: rgb(42, 157, 144);
             box-shadow: 0 0 0 4px rgba(42, 157, 144, 0.1);
             outline: none;
@@ -135,6 +121,23 @@
             cursor: pointer;
             transition: all 0.3s ease;
             margin-bottom: 15px;
+        }
+                /* Style cho button group */
+                .button-group {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            width: 100%;
+            max-width: 5000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(42, 157, 143, 0.2);
         }
 
         .btn-primary {
@@ -155,28 +158,105 @@
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(42, 157, 144, 0.2);
+            box-shadow: 0 5px 15px rgba(42, 157, 143, 0.2);
         }
 
-        .btn-primary:hover {
-            background: rgb(32, 147, 134);
+        .btn:active {
+            transform: translateY(0);
         }
 
-        .error {
-            color: #ff4444;
-            font-size: 0.85em;
-            margin-top: 5px;
-            display: none;
+        .form-group {
+            margin-bottom: 10px;
+            position: relative;
         }
 
-        .button-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2a9d8f;
+            font-weight: 600;
+            font-size: 0.95em;
+            transform: translateY(0);
+            transition: all 0.3s ease;
         }
 
-        /* Hiệu ứng ripple cho buttons */
-        .btn::after {
+        input[type="text"],
+        input[type="number"],
+        input[type="tel"],
+        input[type="url"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #2a9d8f;
+            box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.2);
+            outline: none;
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%232a9d8f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 15px;
+            padding-right: 45px;
+        }
+
+        select:disabled {
+            background-color: #f5f5f5;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .purpose-other {
+            margin-top: 10px;
+            transform: scale(0.98);
+            opacity: 0;
+            height: 0;
+            transition: all 0.3s ease;
+        }
+
+        .purpose-other.show {
+            transform: scale(1);
+            opacity: 1;
+            height: auto;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #2a9d8f 0%, #158eb3 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(42, 157, 143, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button::after {
             content: '';
             position: absolute;
             top: 50%;
@@ -186,30 +266,148 @@
             background: rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
+            transition: width 0.6s ease, height 0.6s ease;
         }
 
-        .btn:active::after {
+        button:hover::after {
             width: 300px;
             height: 300px;
         }
 
-        /* Hiệu ứng hover cho inputs */
-        input:hover {
-            transform: translateX(3px);
+        .error {
+            color: #e63946;
+            font-size: 0.85em;
+            margin-top: 5px;
+            display: none;
+            transform: translateY(-10px);
+            opacity: 0;
+            transition: all 0.3s ease;
         }
 
-        /* Hiệu ứng loading cho button */
-        .btn-primary.loading {
-            background: linear-gradient(90deg, rgb(42, 157, 144) 0%, rgb(32, 147, 134) 50%, rgb(42, 157, 144) 100%);
-            background-size: 200% 100%;
-            animation: gradientMove 1.5s linear infinite;
+        .error.show {
+            transform: translateY(0);
+            opacity: 1;
         }
 
-        @keyframes gradientMove {
-            0% { background-position: 100% 0; }
-            100% { background-position: -100% 0; }
+        /* Loading indicator for selects */
+        .loading::after {
+            content: '';
+            position: absolute;
+            right: 45px;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #2a9d8f;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.6s linear infinite;
         }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 769px) {
+            form {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+            }
+            
+            /* Các trường full width */
+            .form-group.full-width {
+                grid-column: 1 / -1;
+            }
+            
+            /* Các input lớn hơn trên PC */
+            input[type="text"],
+            input[type="number"],
+            input[type="tel"],
+            input[type="url"],
+            input[type="password"],
+            select {
+                padding: 12px 15px;
+                font-size: 16px;
+            }
+            
+            button {
+                grid-column: 1 / -1;
+                max-width: 300px;
+                margin: 20px auto 0;
+            }
+        }
+
+        /* Mobile optimization */
+        @media (max-width: 768px) {
+            .container {
+                margin: 40px 15px;
+                padding: 70px 20px 30px;
+                max-width: 100%;
+            }
+            
+            .form-group {
+                margin-bottom: 15px;
+            }
+            
+            input[type="text"],
+            input[type="number"],
+            input[type="tel"],
+            input[type="url"],
+            input[type="password"],
+            select {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+            
+            label {
+                font-size: 14px;
+                margin-bottom: 5px;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Responsive cho mobile */
+        @media (max-width: 768px) {
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+                max-width: 100%;
+            }
+            
+            .btn-primary {
+                width: 100%;
+                max-width: 250px;
+            }
+
+            .btn-outline {
+                width: 100%;
+                max-width: 220px;
+            }
+        }
+
+        .form-group label i {
+            color: rgb(42, 157, 144);
+            width: 20px;
+            margin-right: 8px;
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        /* Hiệu ứng hover cho icons */
+        .form-group:hover label i {
+            transform: scale(1.1);
+        }
+
         .logo-container a {
             display: block;
             width: 100%;
@@ -220,14 +418,6 @@
             transform: scale(1.05);
             transition: transform 0.3s ease;
         }
-
-        .btn-primary.run-away {
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary.run-away:hover {
-            transform: translate(0, 0);
-        }
     </style>
 </head>
 <body>
@@ -237,51 +427,310 @@
                 <img src="/logo/logoweb-dammekynang.png" alt="Đam Mê Kỹ Năng">
             </a>
         </div>
-        <h1>Đăng Nhập</h1>
-        <form id="loginForm" onsubmit="return validateForm(event)">
+        <h1>Đăng Ký Tài Khoản</h1>
+        <form id="registerForm" onsubmit="return validateForm(event)">
             <div class="form-group">
-                <label>
+                <label for="fullname">
                     <i class="fas fa-user"></i>
-                    Tên đăng nhập
+                    Họ và tên *
                 </label>
-                <input type="text" id="username" name="username" placeholder="Nhập tên đăng nhập" required autocomplete="username">
+                <input type="text" id="fullname" name="fullname" required>
+                <div class="error" id="fullname-error">Vui lòng nhập họ và tên</div>
+            </div>
+
+            <div class="form-group">
+                <label for="age">
+                    <i class="fas fa-birthday-cake"></i>
+                    Tuổi *
+                </label>
+                <input type="number" id="age" name="age" min="1" max="100" required>
+                <div class="error" id="age-error">Vui lòng nhập tuổi hợp lệ</div>
+            </div>
+
+            <div class="form-group">
+                <label for="province">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Tỉnh/Thành phố *
+                </label>
+                <select id="province" name="province" required onchange="loadDistricts()">
+                    <option value="">Chọn Tỉnh/Thành phố</option>
+                </select>
+                <div class="error" id="province-error">Vui lòng chọn tỉnh/thành phố</div>
+            </div>
+
+            <div class="form-group">
+                <label for="district">
+                    <i class="fas fa-building"></i>
+                    Quận/Huyện *
+                </label>
+                <select id="district" name="district" required onchange="loadWards()" disabled>
+                    <option value="">Chọn Quận/Huyện</option>
+                </select>
+                <div class="error" id="district-error">Vui lòng chọn quận/huyện</div>
+            </div>
+
+            <div class="form-group">
+                <label for="ward">
+                    <i class="fas fa-home"></i>
+                    Xã/Phường *
+                </label>
+                <select id="ward" name="ward" required disabled>
+                    <option value="">Chọn Xã/Phường</option>
+                </select>
+                <div class="error" id="ward-error">Vui lòng chọn xã/phường</div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">
+                    <i class="fas fa-phone"></i>
+                    Số điện thoại *
+                </label>
+                <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+                <div class="error" id="phone-error">Vui lòng nhập số điện thoại hợp lệ</div>
+            </div>
+
+            <div class="form-group">
+                <label for="facebook">
+                    <i class="fab fa-facebook"></i>
+                    Link Facebook *
+                </label>
+                <input type="url" id="facebook" name="facebook" required>
+                <div class="error" id="facebook-error">Đây không phải link facebook.com</div>
+            </div>
+
+            <div class="form-group">
+                <label for="purpose">
+                    <i class="fas fa-tasks"></i>
+                    Mục đích sử dụng *
+                </label>
+                <select id="purpose" name="purpose" required onchange="toggleOtherPurpose()">
+                    <option value="">Chọn mục đích</option>
+                    <option value="curious">Tò mò</option>
+                    <option value="test">Thử nghiệm mật thư</option>
+                    <option value="solve">Giải mật thư</option>
+                    <option value="other">Khác</option>
+                </select>
+                <input type="text" id="other-purpose" class="purpose-other" placeholder="Nhập mục đích khác">
+                <div class="error" id="purpose-error">Vui lòng chọn mục đích sử dụng</div>
+            </div>
+
+            <div class="form-group">
+                <label for="username">
+                    <i class="fas fa-user-circle"></i>
+                    Tên đăng nhập *
+                </label>
+                <input type="text" id="username" name="username" required onblur="checkUsername()">
                 <div class="error" id="username-error">Vui lòng nhập tên đăng nhập</div>
             </div>
 
             <div class="form-group">
-                <label>
+                <label for="password">
                     <i class="fas fa-lock"></i>
-                    Mật khẩu
+                    Mật khẩu *
                 </label>
-                <input type="password" id="password" name="password" placeholder="Nhập mật khẩu" required autocomplete="current-password">
-                <div class="error" id="password-error">Vui lòng nhập mật khẩu</div>
+                <input type="password" id="password" name="password" required>
+                <div class="error" id="password-error">Mật khẩu phải chứa ít nhất 1 chữ thường, 1 chữ in hoa, 1 số và 1 ký tự đặc biệt</div>
             </div>
 
             <div class="button-group">
                 <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-sign-in-alt"></i>
-                    <span>ĐĂNG NHẬP</span>
+                    <i class="fas fa-user-plus"></i>
+                    Đăng Ký
                 </button>
-                <a href="register.html" class="btn btn-outline"><i class="fas fa-user-plus"></i> ĐĂNG KÝ TÀI KHOẢN</a>
+                <button type="button" class="btn btn-outline" onclick="window.location.href='login.html'">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Đăng Nhập
+                </button>
             </div>
         </form>
     </div>
 
     <script>
+        const fields = ['fullname', 'age', 'province', 'district', 'ward', 'phone', 'facebook', 'purpose', 'username', 'password'];
+
+        function toggleOtherPurpose() {
+            const purposeSelect = document.getElementById('purpose');
+            const otherPurpose = document.getElementById('other-purpose');
+            if (purposeSelect.value === 'other') {
+                otherPurpose.style.display = 'block';
+                setTimeout(() => otherPurpose.classList.add('show'), 10);
+            } else {
+                otherPurpose.classList.remove('show');
+                setTimeout(() => otherPurpose.style.display = 'none', 300);
+            }
+            otherPurpose.required = purposeSelect.value === 'other';
+        }
+
+        const PROVINCE_API = 'https://provinces.open-api.vn/api/p/';
+        const DISTRICT_API = 'https://provinces.open-api.vn/api/p/';
+        const WARD_API = 'https://provinces.open-api.vn/api/d/';
+
+        // Load tỉnh/thành phố khi trang web được tải
+        async function loadProvinces() {
+            try {
+                const response = await fetch(PROVINCE_API);
+                const provinces = await response.json();
+                const provinceSelect = document.getElementById('province');
+
+                provinces.forEach(province => {
+                    const option = document.createElement('option');
+                    option.value = province.code;
+                    option.textContent = province.name;
+                    provinceSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Lỗi khi tải danh sách tỉnh/thành:', error);
+            }
+        }
+
+        // Hiệu ứng loading khi đang tải dữ liệu
+        function showLoading(selectElement) {
+            selectElement.parentElement.classList.add('loading');
+        }
+
+        function hideLoading(selectElement) {
+            selectElement.parentElement.classList.remove('loading');
+        }
+
+        // Load quận/huyện khi chọn tỉnh/thành phố
+        async function loadDistricts() {
+            const provinceCode = document.getElementById('province').value;
+            const districtSelect = document.getElementById('district');
+            const wardSelect = document.getElementById('ward');
+
+            // Reset quận/huyện và xã/phường
+            districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
+            wardSelect.innerHTML = '<option value="">Chọn Xã/Phường</option>';
+            
+            if (!provinceCode) {
+                districtSelect.disabled = true;
+                wardSelect.disabled = true;
+                return;
+            }
+
+            showLoading(districtSelect);
+
+            try {
+                const response = await fetch(DISTRICT_API + provinceCode + '?depth=2');
+                const data = await response.json();
+                const districts = data.districts;
+
+                districts.forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district.code;
+                    option.textContent = district.name;
+                    districtSelect.appendChild(option);
+                });
+
+                districtSelect.disabled = false;
+                wardSelect.disabled = true;
+            } catch (error) {
+                console.error('Lỗi khi tải danh sách quận/huyện:', error);
+            }
+
+            hideLoading(districtSelect);
+        }
+
+        // Load xã/phường khi chọn quận/huyện
+        async function loadWards() {
+            const districtCode = document.getElementById('district').value;
+            const wardSelect = document.getElementById('ward');
+
+            // Reset xã/phường
+            wardSelect.innerHTML = '<option value="">Chọn Xã/Phường</option>';
+
+            if (!districtCode) {
+                wardSelect.disabled = true;
+                return;
+            }
+
+            showLoading(wardSelect);
+
+            try {
+                const response = await fetch(WARD_API + districtCode + '?depth=2');
+                const data = await response.json();
+                const wards = data.wards;
+
+                wards.forEach(ward => {
+                    const option = document.createElement('option');
+                    option.value = ward.code;
+                    option.textContent = ward.name;
+                    wardSelect.appendChild(option);
+                });
+
+                wardSelect.disabled = false;
+            } catch (error) {
+                console.error('Lỗi khi tải danh sách xã/phường:', error);
+            }
+
+            hideLoading(wardSelect);
+        }
+
+        // Cập nhật hiển thị lỗi với animation
+        function showError(elementId) {
+            const error = document.getElementById(elementId);
+            error.style.display = 'block';
+            setTimeout(() => error.classList.add('show'), 10);
+        }
+
+        function hideError(elementId) {
+            const error = document.getElementById(elementId);
+            error.classList.remove('show');
+            setTimeout(() => error.style.display = 'none', 300);
+        }
+
+        // Gọi hàm tải danh sách tỉnh/thành khi trang web được tải
+        document.addEventListener('DOMContentLoaded', loadProvinces);
+
+        // Thêm hàm kiểm tra username
+        async function checkUsername() {
+            const username = document.getElementById('username').value;
+            if (!username) return false;
+
+            try {
+                const response = await fetch('/api/auth/check-username', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username })
+                });
+
+                const data = await response.json();
+                
+                if (data.exists) {
+                    showError('username-error');
+                    document.getElementById('username-error').textContent = 'Tên đăng nhập này đã được sử dụng';
+                    return false;
+                } else {
+                    hideError('username-error');
+                    return true;
+                }
+            } catch (error) {
+                console.error('Lỗi kiểm tra username:', error);
+                return false;
+            }
+        }
+
+        // Cập nhật hàm validateForm
         async function validateForm(event) {
             event.preventDefault();
             let isValid = true;
-            const fields = ['username', 'password'];
             
-            // Kiểm tra các trường không được để trống
+            // Kiểm tra username trùng lặp
+            const usernameValid = await checkUsername();
+            if (!usernameValid) {
+                isValid = false;
+            }
+
+            // Kiểm tra các trường còn lại
             fields.forEach(field => {
                 const element = document.getElementById(field);
-                const error = document.getElementById(`${field}-error`);
-                if (!element.value) {
-                    error.style.display = 'block';
+                if (!element.value || (element.tagName === 'SELECT' && !element.value)) {
+                    showError(`${field}-error`);
                     isValid = false;
                 } else {
-                    error.style.display = 'none';
+                    hideError(`${field}-error`);
                 }
             });
 
@@ -289,60 +738,57 @@
                 try {
                     const button = document.querySelector('button[type="submit"]');
                     button.disabled = true;
-                    button.classList.add('loading');
                     button.textContent = 'Đang xử lý...';
 
-                    const username = document.getElementById('username').value;
-                    const password = document.getElementById('password').value;
+                    // Tạo đối tượng dữ liệu người dùng
+                    const formData = {
+                        fullname: document.getElementById('fullname').value,
+                        age: document.getElementById('age').value,
+                        province: document.getElementById('province').options[document.getElementById('province').selectedIndex].text,
+                        district: document.getElementById('district').options[document.getElementById('district').selectedIndex].text,
+                        ward: document.getElementById('ward').options[document.getElementById('ward').selectedIndex].text,
+                        phone: document.getElementById('phone').value,
+                        facebook: document.getElementById('facebook').value,
+                        purpose: document.getElementById('purpose').value === 'other' ? 
+                                document.getElementById('other-purpose').value : 
+                                document.getElementById('purpose').options[document.getElementById('purpose').selectedIndex].text,
+                        username: document.getElementById('username').value,
+                        password: document.getElementById('password').value,
+                        createdAt: new Date().toISOString()
+                    };
 
-                    // Gọi API Edge Config để kiểm tra đăng nhập
-                    const response = await fetch('/api/auth/login', {
+                    // Gửi request đến API
+                    const response = await fetch('/api/auth/register', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ username, password })
+                        body: JSON.stringify(formData)
                     });
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
 
                     const data = await response.json();
                     
                     if (data.success) {
-                        localStorage.setItem('currentUser', username);
-                        window.location.href = 'index.html';
+                        alert('Đăng ký thành công!');
+                        window.location.href = 'login.html';
                     } else {
-                        document.getElementById('password-error').textContent = 'Sai Tên đăng nhập hoặc Mật khẩu';
-                        document.getElementById('password-error').style.display = 'block';
-                        // ... rest of error handling code ...
+                        throw new Error(data.message || 'Có lỗi xảy ra khi đăng ký');
                     }
                 } catch (error) {
-                    console.error('Đã xảy ra lỗi trong quá trình xác thực');
-                    alert('Có lỗi xảy ra khi đăng nhập. Vui lòng thử lại sau.');
+                    console.error('Lỗi khi đăng ký:', error);
+                    alert(error.message || 'Có lỗi xảy ra khi đăng ký. Vui lòng thử lại sau.');
                 } finally {
                     const button = document.querySelector('button[type="submit"]');
                     button.disabled = false;
-                    button.classList.remove('loading');
-                    button.textContent = 'ĐĂNG NHẬP';
+                    button.textContent = 'Đăng Ký';
                 }
             }
             return false;
         }
-
-        // Thêm hiệu ứng loading khi submit
-        document.getElementById('loginForm').addEventListener('submit', function() {
-            const button = this.querySelector('.btn-primary');
-            button.classList.add('loading');
-        });
-
-        // Thêm hiệu ứng focus cho input groups
-        document.querySelectorAll('.form-group input').forEach(input => {
-            input.addEventListener('focus', function() {
-                this.parentElement.style.transform = 'scale(1.02)';
-            });
-
-            input.addEventListener('blur', function() {
-                this.parentElement.style.transform = 'scale(1)';
-            });
-        });
     </script>
 </body>
 </html>
