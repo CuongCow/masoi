@@ -2299,7 +2299,7 @@
                     protectedPlayer = null; // Reset bảo vệ sau khi dùng
                 } else if (player.role === 'Bán Sói' && player.status === 'Sống') {
                     player.role = 'Ma Sói';
-                    logEvent(`${playerName} từ bán sói đã biến đổi thành Ma Sói và được sống lại.`);
+                    logEvent(`${playerName} từ bán sói ��ã biến đổi thành Ma Sói và được sống lại.`);
                 } else {
                     player.status = player.status === 'Sống' ? 'Chết' : 'Sống';
                     renderPlayers();
@@ -2765,6 +2765,172 @@
         }
     `;
     document.head.appendChild(shieldStyle);
+
+    // Thêm vào phần initial setup HTML
+    function renderInitialSetup() {
+        const initialSetup = document.getElementById('initialSetup');
+        if (!initialSetup) return;
+
+        // Thêm input điều chỉnh thời gian với thiết kế mới
+        const timeSetupHTML = `
+            <div class="time-setup" style="
+                margin: 25px 0;
+                padding: 15px 20px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                color: white;
+                backdrop-filter: blur(5px);
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s ease;">
+            <div style="
+                display: flex;
+                align-items: center;
+                gap: 10px;">
+                <i class="fas fa-clock" style="
+                    font-size: 1.2em;
+                    color: #3498db;"></i>
+                <label for="dayTime" style="
+                    font-weight: 500;
+                    font-size: 1.1em;">Thời gian ban ngày:</label>
+            </div>
+            <div style="
+                display: flex;
+                align-items: center;
+                gap: 8px;">
+                <input type="number" 
+                    id="dayTime" 
+                    min="1" 
+                    max="60" 
+                    value="5"
+                    style="
+                        width: 60px;
+                        padding: 8px;
+                        border-radius: 6px;
+                        border: 2px solid rgba(52, 152, 219, 0.3);
+                        text-align: center;
+                        background: rgba(255, 255, 255, 0.9);
+                        font-size: 1em;
+                        font-weight: 500;
+                        color: #2c3e50;
+                        transition: all 0.3s ease;
+                        outline: none;">
+                <span style="
+                    font-size: 0.9em;
+                    opacity: 0.8;">phút</span>
+            </div>
+        </div>
+    `;
+
+        // Thêm style cho input focus và hover
+        const timeSetupStyle = document.createElement('style');
+        timeSetupStyle.textContent = `
+            #dayTime:hover {
+                border-color: rgba(52, 152, 219, 0.5);
+                box-shadow: 0 0 5px rgba(52, 152, 219, 0.2);
+            }
+            
+            #dayTime:focus {
+                border-color: #3498db;
+                box-shadow: 0 0 8px rgba(52, 152, 219, 0.4);
+            }
+            
+            .time-setup:hover {
+                background: rgba(255, 255, 255, 0.15);
+                transform: translateY(-1px);
+            }
+            
+            /* Tùy chỉnh arrows của input number */
+            #dayTime::-webkit-inner-spin-button,
+            #dayTime::-webkit-outer-spin-button {
+                opacity: 1;
+                height: 20px;
+                cursor: pointer;
+            }
+            
+            @media (max-width: 480px) {
+                .time-setup {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 10px;
+                }
+            }
+        `;
+        document.head.appendChild(timeSetupStyle);
+
+        // Chèn vào trước nút Start Game
+        const startGameBtn = document.getElementById('startGameBtn');
+        if (startGameBtn) {
+            startGameBtn.insertAdjacentHTML('beforebegin', timeSetupHTML);
+        }
+
+        // Event listener vẫn giữ nguyên
+        const dayTimeInput = document.getElementById('dayTime');
+        if (dayTimeInput) {
+            dayTimeInput.addEventListener('change', function() {
+                if (dayCountdown) {
+                    clearInterval(dayCountdown);
+                    startDayCountdown();
+                }
+            });
+        }
+    }
+
+    // Sửa lại hàm startDayCountdown để lưu giá trị thời gian hiện tại
+    let currentDayTime = 5; // Giá trị mặc định
+
+    function startDayCountdown() {
+        const countdownDisplay = document.getElementById('countdownDisplay');
+        if (!countdownDisplay) return;
+        
+        // Lấy thời gian từ input (đơn vị phút)
+        const dayTimeInput = document.getElementById('dayTime');
+        currentDayTime = dayTimeInput ? parseInt(dayTimeInput.value) : 5;
+        
+        // Chuyển đổi sang giây
+        dayCounter = currentDayTime * 60;
+        
+        countdownDisplay.classList.add('visible');
+        
+        if (dayCountdown) {
+            clearInterval(dayCountdown);
+        }
+
+        dayCountdown = setInterval(() => {
+            if (dayCounter >= 0) {
+                const minutes = Math.floor(dayCounter / 60);
+                const seconds = dayCounter % 60;
+                countdownDisplay.textContent = 
+                    `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                
+                if (dayCounter <= 30) {
+                    countdownDisplay.classList.add('countdown-warning');
+                } else {
+                    countdownDisplay.classList.remove('countdown-warning');
+                }
+                dayCounter--;
+            } else {
+                clearInterval(dayCountdown);
+                countdownDisplay.textContent = "Hết thời gian!";
+                logEvent("⏰ Thời gian ban ngày đã kết thúc");
+            }
+        }, 1000);
+
+        logEvent(`🌞 Ban ngày bắt đầu - ${currentDayTime} phút thảo luận`);
+    }
+
+    // Thêm hàm để lấy thời gian hiện tại
+    function getCurrentDayTime() {
+        const dayTimeInput = document.getElementById('dayTime');
+        return dayTimeInput ? parseInt(dayTimeInput.value) : currentDayTime;
+    }
+
+    // Khởi tạo khi trang được load
+    document.addEventListener('DOMContentLoaded', () => {
+        renderInitialSetup();
+    });
     </script>
 <!-- Thêm modal vào body -->
 <div class="modal-overlay" id="modalOverlay"></div>
