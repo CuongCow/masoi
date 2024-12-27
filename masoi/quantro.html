@@ -403,6 +403,7 @@
     gap: 15px;
     padding: 15px;
     background: transparent;
+    position: relative;
 }
 
 .game-player-card {
@@ -416,6 +417,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 2;
 }
 
 /* Thêm overlay tối cho nền */
@@ -494,17 +496,18 @@
     color: white;
     cursor: pointer;
     padding: 5px;
+    z-index: 3;
 }
 
 .player-menu {
-    position: absolute;
-    top: 40px;
-    right: 10px;
-    background: rgba(0, 0, 0, 0.9);
-    border-radius: 5px;
-    padding: 5px 0;
+    position: fixed; /* Thay đổi từ absolute sang fixed */
+    background: rgba(0, 0, 0, 0.95);
+    border-radius: 8px;
+    padding: 8px 0;
     display: none;
-    z-index: 100;
+    min-width: 160px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 99999; /* Tăng z-index lên rất cao */
 }
 
 .player-menu.show {
@@ -515,7 +518,6 @@
     padding: 8px 15px;
     color: white;
     cursor: pointer;
-    white-space: nowrap;
     transition: background 0.2s;
 }
 
@@ -1134,7 +1136,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    z-index: 10; /* Đảm bảo icon nằm trên các phần tử khác */
+    z-index: 900; /* Đảm bảo icon nằm trên các phần tử khác */
 }
 
 .role-action-btn {
@@ -1207,6 +1209,20 @@
     }
 }
 
+/* Thêm style cho nút xóa dữ liệu */
+.control-btn.delete-data {
+    background-color: #0f0f0f;
+    color: #ff0000;
+    border: 1px solid #333;
+    transition: all 0.3s ease;
+}
+
+.control-btn.delete-data:hover {
+    background-color: #ff0000;
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
     </style>
     <script src="/js/menu.js"></script>
 </head>
@@ -1250,6 +1266,14 @@
         <!-- Giao diện chính của trò chơi (ban đầu sẽ ẩn) -->
         <div id="gameInterface" style="display: none;">
             <div class="controls">
+                <!-- Di chuyển nút xóa dữ liệu lên đầu -->
+                <div class="control-group">
+                    <button class="control-btn delete-data" onclick="confirmClearData()">
+                        <i class="fas fa-trash"></i>
+                        <span>Xóa Tất Cả Dữ Liệu</span>
+                    </button>
+                </div>
+
                 <div class="control-group">
                     <button class="control-btn reset" onclick="startResetCountdown()">
                         <i class="fas fa-redo"></i>
@@ -1354,6 +1378,59 @@
             "Thằng Ngố",
             "Dân làng"
         ];
+
+        // Thêm biến để lưu game logs
+        let gameLogs = [];
+
+        // Sửa lại hàm saveGameState để thêm logs
+        function saveGameState() {
+            const gameState = {
+                players,
+                lovePair,
+                protectedPlayer,
+                completedNightRoles: Array.from(completedNightRoles),
+                hasBlackPotion,
+                hasWhitePotion,
+                gameLogs // Thêm logs vào state
+            };
+            localStorage.setItem('werewolfGameState', JSON.stringify(gameState));
+        }
+
+        // Sửa lại hàm loadGameState để đảm bảo logs được tải và hiển thị
+        function loadGameState() {
+            const savedState = localStorage.getItem('werewolfGameState');
+            if (savedState) {
+                try {
+                    const gameState = JSON.parse(savedState);
+                    
+                    // Khôi phục trạng thái game
+                    players = gameState.players || [];
+                    lovePair = gameState.lovePair || [];
+                    protectedPlayer = gameState.protectedPlayer || null;
+                    completedNightRoles = new Set(gameState.completedNightRoles || []);
+                    hasBlackPotion = gameState.hasBlackPotion ?? true;
+                    hasWhitePotion = gameState.hasWhitePotion ?? true;
+                    
+                    // Khôi phục logs
+                    gameLogs = gameState.gameLogs || [];
+                    
+                    // Nếu có người chơi, hiển thị giao diện game và logs
+                    if (players.length > 0) {
+                        document.getElementById('initialSetup').style.display = 'none';
+                        document.getElementById('gameInterface').style.display = 'block';
+                        renderPlayers();
+                    }
+                    
+                    // Render logs ngay cả khi không có người chơi
+                    renderGameLogs();
+                    
+                    console.log('Loaded game state:', gameState); // Debug log
+                    console.log('Loaded logs:', gameLogs); // Debug log
+                } catch (error) {
+                    console.error('Error loading game state:', error);
+                }
+            }
+        }
 
         function addPlayer() {
             let playerName = document.getElementById('playerName').value.trim();
@@ -1498,6 +1575,7 @@
                     closeMenu();
                     renderPlayers();
                     logEvent(`${playerName} đã được đổi role thành ${role}`);
+                    saveGameState();
                 };
                 
                 roleMenu.appendChild(roleButton);
@@ -1756,19 +1834,32 @@
                 `;
                 
                 playersContainer.appendChild(card);
+                saveGameState(); // Lưu state sau khi render
             });
         }
 
         function togglePlayerMenu(playerName) {
-            const menu = document.getElementById(`menu-${playerName}`);
+            const allMenus = document.querySelectorAll('.player-menu');
+            const clickedMenu = document.getElementById(`menu-${playerName}`);
+            
             // Đóng tất cả các menu khác
-            document.querySelectorAll('.player-menu').forEach(m => {
-                if (m.id !== `menu-${playerName}`) {
-                    m.classList.remove('show');
+            allMenus.forEach(menu => {
+                if (menu !== clickedMenu) {
+                    menu.classList.remove('show');
                 }
             });
-            // Toggle menu hiện tại
-            menu.classList.toggle('show');
+            
+            // Toggle menu được click
+            if (clickedMenu) {
+                clickedMenu.classList.toggle('show');
+                
+                // Điều chỉnh vị trí menu nếu bị tràn khỏi màn hình
+                const rect = clickedMenu.getBoundingClientRect();
+                if (rect.right > window.innerWidth) {
+                    clickedMenu.style.right = '0';
+                    clickedMenu.style.left = 'auto';
+                }
+            }
         }
 
         // Thêm event listener để đóng menu khi click ra ngoài
@@ -2006,6 +2097,7 @@
             }
         }
 
+        // Sửa lại hàm logEvent để lưu log vào array và localStorage
         function logEvent(event) {
             const gameLog = document.getElementById('gameLog');
             if (!gameLog) {
@@ -2013,9 +2105,7 @@
                 return;
             }
 
-            const li = document.createElement('li');
-            
-            // Thêm timestamp
+            // Tạo log entry với timestamp
             const now = new Date();
             const time = now.toLocaleTimeString('vi-VN', { 
                 hour: '2-digit', 
@@ -2023,11 +2113,68 @@
                 second: '2-digit'
             });
             
-            li.innerHTML = `<span class="log-time">[${time}]</span> ${event}`;
-            li.style.animation = 'newLog 0.5s ease-out';
+            const logEntry = {
+                time,
+                event,
+                timestamp: now.getTime() // Lưu timestamp để sắp xếp
+            };
             
-            // Thêm vào đầu danh sách
-            gameLog.insertBefore(li, gameLog.firstChild);
+            // Thêm vào array logs
+            gameLogs.unshift(logEntry); // Thêm vào đầu array
+            
+            // Render log mới
+            renderGameLogs();
+            
+            // Lưu state
+            saveGameState();
+        }
+
+        // Thêm hàm render game logs
+        function renderGameLogs() {
+            const gameLog = document.getElementById('gameLog');
+            if (!gameLog) return;
+            
+            gameLog.innerHTML = '';
+            
+            gameLogs.forEach(log => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span class="log-time">[${log.time}]</span> ${log.event}`;
+                li.style.animation = 'newLog 0.5s ease-out';
+                gameLog.appendChild(li);
+            });
+        }
+
+        // Thêm hàm xóa logs
+        function clearGameLogs() {
+            if (confirm('Bạn có chắc muốn xóa tất cả ghi chú trò chơi?')) {
+                gameLogs = [];
+                renderGameLogs();
+                saveGameState();
+                logEvent("Đã xóa tất cả ghi chú trò chơi");
+            }
+        }
+
+        // Sửa lại hàm confirmClearData để xóa cả logs
+        function confirmClearData() {
+            if (confirm('Bạn có chắc muốn xóa tất cả dữ liệu trò chơi? Hành động này không thể hoàn tác.')) {
+                players = [];
+                lovePair = [];
+                protectedPlayer = null;
+                completedNightRoles.clear();
+                hasBlackPotion = true;
+                hasWhitePotion = true;
+                gameLogs = []; // Xóa logs
+                
+                renderPlayers();
+                renderGameLogs();
+                saveGameState();
+                
+                // Chuyển về màn hình setup
+                document.getElementById('initialSetup').style.display = 'block';
+                document.getElementById('gameInterface').style.display = 'none';
+                
+                logEvent("Đã xóa toàn bộ dữ liệu trò chơi");
+            }
         }
 
         // Thêm style
@@ -2261,6 +2408,7 @@
             `;
             
             playersContainer.appendChild(card);
+            saveGameState(); // Lưu state sau khi render
         });
     }
 
@@ -2280,6 +2428,7 @@
             renderPlayers();
             logEvent(`Phù Thủy ${witchName} đã giết ${targetName} bằng bình thuốc đen.`);
             hasBlackPotion = false; // Bình thuốc đen không còn sau khi dùng
+            saveGameState();
         } else {
             alert("Người chơi không hợp lệ hoặc đã chết.");
         }
@@ -2297,6 +2446,7 @@
             renderPlayers();
             logEvent(`Phù Thủy ${witchName} đã hồi sinh ${targetName} bằng bình thuốc trắng.`);
             hasWhitePotion = false; // Bình thuốc trắng không còn sau khi dùng
+            saveGameState();
         } else {
             alert("Người chơi không hợp lệ hoặc đang sống.");
         }
@@ -2315,6 +2465,7 @@
             
             logEvent(`${protectedPlayer} đã được bảo vệ bởi Bảo Vệ.`);
             renderPlayers();
+            saveGameState();
             
             // Debug logs
             console.log("Protected player:", protectedPlayer);
@@ -2332,7 +2483,7 @@
                     protectedPlayer = null; // Reset bảo vệ sau khi dùng
                 } else if (player.role === 'Bán Sói' && player.status === 'Sống') {
                     player.role = 'Ma Sói';
-                    logEvent(`${playerName} từ bán sói ��ã biến đổi thành Ma Sói và được sống lại.`);
+                    logEvent(`${playerName} từ bán sói đã biến đổi thành Ma Sói và được sống lại.`);
                 } else {
                     player.status = player.status === 'Sống' ? 'Chết' : 'Sống';
                     renderPlayers();
@@ -2346,6 +2497,7 @@
                 }
             }
             renderPlayers(); // Cập nhật lại danh sách người chơi để hiển thị thay đổi
+            saveGameState();
         }
 
         function startDayCountdown() {
@@ -2393,6 +2545,7 @@
                 }
             }
             renderPlayers(); // Cập nhật lại danh sách người chơi để hiển thị thay đổi
+            saveGameState();
         }
 
         // Hàm hiển thị thông báo "Thằng Ngố Chiến Thắng"
@@ -2437,6 +2590,7 @@
             if (players.length === 0) {
                 document.getElementById('startGameBtn').style.display = 'none';
             }
+            saveGameState();
         }
 
         function startGame() {
@@ -2445,6 +2599,7 @@
                 document.getElementById('gameInterface').style.display = 'block';
                 renderPlayers(); // Render danh sách người chơi trong giao diện chính
                 logEvent("Trò chơi đã bắt đầu!");
+                saveGameState(); // Lưu state khi bắt đầu game
             } else {
                 alert("Vui lòng thêm ít nhất một người chơi trước khi bắt đầu!");
             }
@@ -2690,7 +2845,7 @@
         .love-icon {
             position: absolute;
             font-size: 1.5em;
-            z-index: 3;
+            z-index: 900;
             transition: all 0.3s ease;
         }
         
@@ -2965,7 +3120,153 @@
     document.addEventListener('DOMContentLoaded', () => {
         renderInitialSetup();
     });
-    </script>
+
+    // Thêm event listener để load state khi trang được tải
+    document.addEventListener('DOMContentLoaded', () => {
+        loadGameState();
+    });
+
+    // Thêm event listener để lưu state trước khi trang được đóng/refresh
+    window.addEventListener('beforeunload', () => {
+        saveGameState();
+    });
+
+    // Thêm hàm để xóa dữ liệu đã lưu
+    function clearSavedGame() {
+        // Xóa dữ liệu từ localStorage
+        localStorage.removeItem('werewolfGameState');
+        
+        // Reset các biến trạng thái
+        players = [];
+        lovePair = [];
+        protectedPlayer = null;
+        completedNightRoles.clear();
+        hasBlackPotion = true;
+        hasWhitePotion = true;
+        
+        // Reset giao diện
+        document.getElementById('initialSetup').style.display = 'block';
+        document.getElementById('gameInterface').style.display = 'none';
+        document.getElementById('initialPlayersGrid').innerHTML = '';
+        document.getElementById('startGameBtn').style.display = 'none';
+        
+        // Log sự kiện
+        logEvent("🗑️ Đã xóa toàn bộ dữ liệu trò chơi");
+    }
+
+    // Thêm hàm xác nhận xóa dữ liệu
+    function confirmClearData() {
+        const confirmed = confirm("Bạn có chắc chắn muốn xóa tất cả dữ liệu đã lưu? Hành động này không thể hoàn tác.");
+        if (confirmed) {
+            clearSavedGame();
+        }
+    }
+
+    // Sửa lại hàm loadGameState để đảm bảo logs được tải và hiển thị
+    function loadGameState() {
+        const savedState = localStorage.getItem('werewolfGameState');
+        if (savedState) {
+            try {
+                const gameState = JSON.parse(savedState);
+                
+                // Khôi phục trạng thái game
+                players = gameState.players || [];
+                lovePair = gameState.lovePair || [];
+                protectedPlayer = gameState.protectedPlayer || null;
+                completedNightRoles = new Set(gameState.completedNightRoles || []);
+                hasBlackPotion = gameState.hasBlackPotion ?? true;
+                hasWhitePotion = gameState.hasWhitePotion ?? true;
+                
+                // Khôi phục logs
+                gameLogs = gameState.gameLogs || [];
+                
+                // Nếu có người chơi, hiển thị giao diện game và logs
+                if (players.length > 0) {
+                    document.getElementById('initialSetup').style.display = 'none';
+                    document.getElementById('gameInterface').style.display = 'block';
+                    renderPlayers();
+                }
+                
+                // Render logs ngay cả khi không có người chơi
+                renderGameLogs();
+                
+                console.log('Loaded game state:', gameState); // Debug log
+                console.log('Loaded logs:', gameLogs); // Debug log
+            } catch (error) {
+                console.error('Error loading game state:', error);
+            }
+        }
+    }
+
+    // Sửa lại hàm renderGameLogs để đảm bảo hiển thị đúng
+    function renderGameLogs() {
+        const gameLog = document.getElementById('gameLog');
+        if (!gameLog) {
+            console.error('Game log element not found');
+            return;
+        }
+        
+        // Clear existing logs
+        gameLog.innerHTML = '';
+        
+        // Ensure gameLogs exists
+        if (!Array.isArray(gameLogs)) {
+            gameLogs = [];
+        }
+        
+        // Render each log entry
+        gameLogs.forEach(log => {
+            const li = document.createElement('li');
+            li.innerHTML = `<span class="log-time">[${log.time}]</span> ${log.event}`;
+            li.style.animation = 'newLog 0.5s ease-out';
+            gameLog.appendChild(li);
+        });
+        
+        console.log('Rendered logs:', gameLogs); // Debug log
+    }
+
+    // Sửa lại hàm logEvent để đảm bảo lưu đúng
+    function logEvent(event) {
+        // Ensure gameLogs exists
+        if (!Array.isArray(gameLogs)) {
+            gameLogs = [];
+        }
+
+        const now = new Date();
+        const time = now.toLocaleTimeString('vi-VN', { 
+            hour: '2-digit', 
+            minute: '2-digit',
+            second: '2-digit'
+        });
+        
+        const logEntry = {
+            time,
+            event,
+            timestamp: now.getTime()
+        };
+        
+        // Add to logs array
+        gameLogs.unshift(logEntry);
+        
+        // Render and save immediately
+        renderGameLogs();
+        saveGameState();
+        
+        console.log('Added new log:', logEntry); // Debug log
+    }
+
+    // Thêm event listener để load state khi trang được tải
+    document.addEventListener('DOMContentLoaded', () => {
+        loadGameState();
+        console.log('DOM Content Loaded - Game State Loaded'); // Debug log
+    });
+
+    // Thêm event listener để lưu state trước khi trang được đóng/refresh
+    window.addEventListener('beforeunload', () => {
+        saveGameState();
+        console.log('Before Unload - Game State Saved'); // Debug log
+    });
+</script>
 <!-- Thêm modal vào body -->
 <div class="modal-overlay" id="modalOverlay"></div>
 <div class="login-modal" id="loginModal">
