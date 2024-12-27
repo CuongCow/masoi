@@ -1173,6 +1173,39 @@
 .shield { background: rgba(52, 152, 219, 0.8); }
 .love { background: rgba(155, 89, 182, 0.8); }
 
+/* Thêm media query cho mobile */
+@media (max-width: 768px) {
+    .love-icon {
+        right: auto;  /* Reset vị trí right */
+        left: 85px;   /* Đặt vị trí từ bên trái */
+        top: 35%;     /* Căn giữa theo chiều dọc */
+    }
+
+    .love-icon.selected {
+        right: auto;  /* Reset vị trí right */
+        left: 100px;   /* Giữ nguyên vị trí như love-icon */
+        transform: translateY(-50%) scale(1.2);  /* Chỉ scale không dịch chuyển */
+        color: #e74c3c;
+    }
+
+    /* Điều chỉnh animation cho mobile */
+    @keyframes loveIconPulse {
+        0% {
+            transform: translateY(-50%) scale(1.2);
+        }
+        50% {
+            transform: translateY(-50%) scale(1.4);
+        }
+        150% {
+            transform: translateY(-50%) scale(1.2);
+        }
+    }
+
+    /* Đảm bảo không bị chồng lấp với các icon khác */
+    .shield-icon {
+        right: 75px;  /* Điều chỉnh vị trí shield icon nếu cần */
+    }
+}
 
     </style>
     <script src="/js/menu.js"></script>
@@ -2870,6 +2903,7 @@
         const dayTimeInput = document.getElementById('dayTime');
         if (dayTimeInput) {
             dayTimeInput.addEventListener('change', function() {
+                // Nếu đang trong quá trình đếm ngược, cập nhật lại
                 if (dayCountdown) {
                     clearInterval(dayCountdown);
                     startDayCountdown();
