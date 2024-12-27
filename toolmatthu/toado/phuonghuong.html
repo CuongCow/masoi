@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tọa độ phương hướng</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" href="/logo/logoweb-dammekynang.png" type="image/png">
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        :root {
+            --primary-color: rgb(42, 157, 144);
+            --secondary-color: #ecffd3;
+            --border-color: #ddd;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        table {
+            width: 89%;
+            max-width: 800px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: rgb(32, 147, 134);
+            transform: translateY(-1px);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        input[type="text"], select {
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+
+            .input-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            input[type="text"] {
+                width: 100%;
+            }
+        }
+
+        /* Căn giữa tiêu đề */
+        .section-title {
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Cải thiện thanh slider */
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            max-width: 700px; /* Tăng độ dài */
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        #letterSlider {
+            flex: 1;
+            height: 10px;
+            -webkit-appearance: none;
+            background: var(--border-color);
+            border-radius: 5px;
+            outline: none;
+        }
+
+        #letterSlider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #letterSlider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        #currentLetter {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-color);
+            min-width: 40px;
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+            background: var(--secondary-color);
+        }
+
+        /* Điều chỉnh bảng cho mobile */
+        @media (max-width: 768px) {
+            .table-container {
+                overflow-x: hidden; /* Tắt cuộn ngang */
+            }
+
+            table {
+                font-size: 12px; /* Giảm font size */
+                width: 100%;
+                table-layout: fixed; /* Cố định độ rộng cột */
+            }
+
+            th, td {
+                padding: 1px 4px;
+                width: 12.5%; /* 100% chia 8 cột */
+            }
+
+            /* Điều chỉnh độ rộng của các cột có 2 ký tự */
+            th:nth-child(n+5), /* ĐN, TN, ĐB, TB */
+            td:nth-child(n+5) {
+                font-size: 11px; /* Giảm font size cho cột 2 ký tự */
+            }
+
+            .slider-container {
+                max-width: 100%;
+                padding: 10px 0;
+            }
+
+            #letterSlider {
+                width: 100%;
+            }
+
+            .input-group {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            button {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+
+        /* Thêm styles cho bảng */
+        .table-container {
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        table {
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        td {
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        td[contenteditable="true"]:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        /* Điều chỉnh bảng và chữ cái */
+        td {
+            font-size: 25px; /* Tăng kích thước chữ */
+            font-weight: 600;
+            text-align: center;
+            vertical-align: middle;
+            height: 50px; /* Tăng chiều cao ô */
+            width: 50px; /* Đảm bảo ô vuông */
+        }
+
+        /* Điều chỉnh ô input tọa độ */
+        #coordinateInput {
+            width: 100%;
+            height: 50px;
+            font-size: 18px;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        #coordinateInput:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(42, 157, 144, 0.1);
+        }
+
+        /* Điều chỉnh khu vực kết quả */
+        #result {
+            font-size: 24px;
+            min-height: 50px;
+            padding: 15px;
+            margin: 15px 0;
+            background: var(--secondary-color);
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* Điều chỉnh cho mobile */
+        @media (max-width: 768px) {
+            td {
+                font-size: 12px; /* Giảm font size nhưng vẫn đủ lớn */
+                height: 40px;
+                width: 40px;
+            }
+
+            #coordinateInput {
+                height: 40px;
+                font-size: 16px;
+            }
+
+            #result {
+                font-size: 20px;
+                min-height: 40px;
+            }
+        }
+
+        /* Điều chỉnh tiêu đề chính */
+        .section-title.main-title {
+            font-size: 40px;
+            font-weight: bold;
+            text-align: center;
+            margin: 30px 0;
+            padding-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .section-title.main-title {
+                font-size: 24px;
+                margin: 20px 0;
+            }
+        }
+                /* Style cho container chứa nút copy và thông báo */
+                .copy-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        /* Thêm style cho nút copy và thông báo */
+        #copyButton {
+            margin: 10px auto;
+            display: none;
+            margin: 0; /* Bỏ margin của nút */
+        }
+
+        #copyMessage {
+            color: var(--primary-color);
+            display: none;
+            text-align: center;
+            margin-top: 1px;
+            font-weight: 500;
+        }
+
+
+
+    </style>
+        <script src="/js/menu.js"></script>
+</head>
+<body>
+        <!-- Header Section -->
+        <header>
+            <div class="title-container">
+                <div class="menu-icon" id="menuIcon" onclick="toggleSidebar()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="logo">
+                    <a href="/index.html" style="text-decoration: none; color: inherit;">
+                        Đam mê Kỹ năng
+                    </a>
+                </div>
+            </div>
+            <div class="header-right">
+                <a href="/login.html" class="login-btn" id="loginBtn">Đăng nhập</a>
+                <span id="userDisplay" style="color: white; font-weight: bold; margin-right: 15px;"></span>
+                <a href="#" onclick="logout()" class="login-btn" id="logoutBtn" style="display: none;">Đăng xuất</a>
+            </div>
+        </header>
+    
+    <div id="sidebar-container"></div>
+    <div class="container">
+        <div class="section">
+            <h2 class="section-title main-title">
+                 Tọa độ Phương hướng 
+            </h2>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>Đ</th>
+                        <th>T</th>
+                        <th>N</th>
+                        <th>B</th>
+                        <th>ĐN</th>
+                        <th>TN</th>
+                        <th>ĐB</th>
+                        <th>TB</th>
+                    </tr>
+                    <tr>
+                        <th>1</th>
+                        <td contenteditable="true">A</td>
+                        <td contenteditable="true">B</td>
+                        <td contenteditable="true">C</td>
+                        <td contenteditable="true">D</td>
+                        <td contenteditable="true">E</td>
+                        <td contenteditable="true">F</td>
+                        <td contenteditable="true">G</td>
+                        <td contenteditable="true">H</td>
+                    </tr>
+                    <tr>
+                        <th>2</th>
+                        <td contenteditable="true">I</td>
+                        <td contenteditable="true">J</td>
+                        <td contenteditable="true">K</td>
+                        <td contenteditable="true">L</td>
+                        <td contenteditable="true">M</td>
+                        <td contenteditable="true">N</td>
+                        <td contenteditable="true">O</td>
+                        <td contenteditable="true">P</td>
+                    </tr>
+                    <tr>
+                        <th>3</th>
+                        <td contenteditable="true">Q</td>
+                        <td contenteditable="true">R</td>
+                        <td contenteditable="true">S</td>
+                        <td contenteditable="true">T</td>
+                        <td contenteditable="true">U</td>
+                        <td contenteditable="true">U</td>
+                        <td contenteditable="true">W</td>
+                        <td contenteditable="true">X</td>
+                    </tr>
+                    <tr>
+                        <th>4</th>
+                        <td contenteditable="true">Y</td>
+                        <td contenteditable="true">Z</td>
+                        <td class="disabled"></td>
+                        <td class="disabled"></td>
+                        <td class="disabled"></td>
+                        <td class="disabled"></td>
+                        <td class="disabled"></td>
+                        <td class="disabled"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="section">
+            <div class="slider-container">
+                <div id="currentLetter">A</div>
+                <input type="range" id="letterSlider" min="0" max="25" value="0">
+            </div>
+
+        <div class="section">
+            <h2 class="section-title">
+                <i class="fas fa-map-marker-alt"></i>
+                Nhập khóa
+            </h2>
+            <div class="input-group">
+                <div>
+                    <label><i class="fas fa-arrows-alt-v"></i> Cột:</label>
+                    <select id="rowInput">
+                        <option value="">Chọn cột</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+                <div>
+                    <label><i class="fas fa-arrows-alt-h"></i> Hàng:</label>
+                    <select id="colInput">
+                        <option value="">Chọn hàng</option>
+                        <option value="1">Đ</option>
+                        <option value="2">T</option>
+                        <option value="3">N</option>
+                        <option value="4">B</option>
+                        <option value="5">ĐN</option>
+                        <option value="6">TN</option>
+                        <option value="7">ĐB</option>
+                        <option value="8">TB</option>
+                    </select>
+                </div>
+                <button onclick="updateLettersByCoordinate()">
+                    <i class="fas fa-sync-alt"></i>
+                    Cập nhật
+                </button>
+            </div>
+            <div id="updateInfo"></div>
+        </div>
+        
+
+        <div class="section">
+            <h2 class="section-title">
+                <i class="fas fa-search"></i>
+                Nhập bảng mã
+            </h2>
+            <div class="input-group">
+                <input type="text" id="coordinateInput" 
+                       placeholder="VD: Đ1 T4-B1,TB3.TN2_ĐN2"
+                       oninput="getLettersByCoordinates()">
+            </div>
+            <div id="result"></div>
+            <div class="copy-container">
+                <button id="copyButton" onclick="copyResult()">
+                    <i class="fas fa-copy"></i>
+                    Sao chép
+                </button>
+                <div id="copyMessage">
+                    <i class="fas fa-check"></i> Đã sao chép!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('td[contenteditable="true"]').forEach(cell => {
+            cell.addEventListener('input', function() {
+                this.textContent = this.textContent.slice(-1).toUpperCase();
+            });
+            
+            cell.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.blur();
+                }
+            });
+        });
+
+        const letterSlider = document.getElementById('letterSlider');
+        const currentLetter = document.getElementById('currentLetter');
+
+        letterSlider.addEventListener('input', function() {
+            const startCharCode = 'A'.charCodeAt(0);
+            const selectedLetter = String.fromCharCode(startCharCode + parseInt(this.value));
+            currentLetter.textContent = selectedLetter;
+            updateLettersByStartingPoint(selectedLetter);
+            getLettersByCoordinates();
+        });
+
+        function updateLettersByStartingPoint(startLetter) {
+            // Bắt đầu từ vị trí cố định (hàng 1, cột Đ)
+            const cells = document.querySelectorAll('td:not(.disabled)');
+            let currentLetter = startLetter.charCodeAt(0);
+
+            cells.forEach(cell => {
+                cell.textContent = String.fromCharCode(currentLetter);
+                currentLetter++;
+                if (currentLetter > 'Z'.charCodeAt(0)) {
+                    currentLetter = 'A'.charCodeAt(0);
+                }
+            });
+            getLettersByCoordinates();
+        }
+
+        function updateLettersByCoordinate() {
+            const row = parseInt(document.getElementById('rowInput').value);
+            const col = parseInt(document.getElementById('colInput').value);
+            const startLetter = currentLetter.textContent;
+            const updateInfo = document.getElementById('updateInfo');
+            
+            // Kiểm tra đầu vào
+            if (!row || !col) {
+                alert('Vui lòng chọn đầy đủ hàng và cột');
+                return;
+            }
+
+            // Lưu trữ thông tin thay đổi
+            let changes = [];
+            let currentLetterCode = startLetter.charCodeAt(0);
+            let started = false;
+
+            // Duyệt qua từng hàng và cột
+            document.querySelectorAll('tr').forEach((tr, rowIndex) => {
+                if (rowIndex === 0) return; // Bỏ qua hàng tiêu đề
+                tr.querySelectorAll('td:not(.disabled)').forEach((td, colIndex) => {
+                    if (rowIndex === row && colIndex + 1 === col) {
+                        started = true;
+                    }
+                    
+                    if (started) {
+                        const oldLetter = td.textContent;
+                        const newLetter = String.fromCharCode(currentLetterCode);
+                        if (oldLetter !== newLetter) {
+                            changes.push({
+                                row: rowIndex,
+                                col: getColumnName(colIndex + 1),
+                                old: oldLetter,
+                                new: newLetter
+                            });
+                        }
+                        td.textContent = newLetter;
+                        currentLetterCode++;
+                        if (currentLetterCode > 'Z'.charCodeAt(0)) {
+                            currentLetterCode = 'A'.charCodeAt(0);
+                        }
+                    }
+                });
+            });
+
+            // Tiếp tục từ đầu bảng nếu cần
+            if (started) {
+                document.querySelectorAll('tr').forEach((tr, rowIndex) => {
+                    if (rowIndex === 0) return;
+                    tr.querySelectorAll('td:not(.disabled)').forEach((td, colIndex) => {
+                        if (rowIndex < row || (rowIndex === row && colIndex + 1 < col)) {
+                            const oldLetter = td.textContent;
+                            const newLetter = String.fromCharCode(currentLetterCode);
+                            if (oldLetter !== newLetter) {
+                                changes.push({
+                                    row: rowIndex,
+                                    col: getColumnName(colIndex + 1),
+                                    old: oldLetter,
+                                    new: newLetter
+                                });
+                            }
+                            td.textContent = newLetter;
+                            currentLetterCode++;
+                            if (currentLetterCode > 'Z'.charCodeAt(0)) {
+                                currentLetterCode = 'A'.charCodeAt(0);
+                            }
+                        }
+                    });
+                });
+            }
+
+            // Hiển thị thông tin thay đổi đơn giản
+            const colName = getColumnName(col);
+            updateInfo.innerHTML = `<p><strong>Đã thay đổi tọa độ:</strong> ${colName}${row} với chữ cái ${startLetter}</p>`;
+
+            // Xóa giá trị trong form
+            document.getElementById('rowInput').value = '';
+            document.getElementById('colInput').value = '';
+        }
+
+        function getColumnName(colIndex) {
+            const columnNames = {
+                1: 'Đ',
+                2: 'T',
+                3: 'N',
+                4: 'B',
+                5: 'ĐN',
+                6: 'TN',
+                7: 'ĐB',
+                8: 'TB'
+            };
+            return columnNames[colIndex] || '';
+        }
+
+        function getLettersByCoordinates() {
+            const input = document.getElementById('coordinateInput').value;
+            const resultDiv = document.getElementById('result');
+            const copyButton = document.getElementById('copyButton');
+            const copyMessage = document.getElementById('copyMessage');
+            
+            if (!input.trim()) {
+                resultDiv.textContent = '';
+                copyButton.style.display = 'none';
+                copyMessage.style.display = 'none';
+                return;
+            }
+            
+            // Tách chuỗi input thành các tọa độ riêng biệt
+            const coordinates = input.split(/[\s,\-\._]+/);
+            let result = '';
+            
+            coordinates.forEach(coord => {
+                // Tách phần chữ và số từ mỗi tọa độ
+                const match = coord.match(/^(Đ|T|N|B|ĐN|TN|ĐB|TB)(\d+)$/);
+                if (!match) {
+                    result += '?';
+                    return;
+                }
+
+                const [_, col, row] = match;
+                const colNumber = getColumnNumber(col);
+                const rowNumber = parseInt(row);
+
+                // Kiểm tra tính hợp lệ của tọa độ
+                if (!colNumber || !rowNumber || rowNumber < 1 || rowNumber > 4) {
+                    result += '?';
+                    return;
+                }
+
+                // Tìm chữ cái tại tọa độ
+                const letter = findLetterAtCoordinate(rowNumber, colNumber);
+                result += letter || '?';
+            });
+            
+            // Hiển thị kết quả
+            resultDiv.textContent = result;
+            copyButton.style.display = result ? 'block' : 'none';
+            copyMessage.style.display = 'none'; // Reset thông báo
+        }
+
+        function getColumnNumber(col) {
+            const columnMap = {
+                'Đ': 1,
+                'T': 2,
+                'N': 3,
+                'B': 4,
+                'ĐN': 5,
+                'TN': 6,
+                'ĐB': 7,
+                'TB': 8
+            };
+            return columnMap[col];
+        }
+
+        function findLetterAtCoordinate(row, col) {
+            const rows = document.querySelectorAll('tr');
+            const targetRow = rows[row];
+            if (!targetRow) return null;
+            
+            const cells = targetRow.querySelectorAll('td:not(.disabled)');
+            const targetCell = cells[col - 1];
+            return targetCell ? targetCell.textContent : null;
+        }
+
+        async function copyResult() {
+            const resultText = document.getElementById('result').textContent;
+            const copyMessage = document.getElementById('copyMessage');
+            
+            try {
+                await navigator.clipboard.writeText(resultText);
+                // Hiển thị thông báo
+                copyMessage.style.display = 'block';
+                // Ẩn thông báo sau 2 giây
+                setTimeout(() => {
+                    copyMessage.style.display = 'none';
+                }, 2000);
+            } catch (err) {
+                // Phương pháp dự phòng nếu clipboard API không hoạt động
+                const textArea = document.createElement('textarea');
+                textArea.value = resultText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    copyMessage.style.display = 'block';
+                    setTimeout(() => {
+                        copyMessage.style.display = 'none';
+                    }, 2000);
+                } catch (err) {
+                    console.error('Không thể sao chép:', err);
+                    alert('Không thể sao chép kết quả!');
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+    </script>
+        <footer>
+            &copy; 2024 Đam Mê Kỹ Năng
+        </footer>
+        <!-- Thêm modal vào body -->
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="login-modal" id="loginModal">
+            <h3>Thông báo đăng nhập</h3>
+            <p>Bạn cần đăng nhập để dùng các công cụ tool. Vì một số lý do cộng đồng nên rất cần thiết để quản lý người dùng.</p>
+            <div class="modal-buttons">
+                <a href="/login.html" class="modal-btn modal-login">Đăng nhập</a>
+                <a href="/register.html" class="modal-btn modal-register">Đăng ký</a>
+            </div>
+        </div>
+</body>
+</html>

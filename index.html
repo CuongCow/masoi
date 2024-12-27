@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="index, follow">
+    <!-- Thẻ tiêu đề và mô tả -->
+    <title>Đam Mê Kỹ Năng</title>
+    <meta name="description" content="Đam Mê Kỹ Năng - Tool giải mật thư, Bot học mật thư và tài liệu.">
+    <meta name="keywords" content="giải mật thư, mật thư, ma sói, quản trò ma sói, sinh hoạt vòng tròn, trò chơi lớn, trò chơi nhỏ, công cụ mật thư, tài liệu mật thư">
+    <meta name="robots" content="index, follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Thẻ Open Graph để hiển thị logo khi chia sẻ -->
+    <meta property="og:title" content="Đam Mê Kỹ Năng">
+    <meta property="og:description" content="Tool giải mật thư, Bot học mật thư và tài liệu.">
+    <meta property="og:image" content="https://yourwebsite.com/images/logo.png">
+    <meta property="og:url" content="https://dammekynang.id.vn">
+    <meta property="og:type" content="website">
+
+    <!-- Thẻ Twitter card (nếu chia sẻ trên Twitter) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Đam Mê Kỹ Năng">
+    <meta name="twitter:description" content="Tool giải mật thư, Bot học mật thư và tài liệu.">
+    <meta name="twitter:image" content="https://yourwebsite.com/images/logo.png">
+
+    <link rel="icon" href="/logo/logoweb-dammekynang.png" type="image/png">
+    <link rel="stylesheet" href="/styles.css">
+        <style>
+        /* ... existing styles ... */
+
+@media (max-width: 768px) {
+    .main-body {
+        margin-top: 170px; /* Điều chỉnh giá trị này để tạo khoảng cách phù hợp */
+        background-color: rgba(255, 255, 255, 0.8); /* Nền trắng mờ */
+    }
+}
+
+/* ... existing styles ... */
+
+    </style>
+
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+    <script src="/js/menu.js"></script>
+
+    <!-- Thêm style cho hiệu ứng theo dõi chuột -->
+    <style>
+        .falling-particle {
+            position: fixed;
+            pointer-events: none;
+            font-size: 14px;
+            color: #000000;
+            text-shadow: 0 0 5px #00000000;
+            animation: fallDown 5s linear forwards;
+            z-index: 1001;
+        }
+
+        @keyframes fallDown {
+            0% {
+                transform: translateY(-20px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-E2YCTNXV48');
+    </script>
+
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="title-container">
+            <div class="menu-icon" id="menuIcon" onclick="toggleSidebar()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="logo">
+                <a href="/index.html" style="text-decoration: none; color: inherit;">
+                    Đam mê Kỹ năng
+                </a>
+            </div>
+        </div>
+        <div class="header-right">
+            <a href="/login.html" class="login-btn" id="loginBtn">Đăng nhập</a>
+            <span id="userDisplay" style="color: white; font-weight: bold; margin-right: 15px;"></span>
+            <a href="#" onclick="logout()" class="login-btn" id="logoutBtn" style="display: none;">Đăng xuất</a>
+        </div>
+    </header>
+
+<div id="sidebar-container"></div>
+    <!-- Thay thẻ thẻ img cũ bằng dotlottie-player -->
+    <dotlottie-player src="https://lottie.host/46ec79c4-e259-47da-a8b7-58f7e0f53189/AIwNNZaw72.lottie" 
+                      background="transparent" 
+                      speed="1" 
+                      style="width: 100%; height: 100vh; position: fixed; top: 0; left: 0; z-index: -1;" 
+                      loop 
+                      autoplay>
+    </dotlottie-player>
+    <!-- Main Body Section -->
+    <div class="main-body">
+        <div class="content-placeholder">
+            <h1>Chào các bạn đến với trang Kỹ năng! </h1>
+            <h2>Khám phá các kỹ năng cần thiết để chuẩn bị cho đợt trại của bạn.</h2>
+            <h3>Lưu ý: Các Tool giúp người ra mật thư thử nghiệm lại mật thư và tạo đề mật thư nhanh chóng.</h3>
+            <h4> Các bạn tránh lạm dụng tool này để giải mật thư, nhằm tránh bào mòn thế hệ tương lai </h4>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        &copy; 2024 Đam Mê Kỹ Năng
+    </footer>
+    <!-- Thêm modal vào body -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="login-modal" id="loginModal">
+        <h3>Thông báo đăng nhập</h3>
+        <p>Bạn cần đăng nhập để dùng các công cụ tool. Vì một số lý do cộng đồng nên rất cần thiết để quản lý người dùng.</p>
+        <div class="modal-buttons">
+            <a href="/login.html" class="modal-btn modal-login">Đăng nhập</a>
+            <a href="/register.html" class="modal-btn modal-register">Đăng ký</a>
+        </div>
+    </div>
+
+    <!-- Thêm script trước thẻ đóng body -->
+    <script>
+        class CombinedEffect {
+            constructor() {
+                this.letters = Array.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+                this.vietnameseLetters = Array.from('ĂÂĐÊÔƠƯÁÀẢÃẠẾỀỂỄỆỐỒỔỖỘỚỜỞỠỢỨỪỬỮỰ');
+                this.allLetters = [...this.letters, ...this.vietnameseLetters];
+                this.morseCharacters = ['·−', '−···', '−·−·', '−··', '·', '··−·', '−−·', '····', '··', '·−−−', '−·−', '··−', '···−', '·−−', '−··−', '−·−−', '−−··'];
+                
+                // Theo dõi vị trí chuột
+                this.mouseX = 0;
+                this.mouseY = 0;
+                
+                this.init();
+            }
+
+            init() {
+                // Cập nhật vị trí chuột khi di chuyển
+                document.addEventListener('mousemove', (e) => {
+                    this.mouseX = e.clientX;
+                    this.mouseY = e.clientY;
+                });
+
+                // Bắt đầu tạo particle liên tục
+                this.startAutoGenerate();
+            }
+
+            startAutoGenerate() {
+                setInterval(() => {
+                    this.createParticle();
+                }, 190); // Tạo particle mới mỗi 100ms
+            }
+
+            createParticle() {
+                const particle = document.createElement('div');
+                particle.className = 'falling-particle';
+                
+                // Chọn ngẫu nhiên giữa chữ cái và ký tự Morse
+                if (Math.random() > 0.5) {
+                    particle.textContent = this.allLetters[Math.floor(Math.random() * this.allLetters.length)];
+                } else {
+                    particle.textContent = this.morseCharacters[Math.floor(Math.random() * this.morseCharacters.length)];
+                }
+                
+                // Thêm độ ngẫu nhiên nhỏ quanh vị trí chuột
+                const randomOffset = (Math.random() - 0.5) * 30;
+                const randomRotation = (Math.random() - 0.5) * 90;
+                const randomSize = 22 + Math.random() * 8;
+                
+                particle.style.left = `${this.mouseX + randomOffset}px`;
+                particle.style.top = `${this.mouseY}px`;
+                particle.style.transform = `rotate(${randomRotation}deg)`;
+                particle.style.fontSize = `${randomSize}px`;
+                
+                document.body.appendChild(particle);
+                
+                particle.addEventListener('animationend', () => {
+                    particle.remove();
+                });
+            }
+        }
+
+        // Khởi tạo hiệu ứng
+        document.addEventListener('DOMContentLoaded', () => {
+            new CombinedEffect();
+        });
+    </script>
+    <!-- Event snippet for Lượt xem trang conversion page -->
+<script>
+  gtag('event', 'conversion', {
+      'send_to': 'AW-813887593/6FRmCOTRzPgZEOngi4QD',
+      'value': 1.0,
+      'currency': 'VND'
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Thư viện Font Awesome cho biểu tượng -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên Hệ Với Tôi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="/logo/logoweb-dammekynang.png" type="image/png">
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+                /* Nội dung chính */
+                .content {
+            text-align: center;
+            color: rgb(17, 104, 94);
+            margin-top: 10%;
+        }
+
+        .content h1 {
+            font-size: 60px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgb(42, 157, 144);
+        }
+
+        .content p {
+            font-size: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+            text-shadow: 1px 1px 3px rgb(42, 157, 144);
+        }
+        .icon-black {
+            color: #000; /* Set icon color to black */
+            margin-top: 5%;
+            font-size: 40px;
+        }
+        
+
+        @media (max-width: 768px) {
+    .content {
+            text-align: center;
+            color: rgb(42, 157, 144);
+            padding: 20px;
+        }
+    
+}
+
+    /* Thêm style cho social links */
+    .social-links a {
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-block;
+        margin: 0 10px;
+    }
+
+    .social-links a:hover {
+        transform: translateY(-5px);
+    }
+
+    .icon-black {
+        color: rgb(12, 94, 84);
+        margin-top: 5%;
+        font-size: 45px;
+        transition: all 0.3s ease;
+    }
+
+    .social-links a:hover .icon-black {
+        color: #000;
+        text-shadow: 0 0 15px rgb(42, 157, 144);
+    }
+
+    /* Hiệu ứng riêng cho từng icon */
+    .fa-facebook:hover {
+        color: #1877f2 !important;
+    }
+
+    .fa-instagram:hover {
+        background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+        background: -webkit-linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-fill-color: transparent;
+        color: transparent;
+    }
+
+    .fa-comments:hover {
+        color: #0068ff !important;
+    }
+
+    .fa-phone:hover {
+        color: #25D366 !important;
+    }
+    .locked-item {
+        position: relative;
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .lock-icon {
+        margin-left: 5px;
+        font-size: 14px;
+    }
+
+    .avatar-video-container {
+        width: 300px;
+        height: 300px;
+        margin: 0 auto 30px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 3px solid rgb(42, 157, 144);
+        box-shadow: 0 0 15px rgba(42, 157, 144, 0.5);
+    }
+
+    .avatar-video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    @media (max-width: 768px) {
+        .avatar-video-container {
+            width: 200px;
+            height: 200px;
+        }
+        .content {
+            margin-top: 25%;
+        }
+        .content h1 {
+            font-size: 40px;
+        }
+        .content p {
+            font-size: 16px;
+        }
+        .icon-black {
+            font-size: 30px;
+        }
+        
+    }
+
+    </style>
+        <script src="/js/menu.js"></script>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="title-container">
+            <div class="menu-icon" id="menuIcon" onclick="toggleSidebar()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="logo">
+                <a href="/index.html" style="text-decoration: none; color: inherit;">
+                    Đam mê Kỹ năng
+                </a>
+            </div>
+        </div>
+        <div class="header-right">
+            <a href="/login.html" class="login-btn" id="loginBtn">Đăng nhập</a>
+            <span id="userDisplay" style="color: white; font-weight: bold; margin-right: 15px;"></span>
+            <a href="#" onclick="logout()" class="login-btn" id="logoutBtn" style="display: none;">Đăng xuất</a>
+        </div>
+    </header>
+    <div id="sidebar-container"></div>
+    <!-- Nội dung chính -->
+    <section class="content">
+        <div class="avatar-video-container">
+            <video class="avatar-video" autoplay loop playsinline preload="auto">
+                <source src="/video/avatar.mp4" type="video/mp4">
+            </video>
+        </div>
+        <h1>Liên Hệ Với Tôi</h1>
+        <p>Theo dõi và liên hệ tôi qua các mạng xã hội:</p>
+        
+        <!-- Liên kết đến các mạng xã hội với icon -->
+        <div class="social-links">
+            <a href="https://www.facebook.com/cuongcowk" target="_blank">
+                <i class="fab fa-facebook icon-black"></i>
+            </a>
+            <a href="https://www.instagram.com/cuong_cow/" target="_blank">
+                <i class="fab fa-instagram icon-black"></i>
+            </a>
+            <a href="https://zalo.me/84799444052" target="_blank">
+                <i class="fas fa-comments icon-black"></i>
+            </a>
+            <a href="tel:0369225402">
+                <i class="fas fa-phone icon-black"></i>
+            </a>
+        </div>
+    </section>
+
+
+
+
+    <!-- Footer Section -->
+    <footer>
+        &copy; 2024 Đam Mê Kỹ Năng
+    </footer>
+    <!-- Thêm modal vào body -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="login-modal" id="loginModal">
+        <h3>Thông báo đăng nhập</h3>
+        <p>Bạn cần đăng nhập để dùng các công cụ tool. Vì một số lý do cộng đồng nên rất cần thiết để quản lý người dùng.</p>
+        <div class="modal-buttons">
+            <a href="/login.html" class="modal-btn modal-login">Đăng nhập</a>
+            <a href="/register.html" class="modal-btn modal-register">Đăng ký</a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.querySelector('.avatar-video');
+            
+            // Cách 1: Sử dụng Promise để phát video
+            const playVideo = async () => {
+                try {
+                    await video.play();
+                } catch (err) {
+                    console.log("Không thể tự động phát video:", err);
+                }
+            };
+            
+            // Cách 2: Thêm sự kiện loadeddata
+            video.addEventListener('loadeddata', function() {
+                playVideo();
+            });
+            
+            // Cách 3: Thử phát ngay khi tải xong
+            playVideo();
+            
+            // Cách 4: Thêm sự kiện click vào document
+            document.addEventListener('click', function() {
+                playVideo();
+            }, { once: true });
+        });
+    </script>
+</body>
+</html>
