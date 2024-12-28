@@ -607,7 +607,7 @@
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
-        min-width: 0; /* Cho phép nút co lại khi cần */
+        min-width: 0; /* Cho phép nút co l���i khi cần */
     }
     .control-btn i {
        font-size: 1em;
@@ -1095,35 +1095,29 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 15px;
-    background: #2ecc71;
+    padding: 8px;
+    background: transparent;
     border: none;
-    border-radius: 5px;
     color: white;
     cursor: pointer;
-    font-size: 0.9em;
+    font-size: 1.1em;
     transition: all 0.3s ease;
 }
 
 .add-player-btn:hover {
-    background: #27ae60;
-    transform: translateY(-2px);
+    transform: scale(1.1);
+    color: #2ecc71;
 }
 
 .add-player-btn i {
-    font-size: 1.1em;
+    font-size: 1.2em;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    .player-list-header {
-        flex-direction: row; /* Giữ nguyên layout ngang */
-        padding: 0 5px;
-    }
-
     .add-player-btn {
-        padding: 6px 12px;
-        font-size: 0.85em;
+        padding: 6px;
+        font-size: 1em;
     }
 }
 
@@ -1223,6 +1217,31 @@
     color: #ffffff;
 }
 
+.notes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.clear-notes-btn {
+    background: transparent;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.clear-notes-btn:hover {
+    background: rgba(231, 76, 60, 0.1);
+    transform: scale(1.1);
+}
+
+.clear-notes-btn i {
+    font-size: 1.5em; /* Tăng từ 1.2em lên 1.5em */
+}
     </style>
     <script src="/js/menu.js"></script>
 </head>
@@ -1323,14 +1342,18 @@
                     <h2>Danh Sách Người Chơi</h2>
                     <button class="add-player-btn" onclick="backToInitialSetup()">
                         <i class="fas fa-user-plus"></i>
-                        <span>Thêm Người Chơi</span>
                     </button>
                 </div>
                 <div id="gamePlayers" class="game-players-grid"></div>
             </div>
 
             <div class="role-list">
-                <h2>Ghi Chú Trò Chơi</h2>
+                <div class="notes-header">
+                    <h2>Ghi Chú Trò Chơi</h2>
+                    <button class="clear-notes-btn" onclick="clearGameLogs()">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
                 <ul id="gameLog"></ul>
             </div>
 
@@ -2146,11 +2169,10 @@
 
         // Thêm hàm xóa logs
         function clearGameLogs() {
-            if (confirm('Bạn có chắc muốn xóa tất cả ghi chú trò chơi?')) {
+            if (confirm('Bạn có chắc chắn muốn xóa tất cả ghi chú?')) {
                 gameLogs = [];
-                renderGameLogs();
-                saveGameState();
-                logEvent("Đã xóa tất cả ghi chú trò chơi");
+                document.getElementById('gameLog').innerHTML = '';
+                saveGameState(); // Lưu trạng thái mới vào localStorage
             }
         }
 
