@@ -1,149 +1,172 @@
-        // Thêm hàm kiểm tra đăng nhập và hiển thị modal
-        function showLoginModal() {
-            document.getElementById('modalOverlay').style.display = 'block';
-            document.getElementById('loginModal').style.display = 'block';
-        }
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Tải sidebar
-    fetch('/components/sidebar.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('sidebar-container').innerHTML = data;
-            initializeMenuFunctionality();
-        });
-
-    function initializeMenuFunctionality() {
-        // Toggle Sidebar and Menu Icon Animation
-        const menuIcon = document.getElementById('menuIcon');
-        const sidebar = document.getElementById('sidebar');
+// Class quản lý Menu
+class MenuManager {
+    constructor() {
+        this.menuIcon = document.getElementById('menuIcon');
+        this.sidebar = document.getElementById('sidebar');
+        this.dropdownButtons = document.querySelectorAll('.dropdown-btn');
+        this.submenuTriggers = document.querySelectorAll('.has-submenu');
+        this.protectedMenuItems = document.querySelectorAll('.dropdown-content a[href*="thaythe"], .dropdown-content a[href*="doicho"], .dropdown-content a[href*="toado"]');
         
-        menuIcon.addEventListener('click', toggleSidebar);
+        this.init();
+    }
 
-        // Toggle Sidebar and Menu Icon Animation
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const menuIcon = document.getElementById('menuIcon');
-            sidebar.classList.toggle('active');
-            menuIcon.classList.toggle('active');
-        }
+    init() {
+        this.initializeSidebar();
+        this.initializeDropdowns();
+        this.initializeSubmenu();
+        this.initializeProtectedItems();
+        this.initializeClickOutside();
+    }
 
-        // Dropdown functionality
-        const dropdownButtons = document.querySelectorAll('.dropdown-btn');
-        dropdownButtons.forEach(btn => {
+    initializeSidebar() {
+        this.menuIcon.addEventListener('click', () => {
+            this.toggleSidebar();
+        });
+    }
+
+    toggleSidebar() {
+        this.sidebar.classList.toggle('active');
+        this.menuIcon.classList.toggle('active');
+    }
+
+    initializeDropdowns() {
+        this.dropdownButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 const parent = btn.parentElement;
                 parent.classList.toggle('active');
             });
         });
-        document.addEventListener('click', (event) => {
-    const sidebar = document.getElementById('sidebar');
-    const menuIcon = document.getElementById('menuIcon');
-
-    // Check if the click is outside the sidebar and the menu button
-    if (!sidebar.contains(event.target) && !menuIcon.contains(event.target)) {
-        sidebar.classList.remove('active');
-        menuIcon.classList.remove('active');
     }
-    // Lấy tất cả các phần tử có class 'has-submenu'
-const submenuTriggers = document.querySelectorAll('.has-submenu');
 
-submenuTriggers.forEach(trigger => {
-    trigger.addEventListener('click', function (e) {
-        e.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
+    initializeSubmenu() {
+        this.submenuTriggers.forEach(trigger => {
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Lấy parent element
+                const parent = trigger.parentElement;
+                
+                // Toggle trực tiếp, không cần kiểm tra click thứ hai
+                this.toggleSubmenu(parent);
 
-        // Lấy phần tử cha (dropdown-sub) và toggle class 'active'
-        const parent = this.parentElement;
-        parent.classList.toggle('active');
-
-        // Đóng các submenu khác nếu cần
-        submenuTriggers.forEach(item => {
-            if (item !== this) {
-                item.parentElement.classList.remove('active');
-            }
+                // Đóng các submenu khác
+                this.submenuTriggers.forEach(item => {
+                    const otherParent = item.parentElement;
+                    if (otherParent !== parent && otherParent.classList.contains('active')) {
+                        this.toggleSubmenu(otherParent);
+                    }
+                });
+            });
         });
-    });
-});
+    }
 
-});
-
-        // Close sidebar when clicking outside
-        document.addEventListener('click', (event) => {
-            if (!sidebar.contains(event.target) && !menuIcon.contains(event.target)) {
-                sidebar.classList.remove('active');
-                menuIcon.classList.remove('active');
-            }
-        });
-
-        // Login modal and protected items logic (from previous script)
-        const currentUser = localStorage.getItem('currentUser');
-        const protectedMenuItems = document.querySelectorAll('.dropdown-content a[href*="thaythe"], .dropdown-content a[href*="doicho"], .dropdown-content a[href*="toado"]');
+    toggleSubmenu(element) {
+        // Toggle class active
+        element.classList.toggle('active');
         
-        protectedMenuItems.forEach(item => {
-            if (!currentUser) {
-                // Thêm icon khóa và class locked
+        // Lấy submenu element
+        const submenu = element.querySelector('.submenu');
+        
+        // Nếu submenu đang đóng, mở ra
+        if (element.classList.contains('active')) {
+            submenu.style.display = 'flex';
+        } else {
+            // Nếu submenu đang mở, đóng lại
+            submenu.style.display = 'none';
+        }
+    }
+
+    initializeProtectedItems() {
+        const currentUser = localStorage.getItem('currentUser');
+        
+        if (!currentUser) {
+            this.protectedMenuItems.forEach(item => {
                 item.classList.add('locked-item');
                 item.innerHTML += ' <span class="lock-icon">🔒</span>';
-                
-                // Thay thế href bằng javascript:void(0)
                 item.setAttribute('href', 'javascript:void(0)');
-                
-                item.addEventListener('click', function(e) {
+                item.addEventListener('click', (e) => {
                     e.preventDefault();
-                    showLoginModal();
+                    this.showLoginModal();
                 });
+            });
+        }
+    }
+
+    initializeClickOutside() {
+        document.addEventListener('click', (event) => {
+            if (!this.sidebar.contains(event.target) && !this.menuIcon.contains(event.target)) {
+                this.sidebar.classList.remove('active');
+                this.menuIcon.classList.remove('active');
             }
         });
     }
-                // Đóng modal khi click bên ngoài
-                document.getElementById('modalOverlay').addEventListener('click', function() {
-                    this.style.display = 'none';
-                    document.getElementById('loginModal').style.display = 'none';
-                });
-                
-                if (currentUser) {
-                    loginBtn.style.display = 'none';
-                    logoutBtn.style.display = 'inline-block';
-                    userDisplay.textContent = `${currentUser}`;
-                } else {
-                    loginBtn.style.display = 'inline-block';
-                    logoutBtn.style.display = 'none';
-                    userDisplay.textContent = '';
-                }
-});
 
-function showLoginModal() {
-    document.getElementById('modalOverlay').style.display = 'block';
-    document.getElementById('loginModal').style.display = 'block';
+    showLoginModal() {
+        document.getElementById('modalOverlay').style.display = 'block';
+        document.getElementById('loginModal').style.display = 'block';
+    }
 }
-        // Kiểm tra trạng thái đăng nhập khi trang được tải
-        document.addEventListener('DOMContentLoaded', function() {
-            const currentUser = localStorage.getItem('currentUser');
-            const loginBtn = document.getElementById('loginBtn');
-            const logoutBtn = document.getElementById('logoutBtn');
-            const userDisplay = document.getElementById('userDisplay');
-            
-            if (currentUser) {
-                // Người dùng đã đăng nhập
-                loginBtn.style.display = 'none';
-                logoutBtn.style.display = 'inline-block';
-                userDisplay.textContent = `${currentUser}`; // Chỉ hiển thị tên người dùng
-            } else {
-                // Chưa đăng nhập
-                loginBtn.style.display = 'inline-block';
-                logoutBtn.style.display = 'none';
-                userDisplay.textContent = '';
-            }
+
+// Auth Manager để xử lý đăng nhập/đăng xuất
+class AuthManager {
+    constructor() {
+        this.loginBtn = document.getElementById('loginBtn');
+        this.logoutBtn = document.getElementById('logoutBtn');
+        this.userDisplay = document.getElementById('userDisplay');
+        this.modalOverlay = document.getElementById('modalOverlay');
+        
+        this.init();
+    }
+
+    init() {
+        this.updateUIState();
+        this.initializeEventListeners();
+    }
+
+    updateUIState() {
+        const currentUser = localStorage.getItem('currentUser');
+        
+        if (currentUser) {
+            this.loginBtn.style.display = 'none';
+            this.logoutBtn.style.display = 'inline-block';
+            this.userDisplay.textContent = currentUser;
+        } else {
+            this.loginBtn.style.display = 'inline-block';
+            this.logoutBtn.style.display = 'none';
+            this.userDisplay.textContent = '';
+        }
+    }
+
+    initializeEventListeners() {
+        this.modalOverlay.addEventListener('click', () => {
+            this.hideLoginModal();
         });
 
-        function logout() {
-            if (confirm('Bạn có chắc muốn đăng xuất?')) {
-                localStorage.removeItem('currentUser');
-                window.location.reload();
-            }
+        this.logoutBtn?.addEventListener('click', () => {
+            this.logout();
+        });
+    }
+
+    hideLoginModal() {
+        this.modalOverlay.style.display = 'none';
+        document.getElementById('loginModal').style.display = 'none';
+    }
+
+    logout() {
+        if (confirm('Bạn có chắc muốn đăng xuất?')) {
+            localStorage.removeItem('currentUser');
+            window.location.reload();
         }
-                // Thêm hàm kiểm tra đăng nhập và hiển thị modal
-                function showLoginModal() {
-                    document.getElementById('modalOverlay').style.display = 'block';
-                    document.getElementById('loginModal').style.display = 'block';
-                }
+    }
+}
+
+// Khởi tạo khi DOM đã sẵn sàng
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/components/sidebar.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('sidebar-container').innerHTML = data;
+            new MenuManager();
+            new AuthManager();
+        });
+});
