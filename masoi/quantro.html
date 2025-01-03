@@ -1668,17 +1668,26 @@
         function toggleStatus(playerName) {
             const player = players.find(p => p.name === playerName);
             if (player) {
-                player.status = player.status === 'Sống' ? 'Chết' : 'Sống';
-                renderPlayers();
-                logEvent(`Trạng thái của ${playerName} đã thay đổi thành ${player.status}.`);
-                checkLovePairStatus(playerName);
+                // Kiểm tra bảo vệ chỉ khi đang là ban đêm (không có đếm ngược ban ngày)
+                if (player.status === 'Sống' && playerName === protectedPlayer && !dayCountdown) {
+                    logEvent(`${playerName} đã được bảo vệ và không bị chết.`);
+                    protectedPlayer = null; // Reset bảo vệ sau khi dùng
+                } else if (player.role === 'Bán Sói' && player.status === 'Sống') {
+                    player.role = 'Ma Sói';
+                    logEvent(`${playerName} từ bán sói đã biến đổi thành Ma Sói và được sống lại.`);
+                } else {
+                    player.status = player.status === 'Sống' ? 'Chết' : 'Sống';
+                    renderPlayers();
+                    logEvent(`Trạng thái của ${playerName} đã thay đổi thành ${player.status}.`);
+                    checkLovePairStatus(playerName);
 
-                // Kiểm tra nếu vai trò là "Thằng Ngố" và người chơi bị giết
-                if (player.role === "Thằng Ngố" && player.status === "Chết") {
-                    displayFoolVictory(playerName);
+                    if (player.role === "Thằng Ngố" && player.status === "Chết") {
+                        displayFoolVictory(playerName);
+                    }
                 }
             }
-            renderPlayers(); // Cập nhật lại danh sách người chơi để hiển thị thay đổi
+            renderPlayers();
+            saveGameState();
         }
 
         function checkLovePairStatus(playerName) {
@@ -1982,35 +1991,28 @@
         }
 
         function startDayCountdown() {
-            console.log("Bắt đầu ban ngày"); // Debug log
-
-            // Ẩn danh sách role ban đêm
-            const nightRoleList = document.getElementById('nightRoleList');
-            if (nightRoleList) {
-                nightRoleList.style.display = 'none';
-            }
-
-            // Dừng bộ đếm cũ nếu có
+            const countdownDisplay = document.getElementById('countdownDisplay');
+            if (!countdownDisplay) return;
+            
+            // Xóa bảo vệ khi bắt đầu ban ngày
+            protectedPlayer = null;
+            
+            // Thêm class visible khi bắt đầu đếm ngược
+            countdownDisplay.classList.add('visible');
+            
+            // Lấy thời gian từ input (đơn vị phút)
+            const dayTimeInput = document.getElementById('dayTime');
+            currentDayTime = dayTimeInput ? parseInt(dayTimeInput.value) : 5;
+            
+            // Chuyển đổi sang giây
+            dayCounter = currentDayTime * 60;
+            
             if (dayCountdown) {
                 clearInterval(dayCountdown);
             }
 
-            // Thiết lập thời gian ban đầu (5 phút)
-            dayCounter = 300;
-
-            // Lấy element hiển thị đếm ngược
-            const countdownDisplay = document.getElementById('countdownDisplay');
-            console.log("Countdown display element:", countdownDisplay); // Debug log
-
-            if (!countdownDisplay) {
-                console.error("Không tìm thấy element countdownDisplay");
-                return;
-            }
-
-            // Hiển thị thời gian ban đầu
-            countdownDisplay.textContent = "5:00";
-            countdownDisplay.style.display = 'block';
-
+            // Render lại người chơi để cập nhật hiển thị (xóa icon bảo vệ)
+            renderPlayers();
 
             // Hàm cập nhật đếm ngược
             function updateCountdown() {
@@ -2500,7 +2502,8 @@
         function toggleStatus(playerName) {
             const player = players.find(p => p.name === playerName);
             if (player) {
-                if (player.status === 'Sống' && playerName === protectedPlayer) {
+                // Kiểm tra bảo vệ chỉ khi đang là ban đêm (không có đếm ngược ban ngày)
+                if (player.status === 'Sống' && playerName === protectedPlayer && !dayCountdown) {
                     logEvent(`${playerName} đã được bảo vệ và không bị chết.`);
                     protectedPlayer = null; // Reset bảo vệ sau khi dùng
                 } else if (player.role === 'Bán Sói' && player.status === 'Sống') {
@@ -2526,29 +2529,61 @@
             const countdownDisplay = document.getElementById('countdownDisplay');
             if (!countdownDisplay) return;
             
+            // Xóa bảo vệ khi bắt đầu ban ngày
+            protectedPlayer = null;
+            
             // Thêm class visible khi bắt đầu đếm ngược
             countdownDisplay.classList.add('visible');
             
-            dayCounter = 300;
-            document.getElementById("dayEndWarning").style.display = "none";
-            document.getElementById("dayCountdownDisplay").textContent = `Thời gian ban ngày: ${Math.floor(dayCounter / 60)}:${String(dayCounter % 60).padStart(2, '0')}`;
+            // Lấy thời gian từ input (đơn vị phút)
+            const dayTimeInput = document.getElementById('dayTime');
+            currentDayTime = dayTimeInput ? parseInt(dayTimeInput.value) : 5;
             
-            dayCountdown = setInterval(() => {
-                dayCounter--;
-                document.getElementById("dayCountdownDisplay").textContent = `Thời gian ban ngày: ${Math.floor(dayCounter / 60)}:${String(dayCounter % 60).padStart(2, '0')}`;
+            // Chuyển đổi sang giây
+            dayCounter = currentDayTime * 60;
+            
+            if (dayCountdown) {
+                clearInterval(dayCountdown);
+            }
 
-                if (dayCounter === 0) {
-                    clearInterval(dayCountdown);
-                    document.getElementById("dayEndWarning").style.display = "inline-block";
-                    logEvent("Thời gian ban ngày đã kết thúc!");
+            // Render lại người chơi để cập nhật hiển thị (xóa icon bảo vệ)
+            renderPlayers();
+
+            // Hàm cập nhật đếm ngược
+            function updateCountdown() {
+                const minutes = Math.floor(dayCounter / 60);
+                const seconds = dayCounter % 60;
+                countdownDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+                // Thêm cảnh báo khi còn 30 giây
+                if (dayCounter <= 30) {
+                    countdownDisplay.classList.add('countdown-warning');
                 }
-            }, 1000);
+
+                // Kiểm tra kết thúc
+                if (dayCounter <= 0) {
+                    clearInterval(dayCountdown);
+                    countdownDisplay.textContent = "Hết thời gian!";
+                    logEvent("⏰ Thời gian ban ngày đã kết thúc");
+                    return;
+                }
+
+                dayCounter--;
+            }
+
+            // Bắt đầu đếm ngược
+            updateCountdown(); // Cập nhật lần đầu ngay lập tức
+            dayCountdown = setInterval(updateCountdown, 1000);
+
+            // Log sự kiện
+            logEvent("🌞 Ban ngày bắt đầu - 5 phút thảo luận");
         }
 
         function toggleStatus(playerName) {
             const player = players.find(p => p.name === playerName);
             if (player) {
-                if (player.status === 'Sống' && playerName === protectedPlayer) {
+                // Kiểm tra bảo vệ chỉ khi đang là ban đêm (không có đếm ngược ban ngày)
+                if (player.status === 'Sống' && playerName === protectedPlayer && !dayCountdown) {
                     logEvent(`${playerName} đã được bảo vệ và không bị chết.`);
                     protectedPlayer = null; // Reset bảo vệ sau khi dùng
                 } else if (player.role === 'Bán Sói' && player.status === 'Sống') {
@@ -3096,6 +3131,12 @@
         const countdownDisplay = document.getElementById('countdownDisplay');
         if (!countdownDisplay) return;
         
+        // Xóa bảo vệ khi bắt đầu ban ngày
+        protectedPlayer = null;
+        
+        // Thêm class visible khi bắt đầu đếm ngược
+        countdownDisplay.classList.add('visible');
+        
         // Lấy thời gian từ input (đơn vị phút)
         const dayTimeInput = document.getElementById('dayTime');
         currentDayTime = dayTimeInput ? parseInt(dayTimeInput.value) : 5;
@@ -3103,33 +3144,41 @@
         // Chuyển đổi sang giây
         dayCounter = currentDayTime * 60;
         
-        countdownDisplay.classList.add('visible');
-        
         if (dayCountdown) {
             clearInterval(dayCountdown);
         }
 
-        dayCountdown = setInterval(() => {
-            if (dayCounter >= 0) {
-                const minutes = Math.floor(dayCounter / 60);
-                const seconds = dayCounter % 60;
-                countdownDisplay.textContent = 
-                    `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-                
-                if (dayCounter <= 30) {
-                    countdownDisplay.classList.add('countdown-warning');
-                } else {
-                    countdownDisplay.classList.remove('countdown-warning');
-                }
-                dayCounter--;
-            } else {
+        // Render lại người chơi để cập nhật hiển thị (xóa icon bảo vệ)
+        renderPlayers();
+
+        // Hàm cập nhật đếm ngược
+        function updateCountdown() {
+            const minutes = Math.floor(dayCounter / 60);
+            const seconds = dayCounter % 60;
+            countdownDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+            // Thêm cảnh báo khi còn 30 giây
+            if (dayCounter <= 30) {
+                countdownDisplay.classList.add('countdown-warning');
+            }
+
+            // Kiểm tra kết thúc
+            if (dayCounter <= 0) {
                 clearInterval(dayCountdown);
                 countdownDisplay.textContent = "Hết thời gian!";
                 logEvent("⏰ Thời gian ban ngày đã kết thúc");
+                return;
             }
-        }, 1000);
 
-        logEvent(`🌞 Ban ngày bắt đầu - ${currentDayTime} phút thảo luận`);
+            dayCounter--;
+        }
+
+        // Bắt đầu đếm ngược
+        updateCountdown(); // Cập nhật lần đầu ngay lập tức
+        dayCountdown = setInterval(updateCountdown, 1000);
+
+        // Log sự kiện
+        logEvent("🌞 Ban ngày bắt đầu - 5 phút thảo luận");
     }
 
     // Thêm hàm để lấy thời gian hiện tại
