@@ -234,8 +234,19 @@
         function sendFeedback() {
             const email = 'cuong.dn@pctu.edu.vn';
             const subject = 'Góp ý website';
-            const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
-            window.location.href = mailtoLink;
+            
+            // Kiểm tra thiết bị
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            
+            if (isMobile) {
+                // Điện thoại: sử dụng mailto
+                const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
+                window.location.href = mailtoLink;
+            } else {
+                // PC: mở Gmail
+                const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}`;
+                window.open(gmailComposeUrl, '_blank');
+            }
         }
     </script>
 </body>
