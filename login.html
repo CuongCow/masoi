@@ -257,6 +257,10 @@
                 <div class="error" id="password-error">Vui lòng nhập mật khẩu</div>
             </div>
 
+            <div class="form-group">
+                <input type="checkbox" id="remember" checked> Ghi nhớ đăng nhập
+            </div>
+
             <div class="button-group">
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-sign-in-alt"></i>
@@ -388,6 +392,37 @@
 
             input.addEventListener('blur', function() {
                 this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+
+        // Lưu cookie khi đăng nhập
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('remember').checked;
+            
+            if (remember) {
+                // Lưu cookie trong 30 ngày
+                document.cookie = `username=${username}; max-age=${30*24*60*60}; path=/`;
+                document.cookie = `password=${password}; max-age=${30*24*60*60}; path=/`;
+            }
+        });
+
+        // Tự động điền thông tin khi tải trang
+        window.addEventListener('load', function() {
+            const cookies = document.cookie.split(';');
+            
+            cookies.forEach(cookie => {
+                const [name, value] = cookie.trim().split('=');
+                
+                if (name === 'username') {
+                    document.getElementById('username').value = value;
+                }
+                if (name === 'password') {
+                    document.getElementById('password').value = value;
+                }
             });
         });
     </script>
