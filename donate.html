@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Thư viện Font Awesome cho biểu tượng -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ủng hộ tôi nhé</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="/logo/logoweb-dammekynang.png" type="image/png">
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        .donate-container {
+    max-width: 1200px;
+    margin: 70px auto;
+    padding: 20px;
+}
+
+.donate-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.donate-description {
+    text-align: center;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+.payment-methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    justify-content: center;
+}
+
+.payment-method {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.payment-method h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.qr-code {
+    max-width: 200px;
+    margin: 0 auto 20px;
+    display: block;
+}
+
+.account-info {
+    margin: 20px 0;
+}
+
+.copy-btn, .momo-btn, .playerduo-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.momo-btn {
+    background: #ae2070;
+}
+
+.playerduo-btn {
+    background: #6441a5;
+}
+
+.copy-btn:hover, .momo-btn:hover, .playerduo-btn:hover {
+    opacity: 0.9;
+}
+
+.feedback-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.feedback-btn:hover {
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .payment-methods {
+        grid-template-columns: 1fr;
+    }
+}
+    </style>
+        <script src="/js/menu.js"></script>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="title-container">
+            <div class="menu-icon" id="menuIcon" onclick="toggleSidebar()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="logo">
+                <a href="/index.html" style="text-decoration: none; color: inherit;">
+                    Đam mê Kỹ năng
+                </a>
+            </div>
+        </div>
+        <div class="header-right">
+            <a href="/login.html" class="login-btn" id="loginBtn">Đăng nhập</a>
+            <span id="userDisplay" style="color: white; font-weight: bold; margin-right: 15px;"></span>
+            <a href="#" onclick="logout()" class="login-btn" id="logoutBtn" style="display: none;">Đăng xuất</a>
+        </div>
+    </header>
+    <div id="sidebar-container"></div>
+
+    <!-- Phần nội dung donate -->
+    <div class="donate-container">
+        <h1 class="donate-title">Ủng hộ tác giả</h1>
+        <p class="donate-description">Nếu bạn thấy nội dung hữu ích, hãy ủng hộ tôi để có thêm động lực phát triển và duy trì máy chủ!</p>
+
+        <div class="payment-methods">
+            <!-- ACB -->
+            <div class="payment-method">
+                <h2>Ngân hàng ACB</h2>
+                <img src="/images/QR ACB.jpg" alt="QR Code ACB" class="qr-code">
+                <div class="account-info">
+                    <p>Số tài khoản: <strong>18072151</strong></p>
+                    <p>Chủ tài khoản: <strong>Đào Nhựt Cường</strong></p>
+                    <button class="copy-btn" onclick="copyToClipboard('18072151')">
+                        <i class="fas fa-copy"></i> Sao chép STK
+                    </button>
+                </div>
+            </div>
+
+            <!-- MOMO -->
+            <div class="payment-method">
+                <h2>Ví MOMO</h2>
+                <img src="/images/QR MOMO.jpg" alt="QR Code MOMO" class="qr-code">
+                <div class="account-info">
+                    <p>Số tài khoản: <strong>0799444052</strong></p>
+                    <p>Chủ tài khoản: <strong>Đào Nhựt Cường</strong></p>
+                    <button class="copy-btn" onclick="copyToClipboard('0799444052')">
+                        <i class="fas fa-copy"></i> Sao chép STK
+                    </button>
+                </div>
+            </div>
+
+            <!-- PlayerDuo -->
+            <div class="payment-method">
+                <h2>PlayerDuo</h2>
+                <a href="https://playerduo.net/daonhutcuong" target="_blank" class="playerduo-btn">
+                    <i class="fas fa-gamepad"></i> Ủng hộ qua PlayerDuo
+                </a>
+            </div>
+
+            <!-- Feedback -->
+            <div class="payment-method">
+                <h2>Góp ý</h2>
+                <button onclick="sendFeedback()" class="feedback-btn">
+                    <i class="fas fa-envelope"></i> Gửi góp ý qua Email
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        &copy; 2024 Đam Mê Kỹ Năng
+    </footer>
+    <!-- Thêm modal vào body -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="login-modal" id="loginModal">
+        <h3>Thông báo đăng nhập</h3>
+        <p>Bạn cần đăng nhập để dùng các công cụ tool. Vì một số lý do cộng đồng nên rất cần thiết để quản lý người dùng.</p>
+        <div class="modal-buttons">
+            <a href="/login.html" class="modal-btn modal-login">Đăng nhập</a>
+            <a href="/register.html" class="modal-btn modal-register">Đăng ký</a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.querySelector('.avatar-video');
+            
+            // Cách 1: Sử dụng Promise để phát video
+            const playVideo = async () => {
+                try {
+                    await video.play();
+                } catch (err) {
+                    console.log("Không thể tự động phát video:", err);
+                }
+            };
+            
+            // Cách 2: Thêm sự kiện loadeddata
+            video.addEventListener('loadeddata', function() {
+                playVideo();
+            });
+            
+            // Cách 3: Thử phát ngay khi tải xong
+            playVideo();
+            
+            // Cách 4: Thêm sự kiện click vào document
+            document.addEventListener('click', function() {
+                playVideo();
+            }, { once: true });
+        });
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Đã sao chép số tài khoản!');
+            }).catch(err => {
+                console.error('Không thể sao chép:', err);
+            });
+        }
+
+        function sendFeedback() {
+            const email = 'cuong.dn@pctu.edu.vn';
+            const subject = 'Góp ý website';
+            const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
+            window.location.href = mailtoLink;
+        }
+    </script>
+</body>
+</html>
